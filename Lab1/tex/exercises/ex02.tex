@@ -1,0 +1,40 @@
+\section{Exercise 2}
+
+Given the following circuit, students rearrange the circuit to clarify its serial and/or parallel topology. Then, apply the knowledge you've learned to find the equivalent resistance value between two circuit terminals A and F. Finally, perform the simulation to check if the current through the whole circuit is correctly calculated.
+
+\given{ex2_given}{0.6\textwidth}{Find the equivalent resistance value between terminals A and F}
+
+\subsection{Rearrange the circuit}
+\drawfig{ex2_redraw}{Rearranged circuit (with resistance values and node names)}
+
+\subsection{Calculation}
+\noindent\textbf{\textit{Convention:}}\\
+\textit{The equivalent resistance between the two terminals A and B of a circuit segment containing only R1, R2, R3, and R4 may be named $R_{AB\_1234}$.}\par\medskip
+\notes
+\noindent Dây nối giữa nút $E$ và $D$ là dây dẫn lý tưởng nên $E$ và $D$ cùng một nút ($V_E = V_D$).
+\begin{itemize}[leftmargin=2em]
+  \item Ba điện trở $R_3, R_4, R_5$ nằm trên cùng một nhánh nên mắc nối tiếp:
+        \[
+        R_{345} = R_3 + R_4 + R_5 = 4\,\Omega + 5\,\Omega + 3\,\Omega = 12\,\Omega
+        \]
+  \item Giữa hai nút $C$ và $D$, điện trở $R_6$ mắc song song với $R_{345}$:
+        \[
+        R_{CD\_3456} = R_6 \parallel R_{345} = \frac{R_6 \cdot R_{345}}{R_6 + R_{345}} = \frac{4 \cdot 12}{4 + 12} = 3\,\Omega
+        \]
+  \item Giữa hai nút $B$ và $E$, nhánh $(R_2 + R_{CD\_3456})$ mắc song song với $R_7$:
+        \[
+        R_{BE} = R_7 \parallel (R_2 + R_{CD\_3456}) = \frac{6 \cdot (3 + 3)}{6 + (3 + 3)} = \frac{36}{12} = 3\,\Omega
+        \]
+  \item Giữa hai đầu $A$ và $F$, các điện trở $R_1, R_{BE}$ và $R_8$ mắc nối tiếp:
+        \[
+        R_{AF} = R_1 + R_{BE} + R_8 = 2\,\Omega + 3\,\Omega + 1\,\Omega = 6\,\Omega
+        \]
+  \item Dòng điện qua toàn mạch (chạy từ $A$ sang $B$ qua $R_1$):
+        \[
+        I_{AB} = \frac{V_1}{R_{AF}} = \frac{12\text{ V}}{6\,\Omega} = 2\text{ A}
+        \]
+\end{itemize}
+
+\subsection{Simulation}
+\simresult
+\simfig{ex2_sim}{PSpice simulation result of Exercise 2}

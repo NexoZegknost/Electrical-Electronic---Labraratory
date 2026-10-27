@@ -1,0 +1,49 @@
+\section{Exercise 5}
+
+Given the network as shown below:
+
+\given{ex5_given}{0.45\textwidth}{Select resistor $R$ from the standard resistors list and do the following requirements}
+
+\subsection{Calculation}
+\notes
+\begin{enumerate}[label=\alph*.]
+  \item \textbf{Tìm giá trị cần thiết của điện trở $R$:} \\
+        Điện trở $R$ và $3{,}9\text{ k}\Omega$ mắc nối tiếp nên có cùng dòng điện:
+        \[
+        I = \frac{V_1}{3{,}9\text{ k}\Omega} = \frac{5\text{ V}}{3{,}9\text{ k}\Omega} \approx 1{,}282\text{ mA}
+        \]
+        Theo KVL, điện áp trên $R$ là $V_R = 24\text{ V} - 5\text{ V} = 19\text{ V}$. Suy ra:
+        \[
+        R = \frac{V_R}{I} = 3{,}9\text{ k}\Omega \times \frac{19}{5} = 14{,}82\text{ k}\Omega
+        \]
+
+  \item \textbf{Chọn điện trở chuẩn có dung sai 10\% cho $R$:} \\
+        Dãy giá trị chuẩn dung sai 10\% (dãy E12) gồm: 10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82 ($\times 10^n\,\Omega$).
+        Giá trị chuẩn gần $14{,}82\text{ k}\Omega$ nhất trên thị trường là $15\text{ k}\Omega$ (độ lệch $\approx 1{,}2\%$).
+        Do đó, chọn một điện trở đơn:
+        \[
+        R = 15\text{ k}\Omega
+        \]
+
+  \item \textbf{Xác định điện áp $V_1$ trên điện trở 3,9k theo $R = 15\text{ k}\Omega$ đã chọn:} \\
+        Áp dụng quy tắc chia áp:
+        \[
+        V_1 = 24\text{ V} \times \frac{3{,}9\text{ k}\Omega}{15\text{ k}\Omega + 3{,}9\text{ k}\Omega} = 24 \times \frac{3{,}9}{18{,}9} \approx 4{,}952\text{ V}
+        \]
+
+  \item \textbf{Tính sai số phần trăm của điện áp $V_1$:} \\
+        \[
+        \delta = \frac{|V_{1,\text{thực tế}} - V_{1,\text{yêu cầu}}|}{V_{1,\text{yêu cầu}}} \times 100\% = \frac{|4{,}952\text{ V} - 5\text{ V}|}{5\text{ V}} \times 100\% \approx 0{,}95\%
+        \]
+
+  \item \textbf{Xác định công suất định mức cho linh kiện chuẩn này:} \\
+        Công suất tiêu tán thực tế trên điện trở $R$:
+        \[
+        I = \frac{24\text{ V}}{18{,}9\text{ k}\Omega} \approx 1{,}270\text{ mA} \implies P_R = I^2 R = (1{,}270\text{ mA})^2 \times 15\text{ k}\Omega \approx 24{,}2\text{ mW}
+        \]
+        Áp dụng hệ số an toàn $\ge 2$ ($P_{\text{định mức}} \ge 2 \times 24{,}2\text{ mW} = 48{,}4\text{ mW}$), chọn điện trở có công suất định mức chuẩn là $1/8\text{ W}$ ($125\text{ mW}$) hoặc $1/4\text{ W}$ ($250\text{ mW}$).
+\end{enumerate}
+
+\subsection{Simulation}
+\simresult
+\simfig{ex5_sim}{PSpice simulation result of Exercise 5}

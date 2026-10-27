@@ -1,0 +1,50 @@
+\section{Exercise 9}
+
+Given the following circuit. Find the voltage $v$ and the current $i_x$. According to the result, determine the elements whose absorbing power are respectively $p_1$ and $p_2$ are active or passive (calculations are required). Note that here we use the passive sign convention. If an element consumes power, use a pure resistor with an appropriate value as a representative. If it is a power supply element, use a corresponding ideal DC voltage source to represent it. Perform a simulation to check how the circuit works.
+
+\given{ex9_given}{0.55\textwidth}{Find the unknown elements and variables, then check them out by simulation}
+
+\subsection{Calculation}
+\notes
+\noindent\textbf{Điện áp các nút với nút mốc $D$ ($V_D = 0\text{ V}$):}
+\begin{align*}
+V_A &= 10\text{ V}, \quad V_B = 4\text{ V} \\
+v &= V_A - V_B = 10\text{ V} - 4\text{ V} = 6\text{ V} \\
+V_C &= V_B - 16\text{ V} = 4\text{ V} - 16\text{ V} = -12\text{ V} \\
+U_{CD} &= V_C - V_D = -12\text{ V}
+\end{align*}
+\noindent Từ nguồn áp phụ thuộc dòng (CCVS) có quan hệ $U_{CD} = 3i_x$:
+\[
+3i_x = -12\text{ V} \implies i_x = \frac{-12\text{ V}}{3} = -4\text{ A}
+\]
+\noindent Dòng điện qua các nhánh:
+\begin{align*}
+I_{AB} &= \frac{v}{12\,\Omega} = \frac{6\text{ V}}{12\,\Omega} = 0{,}5\text{ A} \\
+\text{Áp dụng KCL tại nút } B: \quad I_{AB} &= i_x + I_{BC} \implies I_{BC} = I_{AB} - i_x = 0{,}5\text{ A} - (-4\text{ A}) = 4{,}5\text{ A}
+\end{align*}
+
+\noindent\textbf{Tính công suất và phân loại phần tử (quy ước dấu thụ động):}
+\begin{itemize}[leftmargin=2em]
+  \item $p_1 = 4\text{ V} \times i_x = 4\text{ V} \times (-4\text{ A}) = -16\text{ W} < 0 \implies \text{\textbf{Phần tử tích cực}}$ (phát công suất) \\
+        $\longrightarrow$ Đại diện bằng nguồn áp DC lý tưởng $V_1 = 4\text{ V}$ (cực $+$ ở phía trên).
+  \item $p_2 = 16\text{ V} \times I_{BC} = 16\text{ V} \times 4{,}5\text{ A} = 72\text{ W} > 0 \implies \text{\textbf{Phần tử thụ động}}$ (hấp thụ công suất) \\
+        $\longrightarrow$ Đại diện bằng điện trở thuần $R_2 = \dfrac{16\text{ V}}{4{,}5\text{ A}} = \dfrac{32}{9}\,\Omega \approx 3{,}556\,\Omega$.
+\end{itemize}
+
+\noindent\textbf{Tổng hợp kết quả:}
+\begin{itemize}[leftmargin=2em]
+  \item $v = 6\text{ V}$
+  \item $i_x = -4\text{ A}$
+  \item $I_{AB} = 0{,}5\text{ A}$
+  \item $I_{BC} = 4{,}5\text{ A}$
+  \item $U_{CD} = -12\text{ V}$
+  \item $p_1 = -16\text{ W}$ (Tích cực)
+  \item $p_2 = 72\text{ W}$ (Thụ động)
+\end{itemize}
+
+\subsection{Simulation}
+\noindent\textbf{\textit{Tips:}}\\
+To get the Current Controlled Voltage Source (CCVS) from the PSpice, under the \textbf{\textit{Place}} menu, find \textbf{\textit{PSpice Component $>$ Source $>$ Controlled Sources $>$ CCVS}}.
+
+\simresult
+\simfig{ex9_sim}{PSpice simulation result of Exercise 9}

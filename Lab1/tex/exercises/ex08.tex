@@ -1,0 +1,42 @@
+\section{Exercise 8}
+
+Given the following circuit with $p_2$, $p_3$, and $p_4$ are absorbing powers of unknown electrical elements. First, use the knowledge you've learned to identify whether they are active or passive elements (supplying or absorbing power). To an element absorbing power, use a pure resistor with a proper value as a representative. To a power element, use an ideal DC voltage source with the corresponding value as a representative. Next, redraw the circuit and calculate the power that each element absorbs. Note that here we use the passive sign convention. Then, perform a simulation with the elements determined by the previous step.
+
+\given{ex8_given}{0.7\textwidth}{Determine the unknown elements and calculate the absorbing power of each}
+
+\subsection{Identify the unknown elements}
+\notes
+\noindent Áp dụng quy ước dấu thụ động (passive sign convention, $p = v \cdot i$, dòng $i$ đi vào cực $+$):
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Phần tử 2:} Dòng điện $I = 10\text{ A}$ đi vào cực $+$ của điện áp $10\text{ V}$:
+        \[
+        p_2 = 10\text{ V} \times 10\text{ A} = 100\text{ W} > 0 \implies \text{\textbf{Phần tử thụ động}} \text{ (hấp thụ công suất)}
+        \]
+        Đại diện bằng điện trở thuần: $R_2 = \dfrac{10\text{ V}}{10\text{ A}} = 1\,\Omega$.
+
+  \item \textbf{Phần tử 3:} Dòng điện $14\text{ A}$ đi xuống vào cực $+$ của điện áp $20\text{ V}$:
+        \[
+        p_3 = 20\text{ V} \times 14\text{ A} = 280\text{ W} > 0 \implies \text{\textbf{Phần tử thụ động}} \text{ (hấp thụ công suất)}
+        \]
+        Đại diện bằng điện trở thuần: $R_3 = \dfrac{20\text{ V}}{14\text{ A}} = \frac{10}{7}\,\Omega \approx 1{,}429\,\Omega$.
+
+  \item \textbf{Phần tử 4:} Mũi tên dòng $4\text{ A}$ hướng sang trái, đi vào cực âm của điện áp $8\text{ V}$:
+        \[
+        p_4 = -8\text{ V} \times 4\text{ A} = -32\text{ W} < 0 \implies \text{\textbf{Phần tử tích cực}} \text{ (phát công suất)}
+        \]
+        Đại diện bằng nguồn áp DC lý tưởng $V_4 = 8\text{ V}$ với cực $+$ nằm bên trái.
+\end{itemize}
+
+\noindent\textbf{Kiểm tra cân bằng công suất toàn mạch:}
+\begin{align*}
+p_1 &= -30\text{ V} \times 10\text{ A} = -300\text{ W} \\
+p_5 &= -12\text{ V} \times (0{,}4 \times 10\text{ A}) = -12\text{ V} \times 4\text{ A} = -48\text{ W} \\
+\sum p &= -300 + 100 + 280 - 32 - 48 = 0\text{ W}
+\end{align*}
+
+\subsection{Redraw the circuit for simulation}
+\drawfig{ex8_redraw}{Redrawn circuit with representative elements}
+
+\subsection{Simulation}
+\simresult
+\simfig{ex8_sim}{PSpice simulation result of Exercise 8}

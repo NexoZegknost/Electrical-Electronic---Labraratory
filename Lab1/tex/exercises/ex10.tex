@@ -1,0 +1,49 @@
+\section{Exercise 10}
+
+Given the following circuit. Find the voltage $V$. You can do this in any way but remember to explain it in detail. Then simulate the circuit to check the result.
+
+\given{ex10_given}{0.55\textwidth}{Find the voltage $V$}
+
+\subsection{Calculation}
+\notes
+\noindent\textbf{Phương pháp: Biến đổi Tam giác -- Sao ($\Delta \to Y$) và Quy tắc chia áp}
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Biến đổi $\Delta \to Y$ tam giác $B$-$C$-$D$:} \\
+        Tam giác gồm ba điện trở $R_6 = 15\,\Omega$ ($B$-$C$), $R_5 = 10\,\Omega$ ($C$-$D$), và $R_7 = 30\,\Omega$ ($B$-$D$).
+        \[
+        \Sigma_\Delta = R_6 + R_5 + R_7 = 15 + 10 + 30 = 55\,\Omega
+        \]
+        Các điện trở hình sao tương đương nối về tâm sao $N$:
+        \begin{align*}
+        R_B &= \frac{R_6 \cdot R_7}{\Sigma_\Delta} = \frac{15 \times 30}{55} = \frac{90}{11}\,\Omega \approx 8{,}182\,\Omega \\
+        R_C &= \frac{R_6 \cdot R_5}{\Sigma_\Delta} = \frac{15 \times 10}{55} = \frac{30}{11}\,\Omega \approx 2{,}727\,\Omega \\
+        R_D &= \frac{R_5 \cdot R_7}{\Sigma_\Delta} = \frac{10 \times 30}{55} = \frac{60}{11}\,\Omega \approx 5{,}455\,\Omega
+        \end{align*}
+
+  \item \textbf{Gộp hai nhánh song song từ $N$ xuống đất $E$ ($V_E = 0\text{ V}$):}
+        \begin{align*}
+        R_{NE1} &= R_C + R_3 = 2{,}727\,\Omega + 12\,\Omega = 14{,}727\,\Omega \\
+        R_{NE2} &= R_D + R_4 = 5{,}455\,\Omega + 20\,\Omega = 25{,}455\,\Omega \\
+        R_{NE} &= R_{NE1} \parallel R_{NE2} = \frac{14{,}727 \times 25{,}455}{14{,}727 + 25{,}455} \approx 9{,}330\,\Omega
+        \end{align*}
+
+  \item \textbf{Tổng trở nhánh qua $N$ và điện trở tương đương $R_{BE}$:}
+        \begin{align*}
+        R_{BNE} &= R_B + R_{NE} = 8{,}182\,\Omega + 9{,}330\,\Omega = 17{,}511\,\Omega \\
+        R_{BE} &= R_2 \parallel R_{BNE} = \frac{35 \times 17{,}511}{35 + 17{,}511} \approx 11{,}672\,\Omega
+        \end{align*}
+
+  \item \textbf{Tính điện áp $V$ bằng quy tắc chia áp giữa $R_{BE}$ và $R_1$:}
+        \[
+        V = 100\text{ V} \times \frac{R_{BE}}{R_1 + R_{BE}} = 100\text{ V} \times \frac{11{,}672\,\Omega}{16\,\Omega + 11{,}672\,\Omega} = 100 \times \frac{11{,}672}{27{,}672} \approx 42{,}18\text{ V}
+        \]
+\end{enumerate}
+
+\noindent\textbf{Kết quả:}
+\begin{itemize}[leftmargin=2em]
+  \item $V \approx 42{,}18\text{ V}$
+\end{itemize}
+
+\subsection{Simulation}
+\simresult
+\simfig{ex10_sim}{PSpice simulation result of Exercise 10}

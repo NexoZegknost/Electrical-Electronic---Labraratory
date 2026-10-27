@@ -1,0 +1,45 @@
+\section{Exercise 4}
+
+Given the following circuit, find $I_1$, $I_2$, $I_3$, $V_a$, and $V_b$. Present your calculation steps and check them out by performing the simulation.
+
+\given{ex4_given}{0.5\textwidth}{Find $I_1$, $I_2$, $I_3$, $V_a$, and $V_b$}
+
+\subsection{Calculation}
+\notes
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Tính điện trở tương đương:}
+        \begin{itemize}
+          \item Gộp hai điện trở $3\text{ k}\Omega$ nối tiếp ở nhánh bên phải:
+                \[
+                R_s = 3\text{ k}\Omega + 3\text{ k}\Omega = 6\text{ k}\Omega
+                \]
+          \item Gộp hai nhánh song song:
+                \[
+                R_p = 6\text{ k}\Omega \parallel R_s = \frac{6 \cdot 6}{6 + 6} = 3\text{ k}\Omega
+                \]
+          \item Điện trở tương đương toàn mạch nhìn từ nguồn $12\text{ V}$:
+                \[
+                R_{eq} = 9\text{ k}\Omega + R_p = 9\text{ k}\Omega + 3\text{ k}\Omega = 12\text{ k}\Omega
+                \]
+        \end{itemize}
+  \item \textbf{Tính toán dòng điện và điện áp:}
+        \begin{align*}
+        I_1 &= \frac{12\text{ V}}{R_{eq}} = \frac{12\text{ V}}{12\text{ k}\Omega} = 1\text{ mA} \\
+        V_a &= I_1 \cdot R_p = 1\text{ mA} \times 3\text{ k}\Omega = 3\text{ V} \\
+        I_2 &= \frac{V_a}{6\text{ k}\Omega} = \frac{3\text{ V}}{6\text{ k}\Omega} = 0{,}5\text{ mA} \\
+        I_3 &= \frac{V_a}{R_s} = \frac{3\text{ V}}{6\text{ k}\Omega} = 0{,}5\text{ mA} \\
+        V_b &= V_a \cdot \frac{3\text{ k}\Omega}{3\text{ k}\Omega + 3\text{ k}\Omega} = 3\text{ V} \times \frac{1}{2} = 1{,}5\text{ V}
+        \end{align*}
+\end{enumerate}
+
+\noindent\textbf{Tổng hợp kết quả:}
+\begin{itemize}[leftmargin=2em]
+  \item $R_{eq} = 12\text{ k}\Omega$
+  \item $I_1 = 1\text{ mA}$
+  \item $I_2 = 0{,}5\text{ mA}, \quad I_3 = 0{,}5\text{ mA}$
+  \item $V_a = 3\text{ V}, \quad V_b = 1{,}5\text{ V}$
+\end{itemize}
+
+\subsection{Simulation}
+\simresult
+\simfig{ex4_sim}{PSpice simulation result of Exercise 4}

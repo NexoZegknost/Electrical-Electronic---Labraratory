@@ -1,0 +1,49 @@
+\section{Exercise 7}
+
+Given the following circuit. Apply the knowledge you've learned to transform it into another form in which you can find total equivalent resistance more easily. Next, find the value of the current $I_S$ through the circuit and perform a simulation to check it out.
+
+\given{ex7_given}{0.45\textwidth}{Transform the circuit, then find the equivalent resistance and the current $I_S$}
+
+\subsection{Circuit transformation}
+\drawfig{ex7_transform}{Transformed circuit}
+\noindent Mạch cầu gồm các điện trở $12\text{ k}\Omega, 18\text{ k}\Omega, 6\text{ k}\Omega, 4\text{ k}\Omega, 9\text{ k}\Omega$ không cân bằng ($12 \times 9 \neq 18 \times 4$). Đặt các nút $T$ (nút trên), $M$ (giữa trái), $P$ (giữa phải). Biến đổi tam giác ($\Delta$) $T$-$M$-$P$ gồm ba điện trở $12\text{ k}\Omega, 18\text{ k}\Omega, 6\text{ k}\Omega$ thành hình sao (Y) với tâm sao $N$:
+\[
+\Sigma_\Delta = 12\text{ k}\Omega + 18\text{ k}\Omega + 6\text{ k}\Omega = 36\text{ k}\Omega
+\]
+\begin{align*}
+R_1 &= \frac{12 \times 18}{36} = 6\text{ k}\Omega \quad (\text{nối vào nút trên } T) \\
+R_2 &= \frac{12 \times 6}{36} = 2\text{ k}\Omega \quad (\text{nối vào nút giữa trái } M) \\
+R_3 &= \frac{18 \times 6}{36} = 3\text{ k}\Omega \quad (\text{nối vào nút giữa phải } P)
+\end{align*}
+
+\subsection{Calculation}
+\notes
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Gộp nối tiếp hai nhánh từ $N$ xuống dây dưới:}
+        \begin{align*}
+        R_{NM} &= R_2 + 4\text{ k}\Omega = 2\text{ k}\Omega + 4\text{ k}\Omega = 6\text{ k}\Omega \\
+        R_{NP} &= R_3 + 9\text{ k}\Omega = 3\text{ k}\Omega + 9\text{ k}\Omega = 12\text{ k}\Omega
+        \end{align*}
+  \item \textbf{Gộp hai nhánh song song:}
+        \[
+        R_p = R_{NM} \parallel R_{NP} = \frac{6 \cdot 12}{6 + 12} = 4\text{ k}\Omega
+        \]
+  \item \textbf{Điện trở tương đương toàn mạch:}
+        \[
+        R_{\text{equivalent}} = R_1 + R_p = 6\text{ k}\Omega + 4\text{ k}\Omega = 10\text{ k}\Omega
+        \]
+  \item \textbf{Dòng điện nguồn $I_S$:}
+        \[
+        I_S = \frac{12\text{ V}}{R_{\text{equivalent}}} = \frac{12\text{ V}}{10\text{ k}\Omega} = 1{,}2\text{ mA}
+        \]
+\end{enumerate}
+
+\noindent\textbf{Tổng hợp kết quả:}
+\begin{itemize}[leftmargin=2em]
+  \item $R_{\text{equivalent}} = 10\text{ k}\Omega$
+  \item $I_S = 1{,}2\text{ mA}$
+\end{itemize}
+
+\subsection{Simulation}
+\simresult
+\simfig{ex7_sim}{PSpice simulation result of Exercise 7}
