@@ -1,11 +1,10 @@
-\section{Exercise 8}
+\section{Bài tập 8}
 
-Given the following circuit with $p_2$, $p_3$, and $p_4$ are absorbing powers of unknown electrical elements. First, use the knowledge you've learned to identify whether they are active or passive elements (supplying or absorbing power). To an element absorbing power, use a pure resistor with a proper value as a representative. To a power element, use an ideal DC voltage source with the corresponding value as a representative. Next, redraw the circuit and calculate the power that each element absorbs. Note that here we use the passive sign convention. Then, perform a simulation with the elements determined by the previous step.
+Cho mạch điện như hình bên dưới, trong đó $p_2, p_3$ và $p_4$ là công suất hấp thụ của các phần tử điện chưa biết. Trước hết, hãy vận dụng kiến thức đã học để xác định các phần tử này là phần tử tích cực hay thụ động (phát hay hấp thụ công suất). Với phần tử hấp thụ công suất, dùng một điện trở thuần có giá trị phù hợp để đại diện. Với phần tử phát công suất, dùng một nguồn áp DC lý tưởng có giá trị tương ứng để đại diện. Tiếp theo, vẽ lại mạch điện và tính công suất mà mỗi phần tử hấp thụ. Lưu ý: ở đây sử dụng quy ước dấu thụ động. Sau đó, thực hiện mô phỏng với các phần tử đã được xác định ở bước trước.
 
-\given{ex8_given}{0.7\textwidth}{Determine the unknown elements and calculate the absorbing power of each}
+\given{ex8_given}{0.7\textwidth}{Xác định các phần tử chưa biết và tính công suất hấp thụ của từng phần tử}
 
-\subsection{Identify the unknown elements}
-\notes
+\subsection{Xác định các phần tử chưa biết}
 \noindent Áp dụng quy ước dấu thụ động (passive sign convention, $p = v \cdot i$, dòng $i$ đi vào cực $+$):
 \begin{itemize}[leftmargin=2em]
   \item \textbf{Phần tử 2:} Dòng điện $I = 10\text{ A}$ đi vào cực $+$ của điện áp $10\text{ V}$:
@@ -34,9 +33,9 @@ p_5 &= -12\text{ V} \times (0{,}4 \times 10\text{ A}) = -12\text{ V} \times 4\te
 \sum p &= -300 + 100 + 280 - 32 - 48 = 0\text{ W}
 \end{align*}
 
-\subsection{Redraw the circuit for simulation}
-\drawfig{ex8_redraw}{Redrawn circuit with representative elements}
+\subsection{Vẽ lại mạch điện mô phỏng}
+\drawfig{ex8_redraw}{Sơ đồ mạch vẽ lại với các phần tử đại diện}
 
-\subsection{Simulation}
+\subsection{Mô phỏng}
 \simresult
-\simfig{ex8_sim}{PSpice simulation result of Exercise 8}
+\simfig{ex8_sim}{Kết quả mô phỏng PSpice của Bài tập 8}

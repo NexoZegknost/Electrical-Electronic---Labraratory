@@ -1,11 +1,11 @@
-\section{Exercise 7}
+\section{Bài tập 7}
 
-Given the following circuit. Apply the knowledge you've learned to transform it into another form in which you can find total equivalent resistance more easily. Next, find the value of the current $I_S$ through the circuit and perform a simulation to check it out.
+Cho mạch điện như hình bên dưới. Hãy vận dụng kiến thức đã học để biến đổi mạch sang một dạng khác mà ở đó có thể tìm điện trở tương đương toàn mạch dễ dàng hơn. Tiếp theo, tìm giá trị dòng điện $I_S$ chạy qua mạch và thực hiện mô phỏng để kiểm tra lại.
 
-\given{ex7_given}{0.45\textwidth}{Transform the circuit, then find the equivalent resistance and the current $I_S$}
+\given{ex7_given}{0.45\textwidth}{Biến đổi mạch, sau đó tìm điện trở tương đương và dòng điện $I_S$}
 
-\subsection{Circuit transformation}
-\drawfig{ex7_transform}{Transformed circuit}
+\subsection{Biến đổi mạch điện}
+\drawfig{ex7_transform}{Mạch điện sau khi biến đổi $\Delta \to Y$}
 \noindent Mạch cầu gồm các điện trở $12\text{ k}\Omega, 18\text{ k}\Omega, 6\text{ k}\Omega, 4\text{ k}\Omega, 9\text{ k}\Omega$ không cân bằng ($12 \times 9 \neq 18 \times 4$). Đặt các nút $T$ (nút trên), $M$ (giữa trái), $P$ (giữa phải). Biến đổi tam giác ($\Delta$) $T$-$M$-$P$ gồm ba điện trở $12\text{ k}\Omega, 18\text{ k}\Omega, 6\text{ k}\Omega$ thành hình sao (Y) với tâm sao $N$:
 \[
 \Sigma_\Delta = 12\text{ k}\Omega + 18\text{ k}\Omega + 6\text{ k}\Omega = 36\text{ k}\Omega
@@ -16,8 +16,7 @@ R_2 &= \frac{12 \times 6}{36} = 2\text{ k}\Omega \quad (\text{nối vào nút gi
 R_3 &= \frac{18 \times 6}{36} = 3\text{ k}\Omega \quad (\text{nối vào nút giữa phải } P)
 \end{align*}
 
-\subsection{Calculation}
-\notes
+\subsection{Tính toán}
 \begin{enumerate}[leftmargin=2em]
   \item \textbf{Gộp nối tiếp hai nhánh từ $N$ xuống dây dưới:}
         \begin{align*}
@@ -30,20 +29,20 @@ R_3 &= \frac{18 \times 6}{36} = 3\text{ k}\Omega \quad (\text{nối vào nút gi
         \]
   \item \textbf{Điện trở tương đương toàn mạch:}
         \[
-        R_{\text{equivalent}} = R_1 + R_p = 6\text{ k}\Omega + 4\text{ k}\Omega = 10\text{ k}\Omega
+        R_{\text{tương đương}} = R_1 + R_p = 6\text{ k}\Omega + 4\text{ k}\Omega = 10\text{ k}\Omega
         \]
   \item \textbf{Dòng điện nguồn $I_S$:}
         \[
-        I_S = \frac{12\text{ V}}{R_{\text{equivalent}}} = \frac{12\text{ V}}{10\text{ k}\Omega} = 1{,}2\text{ mA}
+        I_S = \frac{12\text{ V}}{R_{\text{tương đương}}} = \frac{12\text{ V}}{10\text{ k}\Omega} = 1{,}2\text{ mA}
         \]
 \end{enumerate}
 
 \noindent\textbf{Tổng hợp kết quả:}
 \begin{itemize}[leftmargin=2em]
-  \item $R_{\text{equivalent}} = 10\text{ k}\Omega$
+  \item $R_{\text{tương đương}} = 10\text{ k}\Omega$
   \item $I_S = 1{,}2\text{ mA}$
 \end{itemize}
 
-\subsection{Simulation}
+\subsection{Mô phỏng}
 \simresult
-\simfig{ex7_sim}{PSpice simulation result of Exercise 7}
+\simfig{ex7_sim}{Kết quả mô phỏng PSpice của Bài tập 7}

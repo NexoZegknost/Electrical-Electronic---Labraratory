@@ -1,44 +1,44 @@
-\section{Exercise 3}
+\section{Bài tập 3}
 
-Given the following circuit, students rearrange the circuit to clarify its serial and/or parallel topology. Next, apply the knowledge you've learned to find the equivalent resistance value between two circuit terminals A and F, the voltage values at A, B, C, D, and E. Finally, perform the simulation to check your calculation.
+Cho mạch điện như hình bên dưới. Hãy sắp xếp (vẽ) lại mạch điện để làm rõ cấu trúc nối tiếp và/hoặc song song của mạch. Tiếp theo, vận dụng kiến thức đã học để tìm giá trị điện trở tương đương giữa hai đầu $A$ và $F$, cùng các giá trị điện áp tại các điểm $A, B, C, D$ và $E$. Cuối cùng, thực hiện mô phỏng để kiểm tra kết quả tính toán.
 
-\given{ex3_given}{0.65\textwidth}{Find the whole-circuit equivalent resistance and the voltages at A, B, C, D, and E}
+\given{ex3_given}{0.65\textwidth}{Tìm điện trở tương đương toàn mạch và điện áp tại $A, B, C, D, E$}
 
-\subsection{Rearrange the circuit}
-\drawfig{ex3_redraw}{Rearranged circuit (with resistance values and node names)}
+\subsection{Vẽ lại mạch điện}
+\drawfig{ex3_redraw}{Mạch điện sau khi vẽ lại dạng hình thang}
 
-\subsection{Calculation}
-\notes
-\noindent Chọn nút $F$ làm mốc điện thế (Ground, $V_F = 0\text{ V}$):
+\subsection{Tính toán}
+\noindent Chọn nút $F$ làm mốc điện thế (đất, $V_F = 0\text{ V}$):
 \begin{enumerate}[leftmargin=2em]
   \item \textbf{Tính điện trở tương đương (rút gọn từ phải sang trái):}
         \begin{align*}
-          R_{45} & = R_4 + R_5 = 1\text{ k}\Omega + 2\text{ k}\Omega = 3\text{ k}\Omega                                       \\
-          R_{DE} & = R_9 \parallel R_{45} = \frac{6 \cdot 3}{6 + 3} = 2\text{ k}\Omega                                        \\
-          R_{CE} & = R_6 \parallel (R_3 + R_{DE}) = \frac{6 \cdot (10 + 2)}{6 + (10 + 2)} = \frac{72}{18} = 4\text{ k}\Omega  \\
-          R_{BE} & = R_{10} \parallel (R_2 + R_{CE}) = \frac{6 \cdot (2 + 4)}{6 + (2 + 4)} = \frac{36}{12} = 3\text{ k}\Omega \\
-          R_{BF} & = R_8 \parallel (R_{BE} + R_7) = \frac{4 \cdot (3 + 9)}{4 + (3 + 9)} = \frac{48}{16} = 3\text{ k}\Omega    \\
-          R_{AF} & = R_1 + R_{BF} = 2\text{ k}\Omega + 3\text{ k}\Omega = 5\text{ k}\Omega
+        R_{45} &= R_4 + R_5 = 1\text{ k}\Omega + 2\text{ k}\Omega = 3\text{ k}\Omega \\
+        R_{DE} &= R_9 \parallel R_{45} = \frac{6 \cdot 3}{6 + 3} = 2\text{ k}\Omega \\
+        R_{CE} &= R_6 \parallel (R_3 + R_{DE}) = \frac{6 \cdot (10 + 2)}{6 + (10 + 2)} = \frac{72}{18} = 4\text{ k}\Omega \\
+        R_{BE} &= R_{10} \parallel (R_2 + R_{CE}) = \frac{6 \cdot (2 + 4)}{6 + (2 + 4)} = \frac{36}{12} = 3\text{ k}\Omega \\
+        R_{BF} &= R_8 \parallel (R_{BE} + R_7) = \frac{4 \cdot (3 + 9)}{4 + (3 + 9)} = \frac{48}{16} = 3\text{ k}\Omega \\
+        R_{AF} &= R_1 + R_{BF} = 2\text{ k}\Omega + 3\text{ k}\Omega = 5\text{ k}\Omega
         \end{align*}
   \item \textbf{Tính điện áp các nút ($I_1 = 18\text{ mA}, V_F = 0\text{ V}$):}
         \begin{align*}
-          V_A & = I_1 \cdot R_{AF} = 18\text{ mA} \times 5\text{ k}\Omega = 90\text{ V}                                                                                                     \\
-          V_B & = I_1 \cdot R_{BF} = 18\text{ mA} \times 3\text{ k}\Omega = 54\text{ V}                                                                                                     \\
-          I_7 & = \frac{V_B}{R_{BE} + R_7} = \frac{54\text{ V}}{3\text{ k}\Omega + 9\text{ k}\Omega} = 4{,}5\text{ mA}                                                                      \\
-          V_E & = I_7 \cdot R_7 = 4{,}5\text{ mA} \times 9\text{ k}\Omega = 40{,}5\text{ V}                                                                                                 \\
-          I_2 & = \frac{V_B - V_E}{R_2 + R_{CE}} = \frac{54\text{ V} - 40{,}5\text{ V}}{2\text{ k}\Omega + 4\text{ k}\Omega} = \frac{13{,}5\text{ V}}{6\text{ k}\Omega} = 2{,}25\text{ mA}  \\
-          V_C & = V_B - I_2 R_2 = 54\text{ V} - 2{,}25\text{ mA} \times 2\text{ k}\Omega = 49{,}5\text{ V}                                                                                  \\
-          I_3 & = \frac{V_C - V_E}{R_3 + R_{DE}} = \frac{49{,}5\text{ V} - 40{,}5\text{ V}}{10\text{ k}\Omega + 2\text{ k}\Omega} = \frac{9\text{ V}}{12\text{ k}\Omega} = 0{,}75\text{ mA} \\
-          V_D & = V_C - I_3 R_3 = 49{,}5\text{ V} - 0{,}75\text{ mA} \times 10\text{ k}\Omega = 42\text{ V}
+        V_A &= I_1 \cdot R_{AF} = 18\text{ mA} \times 5\text{ k}\Omega = 90\text{ V} \\
+        V_B &= I_1 \cdot R_{BF} = 18\text{ mA} \times 3\text{ k}\Omega = 54\text{ V} \\
+        I_7 &= \frac{V_B}{R_{BE} + R_7} = \frac{54\text{ V}}{3\text{ k}\Omega + 9\text{ k}\Omega} = 4{,}5\text{ mA} \\
+        V_E &= I_7 \cdot R_7 = 4{,}5\text{ mA} \times 9\text{ k}\Omega = 40{,}5\text{ V} \\
+        I_2 &= \frac{V_B - V_E}{R_2 + R_{CE}} = \frac{54\text{ V} - 40{,}5\text{ V}}{2\text{ k}\Omega + 4\text{ k}\Omega} = \frac{13{,}5\text{ V}}{6\text{ k}\Omega} = 2{,}25\text{ mA} \\
+        V_C &= V_B - I_2 R_2 = 54\text{ V} - 2{,}25\text{ mA} \times 2\text{ k}\Omega = 49{,}5\text{ V} \\
+        I_3 &= \frac{V_C - V_E}{R_3 + R_{DE}} = \frac{49{,}5\text{ V} - 40{,}5\text{ V}}{10\text{ k}\Omega + 2\text{ k}\Omega} = \frac{9\text{ V}}{12\text{ k}\Omega} = 0{,}75\text{ mA} \\
+        V_D &= V_C - I_3 R_3 = 49{,}5\text{ V} - 0{,}75\text{ mA} \times 10\text{ k}\Omega = 42\text{ V}
         \end{align*}
 \end{enumerate}
 
-\noindent\textbf{Tổng hợp kết quả:}
-\begin{itemize}[leftmargin=2em]
-  \item $R_{AF} = 5\text{ k}\Omega$
-  \item $V_A = 90\text{ V}, \quad V_B = 54\text{ V}, \quad V_C = 49{,}5\text{ V}, \quad V_D = 42\text{ V}, \quad V_E = 40{,}5\text{ V}$
-\end{itemize}
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item $R_{AF} = 5\text{ k}\Omega$
+    \item $V_A = 90\text{ V}, \quad V_B = 54\text{ V}, \quad V_C = 49{,}5\text{ V}, \quad V_D = 42\text{ V}, \quad V_E = 40{,}5\text{ V}$
+  \end{itemize}
+\end{dapsobox}
 
-\subsection{Simulation}
+\subsection{Mô phỏng}
 \simresult
-\simfig{ex3_sim}{PSpice simulation result of Exercise 3}
+\simfig{ex3_sim}{Kết quả mô phỏng PSpice của Bài tập 3}

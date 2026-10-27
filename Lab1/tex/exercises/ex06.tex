@@ -1,11 +1,11 @@
-\section{Exercise 6}
+\section{Bài tập 6}
 
-Given the following circuit. Apply the knowledge you've learned to transform it into another form in which you can find total equivalent resistance $R_{ab}$ more easily. Next, find the value of the current $i$ through the circuit and perform a simulation to check it out.
+Cho mạch điện như hình bên dưới. Hãy vận dụng kiến thức đã học để biến đổi mạch sang một dạng khác mà ở đó có thể tìm điện trở tương đương toàn mạch $R_{ab}$ dễ dàng hơn. Tiếp theo, tìm giá trị dòng điện $i$ chạy qua mạch và thực hiện mô phỏng để kiểm tra lại.
 
-\given{ex6_given}{0.55\textwidth}{Transform the circuit, then find the equivalent resistance $R_{ab}$ and the current $i$}
+\given{ex6_given}{0.55\textwidth}{Biến đổi mạch, sau đó tìm điện trở tương đương $R_{ab}$ và dòng điện $i$}
 
-\subsection{Circuit transformation}
-\drawfig{ex6_transform}{Transformed circuit}
+\subsection{Biến đổi mạch điện}
+\drawfig{ex6_transform}{Mạch điện sau khi biến đổi $\Delta \to Y$}
 \noindent Cấu trúc cầu gồm 5 điện trở $24\,\Omega, 10\,\Omega, 20\,\Omega, 30\,\Omega, 50\,\Omega$ không cân bằng ($24 \times 50 \neq 10 \times 30$). Đặt tên các nút $T$ (trên), $M$ (giữa trái), $P$ (giữa phải) và $b$ (dưới). Biến đổi tam giác ($\Delta$) $T$-$M$-$P$ gồm $R_{TM} = 24\,\Omega, R_{TP} = 10\,\Omega, R_{MP} = 20\,\Omega$ thành hình sao (Y) với tâm sao $N$:
 \[
 \Sigma_\Delta = R_{TM} + R_{TP} + R_{MP} = 24 + 10 + 20 = 54\,\Omega
@@ -16,8 +16,7 @@ R_2 &= \frac{R_{TM} \cdot R_{MP}}{\Sigma_\Delta} = \frac{24 \times 20}{54} = \fr
 R_3 &= \frac{R_{TP} \cdot R_{MP}}{\Sigma_\Delta} = \frac{10 \times 20}{54} = \frac{100}{27}\,\Omega \approx 3{,}704\,\Omega \quad (\text{nối vào nút } P)
 \end{align*}
 
-\subsection{Calculation}
-\notes
+\subsection{Tính toán}
 \begin{enumerate}[leftmargin=2em]
   \item \textbf{Gộp nối tiếp hai nhánh từ $N$ xuống $b$:}
         \begin{align*}
@@ -38,12 +37,13 @@ R_3 &= \frac{R_{TP} \cdot R_{MP}}{\Sigma_\Delta} = \frac{10 \times 20}{54} = \fr
         \]
 \end{enumerate}
 
-\noindent\textbf{Tổng hợp kết quả:}
-\begin{itemize}[leftmargin=2em]
-  \item $R_{ab} = 40\,\Omega$
-  \item $i = 2{,}5\text{ A}$
-\end{itemize}
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item $R_{ab} = 40\,\Omega$
+    \item $i = 2{,}5\text{ A}$
+  \end{itemize}
+\end{dapsobox}
 
-\subsection{Simulation}
+\subsection{Mô phỏng}
 \simresult
-\simfig{ex6_sim}{PSpice simulation result of Exercise 6}
+\simfig{ex6_sim}{Kết quả mô phỏng PSpice của Bài tập 6}

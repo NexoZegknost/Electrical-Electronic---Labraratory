@@ -1,11 +1,10 @@
-\section{Exercise 5}
+\section{Bài tập 5}
 
-Given the network as shown below:
+Cho mạch điện như hình bên dưới. Hãy chọn điện trở $R$ từ danh sách các giá trị điện trở chuẩn và thực hiện các yêu cầu sau:
 
-\given{ex5_given}{0.45\textwidth}{Select resistor $R$ from the standard resistors list and do the following requirements}
+\given{ex5_given}{0.45\textwidth}{Chọn điện trở $R$ từ danh sách giá trị chuẩn và tính toán theo yêu cầu}
 
-\subsection{Calculation}
-\notes
+\subsection{Tính toán}
 \begin{enumerate}[label=\alph*.]
   \item \textbf{Tìm giá trị cần thiết của điện trở $R$:} \\
         Điện trở $R$ và $3{,}9\text{ k}\Omega$ mắc nối tiếp nên có cùng dòng điện:
@@ -44,6 +43,16 @@ Given the network as shown below:
         Áp dụng hệ số an toàn $\ge 2$ ($P_{\text{định mức}} \ge 2 \times 24{,}2\text{ mW} = 48{,}4\text{ mW}$), chọn điện trở có công suất định mức chuẩn là $1/8\text{ W}$ ($125\text{ mW}$) hoặc $1/4\text{ W}$ ($250\text{ mW}$).
 \end{enumerate}
 
-\subsection{Simulation}
+\begin{dapsobox}
+  \begin{enumerate}[label=\alph*.,leftmargin=1.5em]
+    \item $R = 14{,}82\text{ k}\Omega$
+    \item Chọn điện trở chuẩn $R = 15\text{ k}\Omega$ (dãy E12, dung sai 10\%)
+    \item $V_1 \approx 4{,}952\text{ V}$
+    \item Sai số phần trăm: $\delta \approx 0{,}95\%$
+    \item $P_R \approx 24{,}2\text{ mW} \implies$ chọn công suất định mức $1/8\text{ W}$ ($125\text{ mW}$) hoặc $1/4\text{ W}$ ($250\text{ mW}$)
+  \end{enumerate}
+\end{dapsobox}
+
+\subsection{Mô phỏng}
 \simresult
-\simfig{ex5_sim}{PSpice simulation result of Exercise 5}
+\simfig{ex5_sim}{Kết quả mô phỏng PSpice của Bài tập 5}

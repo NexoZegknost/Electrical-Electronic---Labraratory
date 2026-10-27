@@ -1,16 +1,15 @@
-\section{Exercise 1}
+\section{Bài tập 1}
 
-Given the following circuit. Calculate the value of the voltage $v_0$ and the current $i$. Then, simulate the circuit to check it out.
+Cho mạch điện như hình bên dưới. Hãy tính giá trị của điện áp $v_0$ và dòng điện $i$. Sau đó, mô phỏng mạch điện để kiểm tra lại kết quả.
 
-\given{ex1_given}{0.5\textwidth}{Find the voltage and the current in the given circuit using KVL}
+\given{ex1_given}{0.5\textwidth}{Tìm điện áp và dòng điện trong mạch đã cho bằng KVL}
 
-\subsection{Calculation}
-\notes
+\subsection{Tính toán}
 \noindent\textbf{Theo định luật Ohm trên điện trở $6\,\Omega$:} Dòng $i$ đi vào cực âm của $v_0$ (cực $+$ ở bên trái):
 \begin{equation}
 v_0 = -6i \label{eq:ex1_1}
 \end{equation}
-\noindent\textbf{Áp dụng định luật KVL} theo chiều kim đồng hồ bắt đầu từ góc dưới bên trái:
+\noindent\textbf{Áp dụng định luật Kirchhoff về điện áp (KVL)} theo chiều kim đồng hồ bắt đầu từ góc dưới bên trái:
 \begin{equation}
 -12\text{ V} + 4i + 2v_0 - 4\text{ V} + 6i = 0 \iff 10i + 2v_0 = 16 \label{eq:ex1_2}
 \end{equation}
@@ -19,15 +18,14 @@ v_0 = -6i \label{eq:ex1_1}
 10i + 2(-6i) = 16 &\implies -2i = 16 \implies i = -8\text{ A} \\
 &\implies v_0 = -6 \cdot (-8\text{ A}) = 48\text{ V}
 \end{align*}
-\noindent\textbf{Kết luận:}
-\begin{itemize}[leftmargin=2em]
-  \item $v_0 = 48\text{ V}$
-  \item $i = -8\text{ A}$ \quad (dòng điện thực tế có độ lớn $8\text{ A}$ chạy ngược chiều kim đồng hồ)
-\end{itemize}
 
-\subsection{Simulation}
-\noindent\textbf{\textit{Tips:}}\\
-To get the Voltage Controlled Voltage Source (VCVS) from the PSpice, under the \textbf{\textit{Place}} menu, find \textbf{\textit{PSpice Component $>$ Source $>$ Controlled Sources $>$ VCVS}}.
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item $v_0 = 48\text{ V}$
+    \item $i = -8\text{ A}$ \quad (dòng điện thực tế có độ lớn $8\text{ A}$ chạy ngược chiều kim đồng hồ)
+  \end{itemize}
+\end{dapsobox}
 
+\subsection{Mô phỏng}
 \simresult
-\simfig{ex1_sim}{PSpice simulation result of Exercise 1}
+\simfig{ex1_sim}{Kết quả mô phỏng PSpice của Bài tập 1}

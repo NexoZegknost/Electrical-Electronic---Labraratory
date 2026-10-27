@@ -1,11 +1,10 @@
-\section{Exercise 9}
+\section{Bài tập 9}
 
-Given the following circuit. Find the voltage $v$ and the current $i_x$. According to the result, determine the elements whose absorbing power are respectively $p_1$ and $p_2$ are active or passive (calculations are required). Note that here we use the passive sign convention. If an element consumes power, use a pure resistor with an appropriate value as a representative. If it is a power supply element, use a corresponding ideal DC voltage source to represent it. Perform a simulation to check how the circuit works.
+Cho mạch điện như hình bên dưới. Hãy tìm điện áp $v$ và dòng điện $i_x$. Dựa vào kết quả tìm được, xác định các phần tử có công suất hấp thụ lần lượt là $p_1$ và $p_2$ là phần tử tích cực hay thụ động (yêu cầu có tính toán). Lưu ý: ở đây sử dụng quy ước dấu thụ động. Nếu phần tử tiêu thụ công suất, dùng một điện trở thuần có giá trị phù hợp để đại diện. Nếu là phần tử cung cấp công suất, dùng một nguồn áp DC lý tưởng tương ứng để đại diện. Thực hiện mô phỏng để kiểm tra hoạt động của mạch.
 
-\given{ex9_given}{0.55\textwidth}{Find the unknown elements and variables, then check them out by simulation}
+\given{ex9_given}{0.55\textwidth}{Tìm các phần tử chưa biết và các biến, sau đó kiểm tra bằng mô phỏng}
 
-\subsection{Calculation}
-\notes
+\subsection{Tính toán}
 \noindent\textbf{Điện áp các nút với nút mốc $D$ ($V_D = 0\text{ V}$):}
 \begin{align*}
 V_A &= 10\text{ V}, \quad V_B = 4\text{ V} \\
@@ -42,9 +41,6 @@ I_{AB} &= \frac{v}{12\,\Omega} = \frac{6\text{ V}}{12\,\Omega} = 0{,}5\text{ A} 
   \item $p_2 = 72\text{ W}$ (Thụ động)
 \end{itemize}
 
-\subsection{Simulation}
-\noindent\textbf{\textit{Tips:}}\\
-To get the Current Controlled Voltage Source (CCVS) from the PSpice, under the \textbf{\textit{Place}} menu, find \textbf{\textit{PSpice Component $>$ Source $>$ Controlled Sources $>$ CCVS}}.
-
+\subsection{Mô phỏng}
 \simresult
-\simfig{ex9_sim}{PSpice simulation result of Exercise 9}
+\simfig{ex9_sim}{Kết quả mô phỏng PSpice của Bài tập 9}
