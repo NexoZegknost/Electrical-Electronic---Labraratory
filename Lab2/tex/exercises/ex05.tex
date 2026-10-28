@@ -55,24 +55,25 @@ Do $V_{AK,D3} < 0$, diode $D_3$ bị phân cực ngược hoàn toàn và khóa 
   \end{itemize}
 \end{dapsobox}
 
+\Needspace{0.66\textheight}
 \subsection{Mô phỏng PSpice}
-\begin{itemize}[leftmargin=1.5em]
-  \item Dùng hồ sơ \textbf{Bias Point} với cả hai nguồn $V_2 = 9\text{ V}$ và $V_3 = 5\text{ V}$ cùng hoạt động, bật hiển thị điện áp và dòng điện, chụp màn hình.
-\end{itemize}
-
 \simresult
-\simfig{ex5_sim1}{Kết quả mô phỏng Bias Point của Bài tập 5 (kết nối cả hai nguồn)}
+\simfigs{ex5_sim1}{Kết quả mô phỏng Bias Point của Bài tập 5 (kết nối cả hai nguồn)}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
   \centering
   \caption{So sánh kết quả lý thuyết và mô phỏng PSpice khi cả hai nguồn $5\text{ V}$ và $9\text{ V}$ cùng kết nối}
-  \begin{tabular}{lcccc}
+  \small
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{lcccccccc}
     \toprule
-    \textbf{Phương pháp} & $I_{D1}\text{ (mA)}$ & $I_{D2}\text{ (mA)}$ & $I_{RL}\text{ (mA)}$ & $V_{RL}\text{ (V)}$ \\
+    & \multicolumn{4}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{4}{c}{\textbf{Mô phỏng (PSpice)}} \\
+    \cmidrule(lr){2-5}\cmidrule(lr){6-9}
+    \textbf{Điều kiện} & $I_{D1}$ & $I_{D2}$ & $I_{RL}$ & $V_{RL}$ & $I_{D1}$ & $I_{D2}$ & $I_{RL}$ & $V_{RL}$ \\
+    & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize V} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize V} \\
     \midrule
-    Lý thuyết (Theory) & $0$ & $8.300$ & $8.300$ & $8.300$ \\
-    Mô phỏng (PSpice)  & $\approx 0$ & $8.289$ & $8.289$ & $8.289$ \\
+    Hai nguồn cùng nối & 0 & 8.300 & 8.300 & 8.300 & $\approx 0$ & 8.289 & 8.289 & 8.289 \\
     \bottomrule
   \end{tabular}
 \end{table}

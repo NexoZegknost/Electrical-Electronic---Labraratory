@@ -54,14 +54,12 @@ Trong mô hình diode hoàn chỉnh, khi diode phân cực thuận, diode đư�
   \end{itemize}
 \end{dapsobox}
 
+\Needspace{0.66\textheight}
 \subsection{Mô phỏng PSpice}
-\begin{itemize}[leftmargin=1.5em]
-  \item Tạo hồ sơ mô phỏng \textbf{Bias Point}, bật \textit{Enable Bias Voltage Display} và \textit{Enable Bias Current Display} để hiển thị điện áp, dòng điện trên sơ đồ.
-  \item Để khớp mô hình diode hoàn chỉnh của đề, tạo model riêng \texttt{D50} bằng dòng lệnh \texttt{.model D50 D(Rs=50)} (điện trở nội $R_s = 50\,\Omega$, các tham số khác giữ mặc định của \texttt{Dbreak}: $I_S = 10^{-14}\text{ A}$, $n = 1$) và gán cho diode $D_1$. Chạy lần lượt với $R_1 = 220\,\Omega$ và $R_1 = 1.5\text{ k}\Omega$, chụp màn hình từng trường hợp.
-\end{itemize}
+\noindent Để khớp mô hình diode hoàn chỉnh của đề, diode $D_1$ dùng model \texttt{D50} tạo bằng lệnh \texttt{.model D50 D(Rs=50)} (điện trở nội $R_s = 50\,\Omega$, các tham số còn lại giữ mặc định của \texttt{Dbreak}).
 \simresult
-\simfig{ex1_sim1}{Kết quả mô phỏng Bias Point của Bài tập 1 với $R_1 = 220\,\Omega$}
-\simfig{ex1_sim2}{Kết quả mô phỏng Bias Point của Bài tập 1 với $R_1 = 1.5\text{ k}\Omega$}
+\simfigs{ex1_sim1}{Kết quả mô phỏng Bias Point của Bài tập 1 với $R_1 = 220\,\Omega$}
+\simfigs{ex1_sim2}{Kết quả mô phỏng Bias Point của Bài tập 1 với $R_1 = 1.5\text{ k}\Omega$}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]

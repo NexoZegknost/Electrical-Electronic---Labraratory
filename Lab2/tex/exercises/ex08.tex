@@ -81,34 +81,27 @@ Khi chưa có diode Zener (hoặc khi Zener chưa đánh thủng), điện áp t
   \end{itemize}
 \end{dapsobox}
 
+\Needspace{0.66\textheight}
 \subsection{Mô phỏng PSpice}
-\begin{itemize}[leftmargin=1.5em]
-  \item Lấy linh kiện \texttt{Zener\_P} từ danh sách thư viện (kiểm tra thuộc tính \texttt{ZENER\_VOLTAGE} = 5V).
-  \item Mắc mạch gồm nguồn $V_{CC}$, $R_S = 200\,\Omega$, $R_L = 1.5\text{ k}\Omega$ và Zener \texttt{D1} mắc song song với tải, cathode nối lên nút ngõ ra, anode nối xuống đất.
-  \item Thiết lập cấu hình mô phỏng \textbf{Bias Point} lần lượt cho $V_{CC} = 8\text{ V}$ và $V_{CC} = 12\text{ V}$.
-  \item Bật hiển thị điện áp và dòng điện trên sơ đồ (\texttt{Voltage/Current Display}), đọc $I_S$, $I_L$, $I_Z$, $V_L$; công suất $P_{RS}$, $P_Z$ được tính từ các giá trị đọc được.
-\end{itemize}
-
 \simresult
-\simfig{ex8_sim1}{Kết quả mô phỏng Bias Point của Bài tập 8 với $V_{CC} = 8\text{ V}$}
-\simfig{ex8_sim2}{Kết quả mô phỏng Bias Point của Bài tập 8 với $V_{CC} = 12\text{ V}$}
+\simfigs{ex8_sim1}{Kết quả mô phỏng Bias Point của Bài tập 8 với $V_{CC} = 8\text{ V}$}
+\simfigs{ex8_sim2}{Kết quả mô phỏng Bias Point của Bài tập 8 với $V_{CC} = 12\text{ V}$}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
   \centering
   \caption{So sánh kết quả giữa Lý thuyết và Mô phỏng PSpice cho Bài tập 8}
-  \begin{tabular}{lccccc}
+  \small
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{lcccccccccccc}
     \toprule
-    \textbf{Đại lượng} & \multicolumn{2}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{2}{c}{\textbf{Mô phỏng (PSpice)}} & \textbf{Đơn vị} \\
-    \cmidrule(lr){2-3} \cmidrule(lr){4-5}
-    & $V_{CC} = 8\text{ V}$ & $V_{CC} = 12\text{ V}$ & $V_{CC} = 8\text{ V}$ & $V_{CC} = 12\text{ V}$ & \\
+    & \multicolumn{6}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{6}{c}{\textbf{Mô phỏng (PSpice)}} \\
+    \cmidrule(lr){2-7}\cmidrule(lr){8-13}
+    \textbf{Nguồn} & $I_S$ & $I_L$ & $I_Z$ & $V_L$ & $P_{RS}$ & $P_Z$ & $I_S$ & $I_L$ & $I_Z$ & $V_L$ & $P_{RS}$ & $P_Z$ \\
+    & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize V} & {\scriptsize mW} & {\scriptsize mW} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize V} & {\scriptsize mW} & {\scriptsize mW} \\
     \midrule
-    $I_S$     & $15.000$ & $35.000$ & $15.04$ & $34.96$ & mA \\
-    $I_L$     & $3.333$  & $3.333$  & $3.329$ & $3.339$ & mA \\
-    $I_Z$     & $11.667$ & $31.667$ & $11.71$ & $31.62$ & mA \\
-    $V_L$     & $5.000$  & $5.000$  & $4.993$ & $5.009$ & V  \\
-    $P_{RS}$  & $45.000$ & $245.000$& $45.24$ & $244.44$ & mW \\
-    $P_Z$     & $58.333$ & $158.333$& $58.47$ & $158.38$ & mW \\
+    $V_{CC} = 8\text{ V}$ & 15.000 & 3.333 & 11.667 & 5.000 & 45.000 & 58.333 & 15.04 & 3.329 & 11.71 & 4.993 & 45.24 & 58.47 \\
+    $V_{CC} = 12\text{ V}$ & 35.000 & 3.333 & 31.667 & 5.000 & 245.000 & 158.333 & 34.96 & 3.339 & 31.62 & 5.009 & 244.44 & 158.38 \\
     \bottomrule
   \end{tabular}
   \par\smallskip
@@ -117,15 +110,8 @@ Khi chưa có diode Zener (hoặc khi Zener chưa đánh thủng), điện áp t
 
 \noindent\textbf{Đánh giá khả năng ổn áp:}
 \begin{itemize}[leftmargin=1.5em]
-  \item Khi điện áp nguồn $V_{CC}$ biến thiên mạnh tới $50\%$ (từ $8\text{ V}$ lên $12\text{ V}$), điện áp trên tải $V_L$ và dòng tải $I_L$ vẫn được giữ ổn định ở mức $5\text{ V}$ và $3.33\text{ mA}$.
-  \item Lượng năng lượng dư thừa do điện áp nguồn tăng được hấp thụ bởi điện trở nối tiếp $R_S$ và diode Zener ($I_Z$ tăng hơn 2.7 lần, từ $11.67\text{ mA} \to 31.67\text{ mA}$).
-  \item Mạch có nhược điểm là hiệu suất không cao khi nguồn vào lớn do năng lượng bị tiêu tán thành nhiệt trên $R_S$ và diode Zener.
+  \item Kết quả mô phỏng khớp với tính toán lý thuyết ở cả hai trường hợp, sai lệch dưới $1\%$ đối với dòng và công suất.
+  \item Khi điện áp nguồn $V_{CC}$ tăng $50\%$ (từ $8\text{ V}$ lên $12\text{ V}$), điện áp trên tải $V_L$ vẫn giữ ở $4.993\text{ V}$ và $5.009\text{ V}$, dòng tải $I_L \approx 3.33\text{ mA}$ không đổi.
+  \item Phần dòng tăng thêm khi nguồn tăng đi qua $R_S$ và Zener ($I_Z$ tăng hơn $2.7$ lần, từ $11.71\text{ mA}$ lên $31.62\text{ mA}$).
 \end{itemize}
 
-\begin{notebox}{Nhận xét về kết quả mô phỏng}
-  \begin{itemize}[leftmargin=1.5em]
-    \item Kết quả mô phỏng PSpice khớp tốt với tính toán lý thuyết ở cả hai trường hợp $V_{CC} = 8\text{ V}$ và $12\text{ V}$; các đại lượng chỉ chênh lệch nhỏ (dưới $1\%$ đối với dòng và công suất).
-    \item Điện áp trên tải $V_L$ gần như không đổi ($4.993\text{ V}$ và $5.009\text{ V}$) dù $V_{CC}$ tăng $50\%$, chứng tỏ Zener hoạt động đúng chế độ ổn áp.
-    \item Phần dòng tăng thêm khi $V_{CC}$ tăng đi qua $R_S$ và Zener ($I_Z$ tăng từ $11.71\text{ mA}$ lên $31.62\text{ mA}$), còn dòng tải $I_L \approx 3.33\text{ mA}$ không đổi.
-  \end{itemize}
-\end{notebox}

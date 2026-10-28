@@ -54,23 +54,12 @@ Biểu thức điện áp nguồn tức thời:
 \end{dapsobox}
 
 \subsection{Mô phỏng PSpice}
-\begin{itemize}[leftmargin=1.5em]
-  \item Đặt linh kiện nguồn \texttt{VSIN}, diode \texttt{Dbreak}, điện trở $R_1 = 1\text{ k}\Omega$ và mass \texttt{0}.
-  \item Đặt đầu dò điện áp (\textbf{Voltage Marker}) tại đầu trên của điện trở $R_1$.
-  \item Tạo hồ sơ mô phỏng mới với \textbf{Analysis Type}: \texttt{Time Domain (Transient)}.
-  \item Cài đặt thời gian mô phỏng:
-    \begin{itemize}
-      \item \textbf{Run to time}: $100\text{ ms}$ (tương ứng với 5 chu kỳ của tín hiệu $50\text{ Hz}$).
-      \item \textbf{Maximum step size}: $0.1\text{ ms}$ (để dạng sóng hiển thị mịn và chính xác).
-    \end{itemize}
-  \item Chạy mô phỏng (nhấn F11) và sử dụng công cụ \textbf{Toggle Cursor} trên cửa sổ Probe để đọc tọa độ điểm cực đại, điểm cực tiểu và khoảng thời gian một chu kỳ.
-\end{itemize}
+\noindent Mô phỏng Transient với \textbf{Run to time} $= 100\text{ ms}$ (5 chu kỳ của tín hiệu $50\text{ Hz}$) và \textbf{Maximum step size} $= 0.1\text{ ms}$.
 
 \simresult
-\noindent Các giá trị cực đại, cực tiểu và chu kỳ được đọc bằng công cụ \textbf{Toggle Cursor} trên cửa sổ Probe (cửa sổ \textit{Probe Cursor}).
 \simfig[8cm]{ex6_sim1}{Dạng sóng điện áp ngõ ra $V_{R1}$ trong miền thời gian; con trỏ 1 đặt tại đoạn phẳng ($t = 15\text{ ms}$, $V = -22\text{ nV} \approx 0$) và con trỏ 2 đặt tại đỉnh ($t = 25\text{ ms}$, $V = 21.261\text{ V}$)}
 
-\noindent Từ dạng sóng và các con trỏ ở trên, các giá trị của $V_{R1}$ đọc được từ mô phỏng như sau:
+\noindent Các giá trị của $V_{R1}$ đọc bằng công cụ \textbf{Toggle Cursor}:
 \begin{dapsobox}[title=Kết quả mô phỏng]
   \begin{itemize}[leftmargin=1.5em]
     \item Giá trị nhỏ nhất của $V_{R1}$ (\textit{Minimum Value of $V_{R1}$}) $\approx 0\text{ V}$ (con trỏ 1 tại $t = 15\text{ ms}$ đọc được $-22\text{ nV}$).
@@ -85,7 +74,7 @@ Biểu thức điện áp nguồn tức thời:
   \caption{So sánh thông số dạng sóng ngõ ra giữa Lý thuyết và Mô phỏng PSpice}
   \begin{tabular}{lccc}
     \toprule
-    \textbf{Phương pháp} & \textbf{Giá trị nhỏ nhất $V_{\min}$ (V)} & \textbf{Giá trị lớn nhất $V_{\max}$ (V)} & \textbf{Chu kỳ $T$ (ms)} \\
+    \textbf{Phương pháp} & $V_{\min}\text{ (V)}$ & $V_{\max}\text{ (V)}$ & $T\text{ (ms)}$ \\
     \midrule
     Lý thuyết (Theory) & $0.00$  & $21.22$ & $20.0$ \\
     Mô phỏng (PSpice)  & $\approx 0$ & $21.261$ & $20.0$ \\

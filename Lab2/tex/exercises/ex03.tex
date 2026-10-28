@@ -85,30 +85,27 @@ Với cả hai giá trị nguồn $V = 8\text{ V}$ ($0.2 \times 8 = 1.6\text{ V}
   \end{itemize}
 \end{dapsobox}
 
+\Needspace{0.66\textheight}
 \subsection{Mô phỏng PSpice}
-\begin{itemize}[leftmargin=1.5em]
-  \item Dùng hồ sơ \textbf{Bias Point}; lần lượt đặt $V = 8\text{ V}$ và $V = 12\text{ V}$, chụp màn hình có hiển thị dòng qua các điện trở và điện thế các nút $V_1$, $V_2$.
-\end{itemize}
 \simresult
-\simfig{ex3_sim1}{Kết quả mô phỏng Bias Point của Bài tập 3 với $V = 8\text{ V}$}
-\simfig{ex3_sim2}{Kết quả mô phỏng Bias Point của Bài tập 3 với $V = 12\text{ V}$}
+\simfigs{ex3_sim1}{Kết quả mô phỏng Bias Point của Bài tập 3 với $V = 8\text{ V}$}
+\simfigs{ex3_sim2}{Kết quả mô phỏng Bias Point của Bài tập 3 với $V = 12\text{ V}$}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
-	\centering
-	\caption{So sánh kết quả tính toán lý thuyết và mô phỏng PSpice cho Bài tập 3}
-	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccc}
-		\toprule
-		\textbf{Đại lượng} & \multicolumn{2}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{2}{c}{\textbf{Mô phỏng (PSpice)}} \\
-		\cmidrule(lr){2-3} \cmidrule(lr){4-5}
-		& $V = 8\text{ V}$ & $V = 12\text{ V}$ & $V = 8\text{ V}$ & $V = 12\text{ V}$ \\
-		\midrule
-		$I_{R1}\text{ (mA)}$ & $0.980$ & $1.540$ & $0.996$ & $1.553$ \\
-		$I_{R2}\text{ (mA)}$ & $0.755$ & $1.115$ & $0.751$ & $1.112$ \\
-		$I_{R3}\text{ (mA)}$ & $0.665$ & $0.945$ & $0.653$ & $0.935$ \\
-		$I_{R4}\text{ (mA)}$ & $0.890$ & $1.370$ & $0.898$ & $1.377$ \\
-		$V_1\text{ (V)}$     & $6.040$ & $8.920$ & $6.008$ & $8.894$ \\
-		$V_2\text{ (V)}$     & $5.340$ & $8.220$ & $5.389$ & $8.260$ \\
-		\bottomrule
-	\end{tabular*}
+  \centering
+  \caption{So sánh kết quả tính toán lý thuyết và mô phỏng PSpice cho Bài tập 3}
+  \small
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{lcccccccccccc}
+    \toprule
+    & \multicolumn{6}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{6}{c}{\textbf{Mô phỏng (PSpice)}} \\
+    \cmidrule(lr){2-7}\cmidrule(lr){8-13}
+    \textbf{Nguồn} & $I_{R1}$ & $I_{R2}$ & $I_{R3}$ & $I_{R4}$ & $V_1$ & $V_2$ & $I_{R1}$ & $I_{R2}$ & $I_{R3}$ & $I_{R4}$ & $V_1$ & $V_2$ \\
+    & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize V} & {\scriptsize V} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize V} & {\scriptsize V} \\
+    \midrule
+    $V = 8\text{ V}$ & 0.980 & 0.755 & 0.665 & 0.890 & 6.040 & 5.340 & 0.996 & 0.751 & 0.653 & 0.898 & 6.008 & 5.389 \\
+    $V = 12\text{ V}$ & 1.540 & 1.115 & 0.945 & 1.370 & 8.920 & 8.220 & 1.553 & 1.112 & 0.935 & 1.377 & 8.894 & 8.260 \\
+    \bottomrule
+  \end{tabular}
 \end{table}

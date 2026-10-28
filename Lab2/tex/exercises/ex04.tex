@@ -64,28 +64,27 @@ Khi cấp nguồn dương $V$, dòng điện chạy từ cực dương nguồn q
   \end{itemize}
 \end{dapsobox}
 
+\Needspace{0.66\textheight}
 \subsection{Mô phỏng PSpice}
-\begin{itemize}[leftmargin=1.5em]
-  \item Dùng hồ sơ \textbf{Bias Point}; lần lượt đặt $V = 12\text{ V}$ và $V = 20\text{ V}$, bật hiển thị điện áp và dòng điện, chụp màn hình từng trường hợp.
-\end{itemize}
 \simresult
-\simfig{ex4_sim1}{Kết quả mô phỏng Bias Point của Bài tập 4 với $V = 12\text{ V}$}
-\simfig{ex4_sim2}{Kết quả mô phỏng Bias Point của Bài tập 4 với $V = 20\text{ V}$}
+\simfigs{ex4_sim1}{Kết quả mô phỏng Bias Point của Bài tập 4 với $V = 12\text{ V}$}
+\simfigs{ex4_sim2}{Kết quả mô phỏng Bias Point của Bài tập 4 với $V = 20\text{ V}$}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
   \centering
   \caption{So sánh kết quả tính toán lý thuyết và mô phỏng PSpice cho Bài tập 4}
-  \begin{tabular}{lcccc}
+  \small
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{lcccccccc}
     \toprule
-    \textbf{Đại lượng} & \multicolumn{2}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{2}{c}{\textbf{Mô phỏng (PSpice)}} \\
-    \cmidrule(lr){2-3} \cmidrule(lr){4-5}
-    & $V = 12\text{ V}$ & $V = 20\text{ V}$ & $V = 12\text{ V}$ & $V = 20\text{ V}$ \\
+    & \multicolumn{4}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{4}{c}{\textbf{Mô phỏng (PSpice)}} \\
+    \cmidrule(lr){2-5}\cmidrule(lr){6-9}
+    \textbf{Nguồn} & $I_{R1}$ & $I_{R2}$ & $I_{D2}$ & $V_{R2}$ & $I_{R1}$ & $I_{R2}$ & $I_{D2}$ & $V_{R2}$ \\
+    & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize V} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize mA} & {\scriptsize V} \\
     \midrule
-    $I_{R1}\text{ (mA)}$ & $1.893$ & $3.321$ & $1.903$ & $3.327$ \\
-    $I_{R2}\text{ (mA)}$ & $0.212$ & $0.212$ & $0.203$ & $0.208$ \\
-    $I_{D2}\text{ (mA)}$ & $1.681$ & $3.109$ & $1.701$ & $3.119$ \\
-    $V_{R2}\text{ (V)}$  & $0.700$ & $0.700$ & $0.669$ & $0.684$ \\
+    $V = 12\text{ V}$ & 1.893 & 0.212 & 1.681 & 0.700 & 1.903 & 0.203 & 1.701 & 0.669 \\
+    $V = 20\text{ V}$ & 3.321 & 0.212 & 3.109 & 0.700 & 3.327 & 0.208 & 3.119 & 0.684 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -94,7 +93,6 @@ Khi cấp nguồn dương $V$, dòng điện chạy từ cực dương nguồn q
 \begin{itemize}[leftmargin=1.5em,itemsep=2pt,topsep=0pt]
   \item Kết quả mô phỏng khớp tốt với lý thuyết: $I_{R1}$ và $I_{D2}$ chênh dưới $1.5\%$; $I_{R2}$ và $V_{R2}$ thấp hơn lý thuyết khoảng $2\%$ đến $4\%$ do diode mô phỏng sụt áp thuận $0.67\text{ V}$ đến $0.68\text{ V}$ thay vì $0.7\text{ V}$.
   \item Khi nguồn tăng từ $12\text{ V}$ lên $20\text{ V}$, điện áp trên tải $V_{R2}$ gần như không đổi ($0.669\text{ V}$ lên $0.684\text{ V}$) vì bị $D_2$ ghim, nên dòng tải $I_{R2}$ cũng gần như không đổi ($\approx 0.2\text{ mA}$).
-  \item Phần điện áp tăng thêm rơi trên $R_1$ làm $I_{R1}$ tăng ($1.903\text{ mA}$ lên $3.327\text{ mA}$); dòng tăng thêm đó đi qua $D_2$ nên $I_{D2}$ tăng ($1.701\text{ mA}$ lên $3.119\text{ mA}$).
-  \item Mạch hoạt động như mạch ghim điện áp: giữ điện áp trên nhánh tải ở mức cố định bất kể nguồn thay đổi.
+  \item Phần điện áp tăng thêm rơi trên $R_1$ và đi qua $D_2$: $I_{R1}$ tăng từ $1.903\text{ mA}$ lên $3.327\text{ mA}$, $I_{D2}$ tăng từ $1.701\text{ mA}$ lên $3.119\text{ mA}$.
 \end{itemize}
 \end{notebox}

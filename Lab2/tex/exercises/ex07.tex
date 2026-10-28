@@ -52,7 +52,7 @@ Tổng sụt áp trên hai diode dẫn là:
 \end{dapsobox}
 
 \subsection{Cấu hình và Mô phỏng PSpice}
-\subsubsection*{1. Tính toán thông số mô phỏng:}
+\subsubsection*{Tính toán thông số mô phỏng:}
 \begin{itemize}[leftmargin=1.5em]
   \item Chu kỳ của dạng sóng xoay chiều $V_{AB}$:
   \begin{equation}
@@ -68,12 +68,7 @@ Tổng sụt áp trên hai diode dẫn là:
   \end{equation}
 \end{itemize}
 
-\subsubsection*{2. Tiến hành mô phỏng:}
-\begin{itemize}[leftmargin=1.5em]
-  \item Đặt biến áp: vào \texttt{Place > PSpice Component > Modeling Application... > System Modules > Transformer}, thiết lập tỷ số biến áp $10:1$.
-  \item Đặt đầu dò vi sai (\textbf{Voltage Differential Marker}): cặp que đo vi sai thứ nhất tại hai đầu A và B của cuộn thứ cấp; cặp que đo vi sai thứ hai tại hai đầu C và D của điện trở tải $R_1$.
-  \item Chạy mô phỏng Transient với \textit{Run to time} = $100\text{ ms}$ (tương ứng 5 chu kỳ của $V_{AB}$) và \textit{Maximum step size} = $0.1\text{ ms}$.
-\end{itemize}
+\noindent Mô phỏng Transient với \textit{Run to time} $= 100\text{ ms}$ (5 chu kỳ của $V_{AB}$) và \textit{Maximum step size} $= 0.1\text{ ms}$; $V_{AB}$ và $V_{CD}$ được đo bằng hai \textbf{Voltage Differential Marker} đặt tại A, B và C, D.
 
 \simresult
 \simfig[8cm]{ex7_sim1}{Đồ thị so sánh dạng sóng ngõ vào $V_{AB}$ và ngõ ra $V_{CD}$ trên cùng một cửa sổ (con trỏ 1 tại $t = 5\text{ ms}$, con trỏ 2 tại $t = 15\text{ ms}$)}

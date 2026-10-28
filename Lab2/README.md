@@ -1,4 +1,4 @@
-# Chapter 2 - Diode Circuits Analysis (CO2103)
+# Chapter 2 - Diode Circuits Analysis (CO2104)
 
 ```
 Lab2/
