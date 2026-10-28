@@ -1,0 +1,72 @@
+\section{Bài tập 2: Các Diode mắc nối tiếp (Diode in a Series)}
+
+Cho mạch điện như hình bên dưới gồm nguồn điện áp $V_1 = 10\text{ Vdc}$, ba diode $D_1, D_2, D_3$ mắc nối tiếp và điện trở tải $R_1 = 1\text{ k}\Omega$. Xác định giá trị điện áp trên các diode $V_{D1}, V_{D2}, V_{D3}$, điện áp trên điện trở $V_{R1}$ và dòng điện $I$ trong mạch. Sau đó, tiến hành mô phỏng PSpice để kiểm tra lại kết quả.
+
+Trong bài tập này, giả thiết sử dụng \textbf{mô hình diode thực tế (practical diode model)} với điện áp phân cực thuận ngưỡng là $V_F = 0.7223\text{ V}$.
+
+\given{ex2_given}{0.65\textwidth}{Mạch ba Diode mắc nối tiếp (Hình 2.15)}
+
+\subsection{Tính toán lý thuyết}
+Do cực dương nguồn $V_1 = 10\text{ Vdc}$ nối vào Anode của $D_1$ và giá trị nguồn lớn hơn tổng ngưỡng sụt áp thuận của ba diode ($10\text{ V} > 3 \times 0.7223\text{ V} = 2.1669\text{ V}$), cả ba diode $D_1, D_2, D_3$ đều được phân cực thuận và dẫn điện.
+
+\noindent Theo mô hình diode thực tế với $V_F = 0.7223\text{ V}$:
+\begin{align*}
+  V_{D1} &= 0.7223\text{ V} \\
+  V_{D2} &= 0.7223\text{ V} \\
+  V_{D3} &= 0.7223\text{ V}
+\end{align*}
+
+\noindent Áp dụng định luật KVL quanh vòng kín:
+\begin{equation}
+  V_1 - V_{D1} - V_{D2} - V_{D3} - V_{R1} = 0
+\end{equation}
+
+\noindent Điện áp rơi trên điện trở $R_1$:
+\begin{align*}
+  V_{R1} &= V_1 - (V_{D1} + V_{D2} + V_{D3}) \\
+         &= 10\text{ V} - 3 \times 0.7223\text{ V} = 10 - 2.1669 = 7.8331\text{ V}
+\end{align*}
+
+\noindent Dòng điện $I$ chạy qua mạch nối tiếp:
+\begin{equation}
+  I = \frac{V_{R1}}{R_1} = \frac{7.8331\text{ V}}{1000\,\Omega} = 7.8331 \times 10^{-3}\text{ A} = 7.8331\text{ mA}
+\end{equation}
+
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item $V_{D1} = V_{D2} = V_{D3} = 0.7223\text{ V}$
+    \item $V_{R1} = 7.8331\text{ V}$
+    \item $I = 7.8331\text{ mA}$
+  \end{itemize}
+\end{dapsobox}
+
+\subsection{Mô phỏng PSpice}
+\begin{itemize}[leftmargin=1.5em]
+  \item Vẽ sơ đồ mạch gồm nguồn $V_1 = 10\text{ Vdc}$, 3 linh kiện \texttt{Dbreak} mắc nối tiếp theo chiều thuận, điện trở $R_1 = 1\text{ k}\Omega$ và nối đất mass \texttt{0}.
+  \item Tạo Simulation Profile với kiểu phân tích \textbf{Bias Point}.
+  \item Kích hoạt chế độ hiển thị điện áp và dòng điện trên sơ đồ mạch để quan sát các giá trị $V_{D1}, V_{D2}, V_{D3}, V_{R1}$ và $I$.
+\end{itemize}
+
+\simresult
+\simfig{ex2_sim}{Kết quả mô phỏng Bias Point của Bài tập 2}
+
+\subsection{So sánh và nhận xét}
+\begin{table}[H]
+  \centering
+  \caption{So sánh kết quả tính toán lý thuyết và mô phỏng PSpice cho Bài tập 2}
+  \begin{tabular}{lccccc}
+    \toprule
+    \textbf{Phương pháp} & $V_{D1}\text{ (V)}$ & $V_{D2}\text{ (V)}$ & $V_{D3}\text{ (V)}$ & $V_{R1}\text{ (V)}$ & $I\text{ (mA)}$ \\
+    \midrule
+    Lý thuyết (Theory)  & $0.7223$ & $0.7223$ & $0.7223$ & $7.8331$ & $7.833$ \\
+    Mô phỏng (PSpice)   & -- & -- & -- & -- & -- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\textbf{Ý nghĩa và ứng dụng thực tế:}
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Tạo sụt áp ổn định:} Mỗi diode silicon khi phân cực thuận tạo ra độ sụt áp tương đối không đổi ($\approx 0.7\text{ V}$). Bằng cách mắc nối tiếp một hoặc nhiều diode, ta có thể hạ điện áp nguồn xuống một mức mong muốn với chi phí rất thấp.
+  \item \textbf{Ví dụ thực tiễn:} Các module SIM truyền thông (như SIM800L, SIM900) yêu cầu nguồn cấp tối ưu khoảng $4.3\text{ V}$. Khi hệ thống chỉ có sẵn nguồn chuẩn $5\text{ V}$ (từ cổng USB), ta có thể mắc nối tiếp một diode silicon giữa nguồn $5\text{ V}$ và module SIM. Sụt áp trên diode giúp hạ thế xuống xấp xỉ $5\text{ V} - 0.7\text{ V} = 4.3\text{ V}$, vừa đủ dải điện áp làm việc cho module SIM.
+  \item \textbf{Bảo vệ chống phân cực ngược:} Diode đồng thời hoạt động như một van một chiều, bảo vệ module SIM không bị cháy hỏng nếu người dùng vô tình cắm ngược cực nguồn.
+\end{itemize}

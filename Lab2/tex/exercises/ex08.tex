@@ -1,0 +1,120 @@
+\section{Bài tập 8: Mạch ổn áp sử dụng Diode Zener (Zener Diode as a Regulator)}
+
+Diode Zener có đặc tính điện áp đánh thủng ngược rất rõ ràng và ổn định. Khi hoạt động trong vùng phân cực ngược vượt quá điện áp đánh thủng Zener ($V_Z$), điện áp rơi trên hai đầu diode được duy trì hầu như không đổi trên một dải dòng điện rộng mà không bị phá hỏng. Đặc tính này giúp diode Zener được ứng dụng rộng rãi trong các mạch ổn định điện áp (voltage regulation).
+
+Cho mạch ổn áp sử dụng diode Zener như hình bên dưới. Mạch gồm nguồn điện áp $V_{CC}$, điện trở hạn dòng $R_S = 200\,\Omega$, diode Zener parameterized \texttt{Zener\_P} (mặc định $V_Z = 5\text{ V}$) và điện trở tải $R_L = 1.5\text{ k}\Omega$.
+
+Hãy thiết lập các công thức và tính toán các đại lượng $I_L, I_S, I_Z, V_L, P_{RS}, P_Z$ trong hai trường hợp điện áp nguồn vào:
+\begin{itemize}[leftmargin=1.5em]
+  \item Trường hợp 1: $V_{CC} = 8\text{ V}$.
+  \item Trường hợp 2: $V_{CC} = 12\text{ V}$.
+\end{itemize}
+Sau đó, tiến hành mô phỏng PSpice ở chế độ Bias Point để đối chiếu với tính toán lý thuyết.
+
+\given{ex8_given}{0.5\textwidth}{Mạch ổn áp dùng Diode Zener (Hình 2.28)}
+
+\subsection{Tính toán lý thuyết}
+Khi chưa có diode Zener (hoặc khi Zener chưa đánh thủng), điện áp trên tải theo công thức phân áp:
+\begin{equation}
+  V_{L,\text{open}} = V_{CC} \frac{R_L}{R_S + R_L} = V_{CC} \frac{1500}{200 + 1500} = \frac{15}{17} V_{CC} \approx 0.8824\,V_{CC}
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+  \item Với $V_{CC} = 8\text{ V}$: $V_{L,\text{open}} \approx 7.059\text{ V} > V_Z = 5\text{ V}$.
+  \item Với $V_{CC} = 12\text{ V}$: $V_{L,\text{open}} \approx 10.588\text{ V} > V_Z = 5\text{ V}$.
+\end{itemize}
+Ở cả hai trường hợp, điện áp đều lớn hơn $V_Z = 5\text{ V}$, do đó diode Zener luôn bị đánh thủng ngược và hoạt động ở chế độ ổn áp.
+
+\noindent Điện áp trên tải được ghim cố định ở mức điện áp Zener:
+\begin{equation}
+  V_L = V_Z = 5\text{ V}
+\end{equation}
+
+\noindent Dòng điện qua điện trở tải $R_L$:
+\begin{equation}
+  I_L = \frac{V_L}{R_L} = \frac{V_Z}{R_L} = \frac{5\text{ V}}{1500\,\Omega} \approx 3.3333\text{ mA}
+\end{equation}
+
+\noindent Dòng điện tổng từ nguồn chạy qua điện trở nối tiếp $R_S$:
+\begin{equation}
+  I_S = \frac{V_{CC} - V_L}{R_S} = \frac{V_{CC} - V_Z}{R_S} = \frac{V_{CC} - 5}{200}
+\end{equation}
+
+\noindent Áp dụng định luật KCL tại nút ngõ ra, dòng điện qua diode Zener:
+\begin{equation}
+  I_Z = I_S - I_L
+\end{equation}
+
+\noindent Công suất tiêu tán trên điện trở $R_S$:
+\begin{equation}
+  P_{RS} = I_S^2 \cdot R_S = (V_{CC} - V_Z) \cdot I_S
+\end{equation}
+
+\noindent Công suất tiêu tán trên diode Zener:
+\begin{equation}
+  P_Z = V_Z \cdot I_Z = 5 \cdot I_Z
+\end{equation}
+
+\subsubsection*{1. Khi $V_{CC} = 8\text{ V}$:}
+\begin{align*}
+  V_L &= 5.0000\text{ V} \\
+  I_L &= \frac{5}{1500} \approx 3.3333\text{ mA} \\
+  I_S &= \frac{8 - 5}{200} = \frac{3}{200} = 0.015\text{ A} = 15.0000\text{ mA} \\
+  I_Z &= 15.0000\text{ mA} - 3.3333\text{ mA} = 11.6667\text{ mA} \\
+  P_{RS} &= (15 \times 10^{-3})^2 \times 200 = 0.045\text{ W} = 45.0000\text{ mW} \\
+  P_Z &= 5\text{ V} \times 11.6667\text{ mA} \approx 58.3333\text{ mW}
+\end{align*}
+
+\subsubsection*{2. Khi $V_{CC} = 12\text{ V}$:}
+\begin{align*}
+  V_L &= 5.0000\text{ V} \\
+  I_L &= \frac{5}{1500} \approx 3.3333\text{ mA} \\
+  I_S &= \frac{12 - 5}{200} = \frac{7}{200} = 0.035\text{ A} = 35.0000\text{ mA} \\
+  I_Z &= 35.0000\text{ mA} - 3.3333\text{ mA} = 31.6667\text{ mA} \\
+  P_{RS} &= (35 \times 10^{-3})^2 \times 200 = 0.245\text{ W} = 245.0000\text{ mW} \\
+  P_Z &= 5\text{ V} \times 31.6667\text{ mA} \approx 158.3333\text{ mW}
+\end{align*}
+
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Khi $V_{CC} = 8\text{ V}$: $I_S = 15\text{ mA}$, $I_L = 3.333\text{ mA}$, $I_Z = 11.667\text{ mA}$, $V_L = 5\text{ V}$, $P_{RS} = 45\text{ mW}$, $P_Z = 58.33\text{ mW}$.
+    \item Khi $V_{CC} = 12\text{ V}$: $I_S = 35\text{ mA}$, $I_L = 3.333\text{ mA}$, $I_Z = 31.667\text{ mA}$, $V_L = 5\text{ V}$, $P_{RS} = 245\text{ mW}$, $P_Z = 158.33\text{ mW}$.
+  \end{itemize}
+\end{dapsobox}
+
+\subsection{Mô phỏng PSpice}
+\begin{itemize}[leftmargin=1.5em]
+  \item Lấy linh kiện \texttt{Zener\_P} từ danh sách thư viện (kiểm tra thuộc tính \texttt{ZENER\_VOLTAGE} = 5V).
+  \item Mắc mạch gồm nguồn $V_{CC}$, $R_S = 200\,\Omega$, $R_L = 1.5\text{ k}\Omega$ và Zener \texttt{D2} ngược cực cathode lên trên.
+  \item Thiết lập cấu hình mô phỏng \textbf{Bias Point} lần lượt cho $V_{CC} = 8\text{ V}$ và $V_{CC} = 12\text{ V}$.
+  \item Bật hiển thị điện áp, dòng điện và công suất trên PSpice.
+\end{itemize}
+
+\simresult
+\simfig{ex8_sim}{Kết quả mô phỏng Bias Point của Bài tập 8 ($V_{CC} = 8\text{ V}$ và $V_{CC} = 12\text{ V}$)}
+
+\subsection{So sánh và nhận xét}
+\begin{table}[H]
+  \centering
+  \caption{So sánh kết quả giữa Lý thuyết và Mô phỏng PSpice cho Bài tập 8}
+  \begin{tabular}{lcccccc}
+    \toprule
+    \textbf{Đại lượng} & \multicolumn{2}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{2}{c}{\textbf{Mô phỏng (PSpice)}} & \multicolumn{2}{c}{\textbf{Đơn vị}} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+    & $V_{CC} = 8\text{ V}$ & $V_{CC} = 12\text{ V}$ & $V_{CC} = 8\text{ V}$ & $V_{CC} = 12\text{ V}$ & \\
+    \midrule
+    $I_S$     & $15.000$ & $35.000$ & -- & -- & mA \\
+    $I_L$     & $3.333$  & $3.333$  & -- & -- & mA \\
+    $I_Z$     & $11.667$ & $31.667$ & -- & -- & mA \\
+    $V_L$     & $5.000$  & $5.000$  & -- & -- & V  \\
+    $P_{RS}$  & $45.000$ & $245.000$& -- & -- & mW \\
+    $P_Z$     & $58.333$ & $158.333$& -- & -- & mW \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\textbf{Đánh giá khả năng ổn áp:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Khi điện áp nguồn $V_{CC}$ biến thiên mạnh tới $50\%$ (từ $8\text{ V}$ lên $12\text{ V}$), điện áp trên tải $V_L$ và dòng tải $I_L$ vẫn được giữ ổn định ở mức $5\text{ V}$ và $3.33\text{ mA}$.
+  \item Lượng năng lượng dư thừa do điện áp nguồn tăng được hấp thụ bởi điện trở nối tiếp $R_S$ và diode Zener ($I_Z$ tăng hơn 2.7 lần, từ $11.67\text{ mA} \to 31.67\text{ mA}$).
+  \item Mạch có nhược điểm là hiệu suất không cao khi nguồn vào lớn do năng lượng bị tiêu tán thành nhiệt trên $R_S$ và diode Zener.
+\end{itemize}

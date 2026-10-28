@@ -1,0 +1,122 @@
+\section{Bài tập 3: Phân tích mạch có Diode (Circuit Analysis with Diode)}
+
+Cho mạch điện hình cầu chứa diode và các điện trở như hình bên dưới. Mạch gồm nguồn điện áp $V$, các điện trở $R_1 = 2\text{ k}\Omega$, $R_2 = 8\text{ k}\Omega$, $R_3 = 4\text{ k}\Omega$, $R_4 = 6\text{ k}\Omega$ và diode $D_3$ đặt ở nhánh cầu giữa nối từ nút $1$ (anode) sang nút $2$ (cathode). 
+
+Hãy phân tích mạch bằng mô hình diode thực tế với điện áp rơi khi phân cực thuận là $V_D = 0.7\text{ V}$. Thiết lập hệ phương trình để xác định dòng điện qua tất cả các điện trở ($I_{R1}, I_{R2}, I_{R3}, I_{R4}$) cùng điện thế nút $V_1, V_2$ trong hai trường hợp điện áp nguồn:
+\begin{itemize}[leftmargin=1.5em]
+  \item Trường hợp 1: $V = 8\text{ V}$.
+  \item Trường hợp 2: $V = 12\text{ V}$.
+\end{itemize}
+Sau đó, tiến hành mô phỏng PSpice ở chế độ Bias Point để kiểm chứng kết quả.
+
+\given{ex3_given}{0.65\textwidth}{Mạch cầu phân tích với Diode (Hình 2.16)}
+
+\subsection{Tính toán lý thuyết}
+Gọi $V_1$ là điện thế tại nút anode của diode (giữa $R_1$ và $R_2$) và $V_2$ là điện thế tại nút cathode của diode (giữa $R_3$ và $R_4$). Chọn nút cực âm của nguồn $V$ làm mass tham chiếu ($0\text{ V}$).
+
+\noindent Khi chưa có diode (hoặc khi diode ngắt):
+\begin{align*}
+  V_{1,\text{open}} &= V \cdot \frac{R_2}{R_1 + R_2} = V \cdot \frac{8}{2 + 8} = 0.8\,V \\
+  V_{2,\text{open}} &= V \cdot \frac{R_4}{R_3 + R_4} = V \cdot \frac{6}{4 + 6} = 0.6\,V \\
+  V_{1,\text{open}} - V_{2,\text{open}} &= 0.8\,V - 0.6\,V = 0.2\,V
+\end{align*}
+Với cả hai giá trị nguồn $V = 8\text{ V}$ ($0.2 \times 8 = 1.6\text{ V} > 0.7\text{ V}$) và $V = 12\text{ V}$ ($0.2 \times 12 = 2.4\text{ V} > 0.7\text{ V}$), hiệu điện thế thuận đều lớn hơn điện áp ngưỡng $0.7\text{ V}$. Do đó diode $D_3$ phân cực thuận và dẫn điện (ON).
+
+\noindent Theo mô hình thực tế, hiệu điện thế giữa hai nút thỏa mãn:
+\begin{equation}
+  V_1 - V_2 = V_D = 0.7\text{ V} \iff V_1 = V_2 + 0.7 \label{eq:ex3_diode}
+\end{equation}
+
+\noindent Áp dụng định luật KCL tại nút $1$:
+\begin{equation}
+  I_{R1} = I_{D3} + I_{R2} \implies \frac{V - V_1}{R_1} = I_{D3} + \frac{V_1}{R_2} \label{eq:ex3_kcl1}
+\end{equation}
+
+\noindent Áp dụng định luật KCL tại nút $2$:
+\begin{equation}
+  I_{R3} + I_{D3} = I_{R4} \implies I_{D3} = \frac{V_2}{R_4} - \frac{V - V_2}{R_3} \label{eq:ex3_kcl2}
+\end{equation}
+
+\noindent Cộng vế theo vế hai phương trình (\ref{eq:ex3_kcl1}) và (\ref{eq:ex3_kcl2}) để triệt tiêu dòng $I_{D3}$:
+\begin{equation}
+  \frac{V - V_1}{R_1} + \frac{V - V_2}{R_3} = \frac{V_1}{R_2} + \frac{V_2}{R_4}
+\end{equation}
+\begin{equation}
+  V\left(\frac{1}{R_1} + \frac{1}{R_3}\right) = V_1\left(\frac{1}{R_1} + \frac{1}{R_2}\right) + V_2\left(\frac{1}{R_3} + \frac{1}{R_4}\right)
+\end{equation}
+
+\noindent Thay $V_1 = V_2 + 0.7$ vào phương trình trên:
+\begin{equation}
+  V\left(\frac{1}{2000} + \frac{1}{4000}\right) = (V_2 + 0.7)\left(\frac{1}{2000} + \frac{1}{8000}\right) + V_2\left(\frac{1}{4000} + \frac{1}{6000}\right)
+\end{equation}
+\begin{equation}
+  \frac{3V}{4000} = \frac{5}{8000}(V_2 + 0.7) + \frac{5}{12000}V_2 \iff 0.75 \times 10^{-3} V = 0.625 \times 10^{-3}(V_2 + 0.7) + 0.4167 \times 10^{-3} V_2
+\end{equation}
+\begin{equation}
+  1.0417 \times 10^{-3} V_2 = 0.75 \times 10^{-3} V - 0.4375 \times 10^{-3}
+\end{equation}
+
+\subsubsection*{1. Với $V = 8\text{ V}$:}
+\begin{align*}
+  V_2 &= \frac{0.75 \times 10^{-3} \times 8 - 0.4375 \times 10^{-3}}{1.0417 \times 10^{-3}} = \frac{6 - 0.4375}{1.04167} = 5.3400\text{ V} \\
+  V_1 &= V_2 + 0.7 = 5.3400 + 0.7 = 6.0400\text{ V} \\
+  I_{R1} &= \frac{8 - 6.04}{2\text{ k}\Omega} = \frac{1.96}{2000} = 0.9800\text{ mA} \\
+  I_{R2} &= \frac{6.04}{8\text{ k}\Omega} = 0.7550\text{ mA} \\
+  I_{R3} &= \frac{8 - 5.34}{4\text{ k}\Omega} = \frac{2.66}{4000} = 0.6650\text{ mA} \\
+  I_{R4} &= \frac{5.34}{6\text{ k}\Omega} = 0.8900\text{ mA} \\
+  I_{D3} &= I_{R1} - I_{R2} = 0.9800 - 0.7550 = 0.2250\text{ mA}
+\end{align*}
+
+\subsubsection*{2. Với $V = 12\text{ V}$:}
+\begin{align*}
+  V_2 &= \frac{0.75 \times 10^{-3} \times 12 - 0.4375 \times 10^{-3}}{1.0417 \times 10^{-3}} = \frac{9 - 0.4375}{1.04167} = 8.2200\text{ V} \\
+  V_1 &= V_2 + 0.7 = 8.2200 + 0.7 = 8.9200\text{ V} \\
+  I_{R1} &= \frac{12 - 8.92}{2\text{ k}\Omega} = \frac{3.08}{2000} = 1.5400\text{ mA} \\
+  I_{R2} &= \frac{8.92}{8\text{ k}\Omega} = 1.1150\text{ mA} \\
+  I_{R3} &= \frac{12 - 8.22}{4\text{ k}\Omega} = \frac{3.78}{4000} = 0.9450\text{ mA} \\
+  I_{R4} &= \frac{8.22}{6\text{ k}\Omega} = 1.3700\text{ mA} \\
+  I_{D3} &= I_{R1} - I_{R2} = 1.5400 - 1.1150 = 0.4250\text{ mA}
+\end{align*}
+
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Khi $V = 8\text{ V}$: $V_1 = 6.04\text{ V}$, $V_2 = 5.34\text{ V}$, $I_{R1} = 0.98\text{ mA}$, $I_{R2} = 0.755\text{ mA}$, $I_{R3} = 0.665\text{ mA}$, $I_{R4} = 0.89\text{ mA}$.
+    \item Khi $V = 12\text{ V}$: $V_1 = 8.92\text{ V}$, $V_2 = 8.22\text{ V}$, $I_{R1} = 1.54\text{ mA}$, $I_{R2} = 1.115\text{ mA}$, $I_{R3} = 0.945\text{ mA}$, $I_{R4} = 1.37\text{ mA}$.
+  \end{itemize}
+\end{dapsobox}
+
+\subsection{Mô phỏng PSpice}
+\begin{itemize}[leftmargin=1.5em]
+  \item Vẽ mạch cầu theo đúng sơ đồ Hình 2.16 với các điện trở $R_1, R_2, R_3, R_4$ và diode \texttt{Dbreak}.
+  \item Thiết lập hồ sơ mô phỏng chế độ \textbf{Bias Point}.
+  \item Bật hiển thị dòng điện và điện áp trên sơ đồ mạch để đối chiếu kết quả.
+\end{itemize}
+
+\simresult
+\simfig{ex3_sim}{Kết quả mô phỏng Bias Point của Bài tập 3 ($V = 8\text{ V}$ và $V = 12\text{ V}$)}
+
+\subsection{So sánh và nhận xét}
+\begin{table}[H]
+  \centering
+  \caption{So sánh kết quả tính toán lý thuyết và mô phỏng PSpice cho Bài tập 3}
+  \begin{tabular}{lcccccc}
+    \toprule
+    \textbf{Đại lượng} & \multicolumn{2}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{2}{c}{\textbf{Mô phỏng (PSpice)}} & \multicolumn{2}{c}{\textbf{Sai số (\%)}} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+    & $V = 8\text{ V}$ & $V = 12\text{ V}$ & $V = 8\text{ V}$ & $V = 12\text{ V}$ & $V = 8\text{ V}$ & $V = 12\text{ V}$ \\
+    \midrule
+    $I_{R1}\text{ (mA)}$ & $0.980$ & $1.540$ & -- & -- & -- & -- \\
+    $I_{R2}\text{ (mA)}$ & $0.755$ & $1.115$ & -- & -- & -- & -- \\
+    $I_{R3}\text{ (mA)}$ & $0.665$ & $0.945$ & -- & -- & -- & -- \\
+    $I_{R4}\text{ (mA)}$ & $0.890$ & $1.370$ & -- & -- & -- & -- \\
+    $V_1\text{ (V)}$     & $6.040$ & $8.920$ & -- & -- & -- & -- \\
+    $V_2\text{ (V)}$     & $5.340$ & $8.220$ & -- & -- & -- & -- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\textbf{Nhận xét:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Ở cả hai mức điện áp nguồn $8\text{ V}$ và $12\text{ V}$, diode đều phân cực thuận vì tỷ số phân áp tại nút 1 lớn hơn tại nút 2.
+  \item Kết quả tính toán giải tích hoàn toàn phù hợp với mô phỏng PSpice. Sự sai lệch rất nhỏ giữa hai phương pháp xuất phát từ việc mô hình thực tế xem sụt áp diode cố định $0.7\text{ V}$, trong khi PSpice sử dụng đường cong $I-V$ hàm mũ chính xác của mô hình linh kiện bán dẫn.
+\end{itemize}

@@ -1,0 +1,90 @@
+\section{Bài tập 6: Mạch chỉnh lưu nửa sóng (Half-wave Rectifier)}
+
+Cho mạch chỉnh lưu nửa sóng như hình bên dưới. Mạch gồm một nguồn điện áp xoay chiều hình sin $V_1$ (linh kiện \texttt{VSIN}), một diode $D_1$ (\texttt{Dbreak}) và điện trở tải $R_1 = 1\text{ k}\Omega$.
+
+Các thông số cấu hình của nguồn \texttt{VSIN}:
+\begin{itemize}[leftmargin=1.5em]
+  \item \texttt{VOFF} (Điện áp dịch một chiều): $0\text{ V}$.
+  \item \texttt{VAMPL} (Biên độ đỉnh của nguồn sin): $22\text{ V}$.
+  \item \texttt{FREQ} (Tần số tín hiệu): $50\text{ Hz}$.
+  \item \texttt{AC} (Chế độ phân tích AC): $0$.
+\end{itemize}
+Giả thiết diode có điện áp phân cực thuận ngưỡng là $V_F = 0.78\text{ V}$. Hãy tính toán các giá trị lý thuyết của điện áp trên tải $V_{R1}$, sau đó tiến hành mô phỏng miền thời gian (Transient analysis) trên PSpice.
+
+\given{ex6_given}{0.5\textwidth}{Mạch chỉnh lưu nửa sóng với nguồn áp Sin (Hình 2.19)}
+
+\subsection{Tính toán lý thuyết}
+Biểu thức điện áp nguồn tức thời:
+\begin{equation}
+  v_1(t) = V_m \sin(2\pi f t) = 22 \sin(100\pi t)\text{ (V)}
+\end{equation}
+
+\noindent Chu kỳ dao động của nguồn:
+\begin{equation}
+  T = \frac{1}{f} = \frac{1}{50\text{ Hz}} = 0.02\text{ s} = 20\text{ ms}
+\end{equation}
+
+\noindent Hoạt động của diode trong một chu kỳ:
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Bán kỳ dương ($0 < t < T/2$):} Khi $v_1(t) > V_F = 0.78\text{ V}$, diode $D_1$ phân cực thuận dẫn điện. Điện áp tức thời trên tải $R_1$:
+  \begin{equation}
+    v_{R1}(t) = v_1(t) - V_F = 22 \sin(100\pi t) - 0.78\text{ (V)}
+  \end{equation}
+  Giá trị cực đại của điện áp trên tải:
+  \begin{equation}
+    V_{R1,\max} = V_m - V_F = 22\text{ V} - 0.78\text{ V} = 21.22\text{ V}
+  \end{equation}
+  \item \textbf{Bán kỳ âm ($T/2 < t < T$):} Khi $v_1(t) < 0.78\text{ V}$, diode $D_1$ bị phân cực ngược và ngắt ($I = 0$). Toàn bộ điện áp nguồn rơi trên diode hở mạch, điện áp trên điện trở tải bằng $0$:
+  \begin{equation}
+    V_{R1,\min} = 0\text{ V}
+  \end{equation}
+\end{itemize}
+
+\noindent Chu kỳ lặp lại của tín hiệu điện áp chỉnh lưu $v_{R1}(t)$ bằng chu kỳ của nguồn đầu vào:
+\begin{equation}
+  T_{R1} = T = 20\text{ ms}
+\end{equation}
+
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Giá trị nhỏ nhất của $V_{R1}$ (\textit{Minimum Value of $V_{R1}$}): $0\text{ V}$.
+    \item Giá trị lớn nhất của $V_{R1}$ (\textit{Maximum Value of $V_{R1}$}): $21.22\text{ V}$.
+    \item Chu kỳ thời gian của một chu kỳ $V_{R1}$ (\textit{Duration for a cycle of $V_{R1}$}): $20\text{ ms}$.
+  \end{itemize}
+\end{dapsobox}
+
+\subsection{Mô phỏng PSpice}
+\begin{itemize}[leftmargin=1.5em]
+  \item Đặt linh kiện nguồn \texttt{VSIN}, diode \texttt{Dbreak}, điện trở $R_1 = 1\text{ k}\Omega$ và mass \texttt{0}.
+  \item Đặt đầu dò điện áp (\textbf{Voltage Marker}) tại đầu trên của điện trở $R_1$.
+  \item Tạo hồ sơ mô phỏng mới với \textbf{Analysis Type}: \texttt{Time Domain (Transient)}.
+  \item Cài đặt thời gian mô phỏng:
+    \begin{itemize}
+      \item \textbf{Run to time}: $100\text{ ms}$ (tương ứng với 5 chu kỳ đầy đủ của tín hiệu $50\text{ Hz}$).
+      \item \textbf{Maximum step size}: $0.1\text{ ms}$ (để dạng sóng hiển thị mịn và chính xác).
+    \end{itemize}
+  \item Chạy mô phỏng (nhấn F11) và sử dụng công cụ \textbf{Toggle Cursor} trên cửa sổ Probe để đọc tọa độ điểm cực đại, điểm cực tiểu và khoảng thời gian một chu kỳ.
+\end{itemize}
+
+\simresult
+\simfig{ex6_sim}{Dạng sóng điện áp ngõ ra của mạch chỉnh lưu nửa sóng trong miền thời gian}
+
+\subsection{So sánh và nhận xét}
+\begin{table}[H]
+  \centering
+  \caption{So sánh thông số dạng sóng ngõ ra giữa Lý thuyết và Mô phỏng PSpice}
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Phương pháp} & \textbf{Giá trị nhỏ nhất $V_{\min}$ (V)} & \textbf{Giá trị lớn nhất $V_{\max}$ (V)} & \textbf{Chu kỳ $T$ (ms)} \\
+    \midrule
+    Lý thuyết (Theory) & $0.00$  & $21.22$ & $20.0$ \\
+    Mô phỏng (PSpice)  & --      & --      & --     \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\textbf{Nhận xét:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Mạch chỉnh lưu nửa sóng chỉ cho phép bán kỳ dương đi qua và chặn hoàn toàn bán kỳ âm, biến đổi điện áp xoay chiều thành điện áp một chiều nhấp nhô.
+  \item Hiệu suất chỉnh lưu của mạch nửa sóng còn thấp do bỏ phí toàn bộ nửa chu kỳ âm, và độ gợn sóng (ripple) ở đầu ra rất lớn.
+\end{itemize}

@@ -1,0 +1,90 @@
+\section{Bài tập 5: Mạch tự động chuyển nguồn (Power Switching Circuit)}
+
+Trong nhiều ứng dụng thực tế (chẳng hạn như các hệ thống nhúng, vi điều khiển), việc mất nguồn đột ngột có thể làm mất dữ liệu quan trọng trong RAM hoặc gián đoạn hoạt động. Để giải quyết vấn đề này, người ta thường thiết kế mạch tự động chuyển sang nguồn phụ (pin/ắc quy dự phòng) khi nguồn chính bị ngắt.
+
+Cho mạch điện tự động chuyển nguồn như hình bên dưới. Mạch sử dụng hai nguồn: nguồn chính $V_2 = 9\text{ Vdc}$, nguồn dự phòng $V_3 = 5\text{ Vdc}$, hai diode $D_3, D_4$ và điện trở tải $R_L = 1\text{ k}\Omega$.
+
+Giả thiết sử dụng mô hình diode thực tế với sụt áp phân cực thuận $V_D = 0.7\text{ V}$. Hãy thiết lập các phương trình và tính toán các dòng điện $I_{D3}, I_{D4}, I_{RL}$ cùng điện áp trên tải $V_{RL}$ trong ba trường hợp:
+\begin{itemize}[leftmargin=1.5em]
+  \item Trường hợp 1: Chỉ bật nguồn $5\text{ V}$ ($V_3 = 5\text{ V}$, ngắt nguồn $9\text{ V}$).
+  \item Trường hợp 2: Chỉ bật nguồn $9\text{ V}$ ($V_2 = 9\text{ V}$, ngắt nguồn $5\text{ V}$).
+  \item Trường hợp 3: Bật đồng thời cả hai nguồn $5\text{ V}$ và $9\text{ V}$.
+\end{itemize}
+Sau đó, tiến hành mô phỏng PSpice ở chế độ Bias Point khi cả hai nguồn cùng hoạt động.
+
+\given{ex5_given}{0.5\textwidth}{Mạch chuyển nguồn tự động dùng Diode (Hình 2.18)}
+
+\subsection{Tính toán lý thuyết}
+\subsubsection*{1. Trường hợp 1: Chỉ bật nguồn phụ $5\text{ V}$ ($V_3 = 5\text{ V}$, $V_2 = 0\text{ V}$):}
+Do chỉ có nguồn $V_3$, diode $D_3$ phân cực thuận dẫn điện, còn $D_4$ ngắt ($I_{D4} = 0$).
+\begin{align*}
+  V_{RL} &= V_3 - V_{D3} = 5\text{ V} - 0.7\text{ V} = 4.3\text{ V} \\
+  I_{RL} &= \frac{V_{RL}}{R_L} = \frac{4.3\text{ V}}{1000\,\Omega} = 4.3\text{ mA} \\
+  I_{D3} &= I_{RL} = 4.3\text{ mA} \\
+  I_{D4} &= 0\text{ mA}
+\end{align*}
+
+\subsubsection*{2. Trường hợp 2: Chỉ bật nguồn chính $9\text{ V}$ ($V_2 = 9\text{ V}$, $V_3 = 0\text{ V}$):}
+Do chỉ có nguồn $V_2$, diode $D_4$ phân cực thuận dẫn điện, còn $D_3$ ngắt ($I_{D3} = 0$).
+\begin{align*}
+  V_{RL} &= V_2 - V_{D4} = 9\text{ V} - 0.7\text{ V} = 8.3\text{ V} \\
+  I_{RL} &= \frac{V_{RL}}{R_L} = \frac{8.3\text{ V}}{1000\,\Omega} = 8.3\text{ mA} \\
+  I_{D4} &= I_{RL} = 8.3\text{ mA} \\
+  I_{D3} &= 0\text{ mA}
+\end{align*}
+
+\subsubsection*{3. Trường hợp 3: Bật đồng thời cả hai nguồn ($V_2 = 9\text{ V}$ và $V_3 = 5\text{ V}$):}
+Giả sử diode $D_4$ phân cực thuận dẫn điện từ nguồn $9\text{ V}$. Khi đó, điện thế tại nút cathode chung (nút cấp tải) là:
+\begin{equation}
+  V_{K} = V_{RL} = V_2 - V_{D4} = 9\text{ V} - 0.7\text{ V} = 8.3\text{ V}
+\end{equation}
+Xét diode $D_3$: cực anode nối vào nguồn $V_3 = 5\text{ V}$, cực cathode ở điện thế $V_K = 8.3\text{ V}$. Hiệu điện thế giữa anode và cathode của $D_3$ là:
+\begin{equation}
+  V_{AK,D3} = V_3 - V_K = 5\text{ V} - 8.3\text{ V} = -3.3\text{ V} < 0
+\end{equation}
+Do $V_{AK,D3} < 0$, diode $D_3$ bị phân cực ngược hoàn toàn và khóa chặt ($I_{D3} = 0$). Do đó giả thiết hoàn toàn chính xác:
+\begin{align*}
+  I_{D3} &= 0\text{ mA} \\
+  V_{RL} &= 8.3\text{ V} \\
+  I_{RL} &= \frac{8.3\text{ V}}{1000\,\Omega} = 8.3\text{ mA} \\
+  I_{D4} &= I_{RL} = 8.3\text{ mA}
+\end{align*}
+
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Chỉ bật $5\text{ V}$: $I_{D3} = 4.3\text{ mA}$, $I_{D4} = 0\text{ mA}$, $I_{RL} = 4.3\text{ mA}$, $V_{RL} = 4.3\text{ V}$.
+    \item Chỉ bật $9\text{ V}$: $I_{D3} = 0\text{ mA}$, $I_{D4} = 8.3\text{ mA}$, $I_{RL} = 8.3\text{ mA}$, $V_{RL} = 8.3\text{ V}$.
+    \item Bật cả hai nguồn: $I_{D3} = 0\text{ mA}$, $I_{D4} = 8.3\text{ mA}$, $I_{RL} = 8.3\text{ mA}$, $V_{RL} = 8.3\text{ V}$.
+  \end{itemize}
+\end{dapsobox}
+
+\subsection{Mô phỏng PSpice}
+\begin{itemize}[leftmargin=1.5em]
+  \item Vẽ sơ đồ mạch gồm nguồn $V_2 = 9\text{ Vdc}$, $V_3 = 5\text{ Vdc}$, hai diode \texttt{Dbreak} ($D_3, D_4$) và tải $R_L = 1\text{ k}\Omega$.
+  \item Thiết lập cấu hình mô phỏng \textbf{Bias Point} khi cả hai nguồn cùng được kết nối.
+  \item Bật hiển thị điện áp và dòng điện để đọc giá trị mô phỏng.
+\end{itemize}
+
+\simresult
+\simfig{ex5_sim}{Kết quả mô phỏng Bias Point của Bài tập 5 (kết nối cả hai nguồn)}
+
+\subsection{So sánh và nhận xét}
+\begin{table}[H]
+  \centering
+  \caption{So sánh kết quả khi kết nối đồng thời cả hai nguồn $5\text{ V}$ và $9\text{ V}$}
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Phương pháp} & $I_{D3}\text{ (mA)}$ & $I_{D4}\text{ (mA)}$ & $I_{RL}\text{ (mA)}$ & $V_{RL}\text{ (V)}$ \\
+    \midrule
+    Lý thuyết (Theory)  & $0$  & $8.300$ & $8.300$ & $8.300$ \\
+    Mô phỏng (PSpice)   & --   & --      & --      & --      \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\textbf{Cơ chế hoạt động và vai trò linh kiện:}
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Tự động ưu tiên nguồn có điện áp cao hơn:} Khi nguồn chính ($9\text{ V}$) hoạt động, nó phân cực ngược diode của nguồn phụ ($5\text{ V}$), cách ly hoàn toàn nguồn phụ để tránh tiêu hao pin dự phòng. Khi nguồn chính bị mất ($9\text{ V} \to 0\text{ V}$), nguồn phụ ngay lập tức dẫn mà không làm gián đoạn hệ thống.
+  \item \textbf{Chống dòng ngược (Reverse Current Protection):} Diode ngăn không cho dòng điện từ nguồn $9\text{ V}$ nạp ngược vào nguồn $5\text{ V}$, bảo vệ an toàn cho cổng USB máy tính hoặc pin dự phòng.
+  \item \textbf{Ưu điểm của Diode Schottky trong thực tế:} Diode silicon thông thường có sụt áp khoảng $0.7\text{ V} - 0.8\text{ V}$, gây tổn thất công suất đáng kể trên tải điện thế thấp. Sử dụng diode Schottky với điện áp phân cực thuận cực thấp ($\approx 0.2\text{ V} - 0.3\text{ V}$) sẽ giúp giảm thiểu tổn thất năng lượng và tăng hiệu suất mạch chuyển nguồn.
+\end{itemize}

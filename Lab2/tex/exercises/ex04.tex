@@ -1,0 +1,98 @@
+\section{Bài tập 4: Mạch ghim điện áp dùng Diode (Clamper Diode Circuit)}
+
+Cho mạch điện như hình bên dưới gồm nguồn một chiều $V$, diode $D_1$, điện trở $R_1 = 5.6\text{ k}\Omega$, diode ghim $D_2$ và điện trở tải $R_2 = 3.3\text{ k}\Omega$ mắc song song với $D_2$.
+
+Giả sử sử dụng mô hình diode thực tế với điện áp phân cực thuận ngưỡng $V_D = 0.7\text{ V}$. Hãy thiết lập các phương trình và tính toán ba dòng điện $I_{R1}, I_{R2}, I_{D2}$ cùng điện áp trên tải $V_{R2}$ trong hai trường hợp điện áp nguồn:
+\begin{itemize}[leftmargin=1.5em]
+  \item Trường hợp 1: $V = 12\text{ V}$.
+  \item Trường hợp 2: $V = 20\text{ V}$.
+\end{itemize}
+Sau đó, thực hiện mô phỏng PSpice ở chế độ Bias Point và rút ra nhận xét.
+
+\given{ex4_given}{0.5\textwidth}{Mạch ghim điện áp sử dụng Diode (Hình 2.17)}
+
+\subsection{Tính toán lý thuyết}
+Khi cấp nguồn dương $V$, dòng điện chạy từ cực dương nguồn qua diode $D_1$. Do đó diode $D_1$ phân cực thuận và có độ sụt áp $V_{D1} = 0.7\text{ V}$.
+
+\noindent Dòng điện đi tiếp vào nút song song giữa $D_2$ và $R_2$:
+\begin{itemize}[leftmargin=1.5em]
+  \item Diode $D_2$ có cực anode nối vào đầu trên và cực cathode nối vào đầu dưới của điện trở $R_2$.
+  \item Do $V$ ($12\text{ V}$ hoặc $20\text{ V}$) đủ lớn, điện áp trên nhánh song song có xu hướng vượt quá $0.7\text{ V}$, do đó $D_2$ lập tức dẫn thuận và ghim điện áp trên nhánh tải ở mức:
+  \begin{equation}
+    V_{R2} = V_{D2} = 0.7\text{ V}
+  \end{equation}
+\end{itemize}
+
+\noindent Dòng điện chạy qua điện trở tải $R_2$:
+\begin{equation}
+  I_{R2} = \frac{V_{R2}}{R_2} = \frac{0.7\text{ V}}{3300\,\Omega} \approx 0.2121\text{ mA}
+\end{equation}
+
+\noindent Áp dụng định luật KVL cho toàn vòng mạch chính:
+\begin{equation}
+  V - V_{D1} - V_{R2} - I_{R1} \cdot R_1 = 0 \iff V - 0.7 - 0.7 - I_{R1} \cdot R_1 = 0
+\end{equation}
+\begin{equation}
+  I_{R1} = \frac{V - 1.4\text{ V}}{R_1} = \frac{V - 1.4}{5600}
+\end{equation}
+
+\noindent Áp dụng định luật KCL tại nút phân nhánh:
+\begin{equation}
+  I_{R1} = I_{D2} + I_{R2} \implies I_{D2} = I_{R1} - I_{R2}
+\end{equation}
+
+\subsubsection*{1. Khi $V = 12\text{ V}$:}
+\begin{align*}
+  I_{R1} &= \frac{12 - 1.4}{5600\,\Omega} = \frac{10.6}{5600} \approx 1.8929\text{ mA} \\
+  V_{R2} &= 0.7000\text{ V} \\
+  I_{R2} &= \frac{0.7}{3300\,\Omega} \approx 0.2121\text{ mA} \\
+  I_{D2} &= I_{R1} - I_{R2} = 1.8929 - 0.2121 = 1.6808\text{ mA}
+\end{align*}
+
+\subsubsection*{2. Khi $V = 20\text{ V}$:}
+\begin{align*}
+  I_{R1} &= \frac{20 - 1.4}{5600\,\Omega} = \frac{18.6}{5600} \approx 3.3214\text{ mA} \\
+  V_{R2} &= 0.7000\text{ V} \\
+  I_{R2} &= \frac{0.7}{3300\,\Omega} \approx 0.2121\text{ mA} \\
+  I_{D2} &= I_{R1} - I_{R2} = 3.3214 - 0.2121 = 3.1093\text{ mA}
+\end{align*}
+
+\begin{dapsobox}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Khi $V = 12\text{ V}$: $I_{R1} = 1.893\text{ mA}$, $I_{R2} = 0.212\text{ mA}$, $I_{D2} = 1.681\text{ mA}$, $V_{R2} = 0.700\text{ V}$.
+    \item Khi $V = 20\text{ V}$: $I_{R1} = 3.321\text{ mA}$, $I_{R2} = 0.212\text{ mA}$, $I_{D2} = 3.109\text{ mA}$, $V_{R2} = 0.700\text{ V}$.
+  \end{itemize}
+\end{dapsobox}
+
+\subsection{Mô phỏng PSpice}
+\begin{itemize}[leftmargin=1.5em]
+  \item Thiết lập sơ đồ mạch trên PSpice với các linh kiện tương ứng.
+  \item Chạy mô phỏng ở chế độ phân tích \textbf{Bias Point}.
+  \item Bật hiển thị điện áp và dòng điện để đọc các giá trị $I_{R1}, I_{R2}, I_{D2}$ và $V_{R2}$.
+\end{itemize}
+
+\simresult
+\simfig{ex4_sim}{Kết quả mô phỏng Bias Point của Bài tập 4 ($V = 12\text{ V}$ và $V = 20\text{ V}$)}
+
+\subsection{So sánh và nhận xét}
+\begin{table}[H]
+  \centering
+  \caption{So sánh kết quả tính toán lý thuyết và mô phỏng PSpice cho Bài tập 4}
+  \begin{tabular}{lcccccccc}
+    \toprule
+    \textbf{Điện áp nguồn} & \multicolumn{4}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{4}{c}{\textbf{Mô phỏng (PSpice)}} \\
+    \cmidrule(lr){2-5} \cmidrule(lr){6-9}
+    & $I_{R1}\text{ (mA)}$ & $I_{R2}\text{ (mA)}$ & $I_{D2}\text{ (mA)}$ & $V_{R2}\text{ (V)}$ & $I_{R1}\text{ (mA)}$ & $I_{R2}\text{ (mA)}$ & $I_{D2}\text{ (mA)}$ & $V_{R2}\text{ (V)}$ \\
+    \midrule
+    $V = 12\text{ V}$ & $1.893$ & $0.212$ & $1.681$ & $0.700$ & -- & -- & -- & -- \\
+    $V = 20\text{ V}$ & $3.321$ & $0.212$ & $3.109$ & $0.700$ & -- & -- & -- & -- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\textbf{Kết luận và nhận xét:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Khi điện áp nguồn tăng mạnh từ $12\text{ V}$ lên $20\text{ V}$, điện áp trên tải $V_{R2}$ và dòng điện qua tải $I_{R2}$ hoàn toàn không đổi (luôn được giữ cố định ở xấp xỉ $0.7\text{ V}$ và $0.212\text{ mA}$).
+  \item Toàn bộ lượng dòng điện gia tăng khi điện áp nguồn tăng ($1.893\text{ mA} \to 3.321\text{ mA}$) được diode $D_2$ dẫn qua xuống mass ($I_{D2}$ tăng từ $1.681\text{ mA} \to 3.109\text{ mA}$).
+  \item Mạch này có chức năng như một mạch bảo vệ quá áp hoặc mạch ghim điện áp (voltage limiter/clamp), giúp bảo vệ các vi điều khiển hoặc linh kiện nhạy cảm ở đầu ra khỏi bị hư hại khi điện áp nguồn đầu vào biến động cao.
+\end{itemize}

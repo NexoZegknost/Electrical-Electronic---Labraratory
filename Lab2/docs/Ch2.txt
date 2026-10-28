@@ -1,0 +1,683 @@
+CHAPTER 2
+Diode Circuits Analysis
+
+1 Introduction
+This laboratory exercise aims to demonstrate different diode wave shaping circuits. In
+general, these exercises aims to help students to fully understand how these diode circuit works in theory and actual situations. This laboratory exercises also helps students
+to understand about DC Sweep analysis and Time Domain (Transient) in simulation configuration.
+• DC Sweep analysis calculates the steady-state voltages and currents when sweeping
+a source, model parameter, global parameter, or temperature over a range of values.
+You can view the results of a DC sweep analysis in either a text output file or in the
+graphical display of the Probe window.
+• Transient analysis involves a set of techniques used to analyze simulation data or
+experimental results in the time domain, specifically when the system under study
+is transitioning between two states
+The targets are summarized as follows:
+• Create Project and design as provided schematic to analyse V-I characteristic with
+DC Sweep configuration.
+• Analyse diode characteristic.
+• Analyse some practical diode application circuits.
+
+Page 34
+
+HCMUT - Computer Engineering
+
+2 Diode simulation circuit
+In this manual, a simple circuit presented bellow is used in order to demonstrate principles of a diode. Finally, the simulation based DC Sweep configuration is run to analyse
+the circuit.
+
+Figure 2.1: A simple simulation circuit using Diode
+Step 1: Students are proposed to create a new project in PSPICE. Please select on the
+option Create a blank project.
+Step 2: From the list of Favorites devices, search the component named Dbreak, which
+is a popular diode in circuit. Other components such as VDC, Resistor and the Ground,
+which are already used in Lab 1, are also added to the project as well. Finally, set the voltage supple of V1 to 5Vdc.
+Step 3: Create a simulation project by clicking on the menu PSpice, New Simulation
+Profile. After the name of the simulation profile is given, following dialog is shown:
+
+Figure 2.2: Configure the DC-Sweep simulation Profile
+Following fields are required to configure:
+• Analysis Type: select DC Sweep mode
+• Sweep variable: name of input source to analyze, which is (V1) in this case.
+Electronic Device Component
+
+Page 35
+
+• Sweep Type: vary voltage of the source, which is from 0V to 5V and the incremental
+step is 0.1V.
+Step 5: Run simulation (F11 or from menu PSpice, select Run). The simulation result for
+DC Sweep mode is launched as follows:
+
+Figure 2.3: Simulation results for DC-Sweep mode
+However, the screen is empty without any tracking information. In this case, we need to
+monitor the current in the circuit having a diode. To do this, from menu Trace, select Add
+Trace to open following dialog:
+
+Figure 2.4: Add I(D1) to Y-Axis Trace
+Choose I(D1) which is the current passing through the diode (and also the main current
+in the circuit having 2 components in a series). Finally, simulation results are depicted as
+follows:
+
+Page 36
+
+HCMUT - Computer Engineering
+
+Figure 2.5: Simulation Result
+Step 6: In order to make tracking information more readable, right click on the tracking
+line and choose Trace Property as follows:
+
+Figure 2.6: Configure Trace Property
+The following dialog is opened, allow you to change the color and also the width of the
+tracking line
+
+Figure 2.7: Change Trace Width to make it more readable
+
+Electronic Device Component
+
+Page 37
+
+The final shape of the simulation result is look like the following picture:
+
+Figure 2.8: Simulation result after changing the Trace Width
+The whole data for every point of the input voltage can be extract to text file by right click
+on the curve and select the option Copy to Clipboard. Finally, the data can be pasted to
+text editor, for instance, Notepad IDE.
+
+Figure 2.9: Extract data to Notepad Editor
+It is obviously that when the power supply is less than 0.7V, the current is close to zero (in
+order of 10−9 at 0.3V). However, when the input voltage is 1V, the current in the circuit is
+around 0.37mA. This result can be estimated as (1V-0.7V)/1k, when the practical diode
+model is applied. Students are proposed to check the simulation results at other points,
+such as V1 = 2V or V1 = 4V.
+Step 7: A very important analysis with a diode is the relation between the voltage and the
+current across the diode, which is popular known as the V-I characteristic of the diode. To
+do this, on the simulation result windows, double click on the X-Axis to open the dialog
+as following:
+
+Page 38
+
+HCMUT - Computer Engineering
+
+Figure 2.10: Set the X-Axis of the simulation result
+Firstly, clicking on the Add Variables button and select V(D1:1), which is the voltage
+across the diode. Secondly, on the data range, select from 0V to 1V in the User Defined
+option. Finally, add a trace from menu Trace, and select I(D1) as previous simulation. The
+figure bellow is achieved:
+
+Figure 2.11: V-I characteristic of a diode
+This figure confirms that in the forward bias mode, the drop-down voltage of a diode is
+around 0.7V, which is the default value in the practical diode model.
+Step 8: The bias simulation is also applied in this lab. By clicking on menu PSpice, New
+Simulation Profile. Similar to the first lab, after providing the name for the simulation
+profile(e.g. bias_point), only the analysis type is changed to Bias Point. Finally, click OK
+button to create the second simulation profile.
+
+Electronic Device Component
+
+Page 39
+
+Figure 2.12: Add Bias Point simulation profile to the project
+Currently, there are two simulation profiles in the project, which can be browsed as following. In order to set a profile to active, right click on this profile and select Make Active.
+
+Figure 2.13: Set the active simulation profile
+Bias simulation results are displayed as follows:
+
+Figure 2.14: Enable Bias Current Display
+From the simulation results, it is confirmed that the drop-down voltage of a diode is
+around 0.7V, which is very closed to the practical diode model.
+
+Page 40
+
+HCMUT - Computer Engineering
+
+3 Exercise and Report
+3.1 Complete diode model
+According to the above simulation circuit (Figure 1.2), determine the voltage across the
+resistor and the diode (VR , VD ), and also the current I in the circuit with two different
+values of R1, including 220 Ohm and 1.5K Ohm. It is assumed that the complete diode
+model is used to analyse, having the forward voltage at 0.7V and the internal resistor equal
+to 50 Ohm.
+Finally, the simulation on PSpice is run to double check with theory calculation. Brief explanations concerning the difference between theory and simulations can be provided in
+the report.
+
+3.1.1 Theory calculation
+Notes:
+Explanations, formulas, and equations are expected rather than only results.
+According to the: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+We have VD : . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Formula to calculate VR : . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Formula to calculate I : . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Finally, when R = 220 Ohm, VR = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+And when R = 1.5K Ohm, VR = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.1.2 PSpice Simulation
+Set the simulation profile to bias-point. Moreover, enable both Enable Voltage Bias Display and Enable Current Bias Display to show the simulation results.
+Students are supposed to capture the screen in PSPice and present in this report.
+Simulation results (images):
+Your image goes here
+
+Electronic Device Component
+
+Page 41
+
+3.1.3 Comparison
+In this section, the theory calculations and PSpice simulations are summarized in the
+table bellow to compare the difference. Students are supposed to fill all information in
+the table.
+Theory
+VR VD I
+
+PSpice
+VR V I
+
+R = 220 Ohm
+R= 1.5K Ohm
+According to the above Exercise Results, give some comments about observation (between calculation results and simulation results): . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+..............................................................................................
+
+3.2 Diode in a series
+Similar to the previous exercise, determine the value of the voltage VD1 , VD2 , VD3 and the
+current I for the give circuit. Then, simulate again the circuit using PSpice. However, in
+this case, the practical diode model is used with the forward voltage is 0.7223V.
+
+Figure 2.15: Find the voltage and the current in the given circuit
+
+3.2.1 Theory Calculation
+Notes:
+Explanations, formulas, and equations are expected rather than only results.
+According to the: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+We have VD1 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+VD2 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+VD3 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Page 42
+
+HCMUT - Computer Engineering
+
+VR1 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Formula to calculate I : . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+I = ...........................................................................................
+
+3.2.2 PSpice Simulation
+Set the simulation profile to bias-point. Moreover, enable both Enable Voltage Bias Display and Enable Current Bias Display to show the simulation results.
+Students are supposed to capture the screen in PSPice and present in this report.
+Simulation results (images): Your image goes here
+
+3.2.3 Comparison
+VD1
+
+VD2
+
+VD3
+
+VR1
+
+I
+
+Calculation
+PSpice
+The circuit in this exercise is a simple solution to design a power supply by leveraging a
+voltage drop of a diode. For example, a SIM module used to send SMS messages has a
+good voltage supply at 4.3V. In this case, a diode is connected from a 5V supply (which is
+a very popular voltage) and then, connected to the module SIM. Not only used to protect
+the module to avoid reverse current, a diode is a low-cost solution to generate 4.3V power
+supply for the SIM module.
+
+3.3 Circuit Analysis with Diode
+In PSpice, some exercise in the lesson can be simulated to confirm the results. Although
+it is not exactly the same values (e.g. voltage and current), the simulation in PSpice is a
+tool to check your solution. An example simulation circuit having diode and resistors is
+depicted as follows:
+Students are proposed to analyse this circuit using practical diode model, with the dropdown voltage is around 0.7V. Then the simulation is run on PSpice to double check with
+your results.
+Electronic Device Component
+
+Page 43
+
+Figure 2.16: Circuit analysis with diode
+3.3.1 Theory calculation
+It is assumed that the voltage at anode and cathode of the diode V1 and V2 . It is assumed
+that the diode is in forward bias mode.
+According to the practical diode mode: V1 -V2 = 0.7V
+Students are proposed to construct the equations to determine the current across all the
+resistors.
+..............................................................................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+..............................................................................................
+3.3.2 PSpice simulation
+The bias point profile is used to run the simulation in this exercise. Students are proposed
+to capture the screen on PSpice showing the current and the voltage in the circuit.
+Your image(s) goes here
+
+Page 44
+
+HCMUT - Computer Engineering
+
+3.3.3 Comparison
+Students are supposed to summarized the results from both theory calculations and PSpice
+simulations and fill in the table bellow.
+
+I R1
+
+Theory Calculation
+I R2 I R3 I R4 V1
+
+V2
+
+I R1
+
+PSpice Simulation
+I R2 I R3 VR4 V1
+
+V2
+
+V = 8V
+V = 12V
+
+3.4 Clamper Diode Circuit
+The circuits in the figure below are known as clampers or DC restorers. The simulation on
+PSpice is also shown in the figure below. These circuits clamp a peak of a waveform to a
+specific DC level (e.g. 0.7V). Students are supposed to implement the circuit in PSPice to
+verify their results from therory calculation.
+
+Figure 2.17: Clamper circuit using diode
+
+3.4.1 Theory calculation
+In this part, it is assumed that the practical diode model is used. Present your equations
+to calculate three different currents, including I R1 , I R2 , I D2 and the voltage VR2 .
+..............................................................................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+..............................................................................................
+Electronic Device Component
+
+Page 45
+
+3.4.2 PSpice simulation
+The bias point simulation is run in PSpice. Capture your screen with voltage and current
+are enabled in the results.
+Your image(s) goes here
+
+3.4.3 Comparison
+Students are supposed to summarized the results from both theory calculations and PSpice
+simulations and fill in the table bellow.
+
+Theory calculation
+I R1 I R2 I D2 VR2
+
+PSpice simulation
+I R1 I R2 I D2 VR2
+
+V = 12V
+V = 20V
+What can be concluded from this table?
+
+3.5 Power switching circuit
+The corruption of main power can be crucial in many different situations. For instance,
+when power is abruptly lost, you might want to save some backup data on a micro-controller.
+Such use cases need some form of automatic switching circuit to a secondary power
+source, such as a battery.
+
+Page 46
+
+HCMUT - Computer Engineering
+
+Figure 2.18: Power switching circuit
+The simplest solution to this problem is simply to add a diode on each voltage source,
+as shown in the figure above. In this circuit, a 5V power supply can be used as a backup
+battery. Meanwhile, 9V is the main power supply for the system, which is demonstrated
+by a load resistor.
+However, the main issue with this naive approach is that the voltage drop (forward voltage) across the diode might be too high for the system. Thanks to Schottky diode, this
+can be mitigated by using extremely low forward voltage one, which can be found on the
+market (e.g. Schottky diode having drop-down voltage around 250mV at 1A).
+3.5.1 Theory calculation
+In this part, it is assumed that the practical diode model is used. Present your equations
+to calculate the current I D3 , I D4 , I RL and the volatage VRL in three different cases: only 5V,
+only 9V and both 5V and 9V for the power supply.
+..............................................................................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+..............................................................................................
+3.5.2 PSpice simulation
+The bias point simulation is run in PSpice with both power sources are enabled. Capture
+your screen with voltage and current are enabled in the results.
+Your image(s) goes here
+
+Electronic Device Component
+
+Page 47
+
+3.5.3 Comparison
+Students are supposed to summarized the results from both theory calculations and PSpice
+simulations and fill in the table bellow. Both power sources are connected to the circuit.
+
+Theory calculation
+I D1 I D2 I RL VRL
+
+PSpice simulation
+I D1 I D2 I RL VRL
+
+The last feature of the diodes in this circuit is to protect the reverse current in case both
+the power sources are switch on together. This use case is very popular when a microcontroller platform is programmed and powered by an USB port and also equipped with
+an adapter for external power supply.
+
+3.6 Half-wave Rectifier
+In this exercise, an alternating source is used to generate a half-wave rectifier output using
+a diode. The schematic of the simulation is given bellow:
+
+Figure 2.19: Half-wave Rectifier with Voltage Sin Source
+Step 1: Create the schematic.
+The new component in this schematic is the VSIN - Sine Voltage Source, which can be
+found in the Favorites list. This component has four different parameters are required to
+configure, as follows:
+• VOFF: Offset voltage of the source
+• VAMPL: Amplifier voltage of the source
+• FREQ: Frequency of the alternative current
+• AC: The source type (having value 0 or 1), to switch between VAC and VSIN. In VSIN
+source, the frequency can be modified.
+After setting these parameters are set to the values shown in the figure above, add a voltage
+probe to track the output by clicking on the Voltage/Level Marker on the PSpice Toolbar,
+as follows:
+Page 48
+
+HCMUT - Computer Engineering
+
+Figure 2.20: Add a voltage marker for simulation tracing
+Step 2: Create a new simulation profile. In order to generate the output signal of the
+voltage probe, the analysis type is set to Time Domain (Transient). Moreover, due to the
+frequency of the power source is 50Hz, the simulation time is set to 100ms, to depict 10
+cycles of the output signal. Finally, the resolution is set to 0.1ms in the Maximum Step
+size. The configuration windows for this simulation profile is presented as follows:
+
+Figure 2.21: Create Time Domain simulation profile
+Step 3: Run the simulation and observe the results Finally, run the simulation and the
+output on the simulation windows should be presented in the figure bellow:
+
+Figure 2.22: Wave form for the half-ware rectifier circuit
+
+Electronic Device Component
+
+Page 49
+
+3.6.1 Theory calculation
+Notes:
+Explanations, formulas, and equations are expected rather than only results.
+Approximation: Diodes have V f = 0.78V
+
+• Minimum Value of VR1 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+• Maximum Value of VR1 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+• Duration (millisecond) for a cycle of VR1 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.6.2 PSpice simulation
+Export your simulation results to Notepad for instance, and find the minimum and the
+maximum point of the output voltage, then fill your answer to the section bellow:
+
+• Minimum Value of VR1 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+• Maximum Value of VR1 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+• Duration (millisecond) for a cycle of VR1 = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+The tracking point can also be used directly on the simulation output windows, by the
+Toggle Cursor option on the toolbar. A Probe Cursor window is opened to update a tracking point.
+
+3.7 Full-wave Rectifier
+The following circuit is known as a full-wave bridge diode rectifier. Given that the transformer has the ratio N 1/N 2 = 10. Write the voltage difference equation V AB and VC D .
+After that, perform a time-domain (transient) analysis to check the equation you’ve written.
+Page 50
+
+HCMUT - Computer Engineering
+
+Figure 2.23: Full-wave bridge rectifier
+
+Tips 1: To place the component transformer:
+
+• Step 1: Go to Place > PSpice Component > Modeling Application...
+
+• Step 2: Browse for the Transformer component under the System Modules category
+as shown in the following Figure.
+
+Figure 2.24: Browse for the component Transformer
+
+• Step 3: Set the transformation ratio before placing as shown below.
+Electronic Device Component
+
+Page 51
+
+Figure 2.25: Setting the transformation ratio before placing the transformer
+Tips 2: The Voltage Differential Markers in PSPICE for TI:
+
+Figure 2.26: The Voltage Differential Markers in PSPICE for TI
+3.7.1 Theory calculation
+Notes:
+Explanations, formulas, and equations are expected rather than only results.
+Approximation: Diodes have V f = 0.7V
+
+V AB = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+VC D = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Page 52
+
+HCMUT - Computer Engineering
+
+3.7.2 Simulation
+The sinusoidal waveform of the voltage difference V AB has the period T = . . . . . . . . . . . . . . .
+If we want to perform the transient analysis in 10 periods of the waveform V AB , the required time would be: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+If we want the sampling rate to be as ten times higher than the frequency of the sinusoidal
+voltage difference V AB , the time interval between two consecutive sampling time points
+should be: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Now, create a simulation profile as guided in the Exercise 3.6 and perform your simulation to check it out!
+Simulation result: Show both V AB and VC D in a single plot window to illustrate the relationship between them. Don’t forget to use the cursors to prove that the equation you’ve
+written is correct.
+(Your image(s) goes here)
+
+Electronic Device Component
+
+Page 53
+
+3.8 Zener Diode as a Regulator
+The Zener diode has a well-defined reverse-breakdown voltage, at which it starts conducting current, and continues operating continuously in the reverse-bias mode without
+getting damaged. Additionally, the voltage drop across the diode remains constant over
+a wide range of voltages, a feature that makes Zener diodes suitable for use in voltage
+regulation.
+
+Figure 2.27: Electrical characteristic of Zener diode
+In this exercise, a Zener diode is used to design a voltage regular circuit. The schematic in
+this exercise is given following:
+
+Figure 2.28: Voltage regulator using Zener diode
+The Zener component in the circuit can be found in the Favourites list by search the keyword Zener. The full name of the component used in the circuit above is Zenner_P Zener Diode (parameterized). The default Zener voltage of this component is V Z = 5V .
+However, this value can be changed in the properties of the component (right click and
+select Edit Properties) for other simulations.
+
+Page 54
+
+HCMUT - Computer Engineering
+
+For theory calculation, students are supposed to provide equations for these values
+• IL = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+• IS = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+• IZ = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+• P RS = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+• PZ = . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Then, perform the calculation for the Zener diode voltage regulator with two different input voltage, including 8V and 12V power supply. Finally, run the simulations in PSpice (in
+Bias Point simulation profile) to confirm with the theory calculation.
+The results are summarized in the table bellow.
+IS
+
+Theory Calculation
+I L I Z VL P RS P Z
+
+IS
+
+PSpice Simulation
+I L I Z VL P RS P Z
+
+Vcc = 8V
+Vcc = 12V
+
+3.9 AC/DC Power Circuit Application
+In this exercise, we are building step by step an AC to DC voltage source transformation
+circuit. Students perform a time-domain simulation and write out comments and explanations for each step.
+Tips: To place a capacitor, go to Place > PSpice Component > Capacitor
+• Step 1: The rectified voltage without any filtering or being regulated.
+
+Figure 2.29: The rectified voltage without any filtering or being regulated
+Electronic Device Component
+
+Page 55
+
+Simulation result: Your image goes here
+
+Any comments or explanations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+........................................................................................
+• Step 2: Rectified voltage regulated with a 10µF capacitor.
+
+Figure 2.30: Rectified voltage regulated with a capacitor
+Page 56
+
+HCMUT - Computer Engineering
+
+Simulation result(s): Your image goes here
+
+Any comments or explanations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+........................................................................................
+• Step 3: Replace the 10µF capacitor with a 680µF one and re-run the simulation,
+recognize the change in the result and explain.
+Simulation result(s): Your image goes here
+
+Any comments or explanations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Electronic Device Component
+
+Page 57
+
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+........................................................................................
+• Step 4: Add a zener diode as in Figure 2.31 with the zener vol t ag e properties set to
+22 volt then simulate the circuit and comment or explain the result.
+
+Figure 2.31: Rectified voltage regulated with a capacitor and a zener diode
+Simulation result(s): Your image goes here
+
+Any comments or explanations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Page 58
+
+HCMUT - Computer Engineering
+
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+........................................................................................
+• Step 5: Change the zener vol t ag e properties of the zener diode to 20 voltage and
+then re-run the simulation. Comment and explain any changes in the result.
+Simulation result(s): Your image goes here
+
+Any comments or explanations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+............................................ ............................................
+........................................................................................
+
+Electronic Device Component
+
+Page 59
+
+3.10 Exercise 8: AC/DC Power Circuit Application With LM2596_5P0_TRANS
+Figure 2.32 describes an incomplete Texas Instrument LM2596 - 5.0 Switching Power Supply circuit. It lacks a Zener diode voltage regulator and an inductor reducing the voltage
+variation. At first, let perform a time-domain (transient) simulation with this incomplete
+circuit and figure out the problem with the output voltage (the voltage marker at R1).
+
+Figure 2.32: Incomplete switching power supply circuit
+
+Tips:
+To place the switching power supply IC LM2596 - 5.0, go to Place > PSpice Component...
+> Search... then search for LM2596_5P0_TRANS.
+But before you can perform a transient simulation and analysis with this circuit, we will
+need to pay attention to some minor settings on the simulation profile.
+
+Figure 2.33: Set the transient simulation duration
+Page 60
+
+HCMUT - Computer Engineering
+
+Figure 2.34: Set the transient calculation accuracy
+Simulation result(s): Your image goes here
+
+Any comments or explanations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+Electronic Device Component
+
+Page 61
+
+..............................................................................................
+Next, add an inductor 33µH to the circuit as shown in Figure 2.35 then re-run the simulation and explain any improvements.
+
+Figure 2.35: A 33µH inductor added to the circuit
+Simulation result(s): Your image goes here
+
+Any comments or explanations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+..............................................................................................
+Continue, add a 5V Zener diode to the circuit as shown in Figure 2.36, change the capacitor to 220µF , add a current marker to the Zener diode, re-run the simulation and explain
+the role of the Zener diode in the circuit.
+Page 62
+
+HCMUT - Computer Engineering
+
+Figure 2.36: A 5V Zener diode added to the circuit
+Simulation result(s): Your image goes here
+
+Any comments or explanations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+............................................... ...............................................
+..............................................................................................
+
+Electronic Device Component
+
+Page 63
+
+Page 64
+
+HCMUT - Computer Engineering
+
+

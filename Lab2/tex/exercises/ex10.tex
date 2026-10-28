@@ -1,0 +1,60 @@
+\section{Bài tập 10: Ứng dụng nguồn xung chuyển mạch dùng LM2596 (Switching Power Supply With LM2596)}
+
+Trong các hệ thống nguồn xung (switching mode power supply - SMPS), IC ổn áp hạ áp (Buck Regulator) như Texas Instruments LM2596-5.0 đóng vai trò cực kỳ quan trọng nhờ hiệu suất chuyển đổi năng lượng rất cao ($\ge 80\%$) và ít tỏa nhiệt so với các bộ ổn áp tuyến tính.
+
+Bài tập này khảo sát từng bước cấu trúc hoàn chỉnh của một bộ nguồn xung sử dụng IC LM2596-5.0, từ dạng mạch chưa hoàn chỉnh đến mạch chuẩn công nghiệp qua 3 giai đoạn.
+
+\subsection{Bước 1: Mạch nguồn xung chưa hoàn chỉnh (thiếu cuộn cảm và Diode xả)}
+\label{ssec:ex10:step1}
+Sơ đồ mạch ban đầu như hình bên dưới. Mạch chỉ gồm cầu chỉnh lưu nắn dòng với tụ $C_1 = 680\,\mu\text{F}$, đưa vào chân \texttt{VIN} của IC LM2596, chân \texttt{FEEDBACK} nối trực tiếp tới ngõ ra \texttt{OUTPUT}, và tải $R_1 = 1\text{ k}\Omega$ có tụ ngõ ra $C_2 = 10\,\mu\text{F}$. Mạch chưa có cuộn cảm tích trữ năng lượng và chưa có diode hoàn năng (catch/freewheeling diode).
+
+\given{ex10_given}{0.85\textwidth}{Sơ đồ mạch nguồn xung chưa hoàn chỉnh với LM2596 (Hình 2.32)}
+
+\subsubsection*{Cấu hình mô phỏng PSpice:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Lấy linh kiện \texttt{LM2596\_5P0\_TRANS} từ thư viện bằng cách vào: \texttt{Place > PSpice Component... > Search...}
+  \item Thiết lập cấu hình mô phỏng Transient:
+    \begin{itemize}
+      \item Thời gian mô phỏng (\textit{Run to time}): $50\text{ ms}$ hoặc $100\text{ ms}$.
+      \item Độ chính xác mô phỏng (\textit{Options}): điều chỉnh các tham số dung sai số như \texttt{RELTOL}, \texttt{VNTOL}, \texttt{ABSTOL} theo hướng dẫn để mô phỏng nguồn xung hội tụ tốt và không bị lỗi tràn tính toán.
+    \end{itemize}
+\end{itemize}
+
+\simresult
+\simfig{ex10_step1_sim}{Kết quả mô phỏng dạng sóng điện áp ngõ ra tại Bước 1}
+
+\noindent\textbf{Hiện tượng và giải thích nguyên nhân:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Điện áp ngõ ra tại $R_1$ dao động cực kỳ mạnh, không thể đạt được mức $5.0\text{ V}$ ổn định và xuất hiện các gai nhọn điện áp (spikes) rất lớn.
+  \item \textbf{Nguyên nhân:} IC LM2596 hoạt động theo nguyên lý điều chế độ rộng xung (PWM) đóng/cắt công tắc điện tử bên trong với tần số cao ($150\text{ kHz}$). Khi thiếu cuộn cảm tích lũy năng lượng và diode dẫn xả, dòng điện nạp vào tụ $C_2$ bị đóng cắt đột ngột, mạch không thể lọc trung bình hóa điện áp và vòng phản hồi (feedback) bị mất ổn định.
+\end{itemize}
+
+\subsection{Bước 2: Bổ sung cuộn cảm \texorpdfstring{$L_1 = 33\,\mu\text{H}$}{L1 = 33uH}}
+Thêm cuộn cảm $L_1 = 33\,\mu\text{H}$ nối tiếp giữa chân ngõ ra \texttt{OUTPUT} của IC và nút phản hồi \texttt{FEEDBACK} / tải $R_1$.
+
+\given{ex10_step2_given}{0.85\textwidth}{Mạch được bổ sung cuộn cảm $L_1 = 33\,\mu\text{H}$ (Hình 2.35)}
+
+\simresult
+\simfig{ex10_step2_sim}{Kết quả mô phỏng dạng sóng ngõ ra sau khi thêm cuộn cảm $L_1 = 33\,\mu\text{H}$}
+
+\noindent\textbf{Giải thích sự cải thiện:}
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Tác dụng của cuộn cảm $L_1$:} Cuộn cảm có đặc tính chống lại sự biến thiên đột ngột của dòng điện ($v_L = L \frac{di}{dt}$). Trong giai đoạn công tắc bên trong IC đóng (ON), cuộn cảm tích lũy năng lượng dưới dạng từ trường và hạn chế dòng điện tăng vọt, giúp làm mịn dòng nạp vào tải và tụ điện ngõ ra.
+  \item Kết quả là biên độ gai nhọn điện áp đầu ra giảm đi rõ rệt, dạng sóng ngõ ra bắt đầu có xu hướng tiến dần về vùng điện áp ổn định.
+  \item Tuy nhiên, khi công tắc bên trong IC ngắt (OFF), dòng điện trong cuộn cảm bị đứt đoạn đột ngột nếu không có đường thoát, vẫn gây ra hiện tượng quá áp ngược và nhiễu lớn.
+\end{itemize}
+
+\subsection{Bước 3: Bổ sung Diode Zener \texorpdfstring{$5\text{ V}$}{5V} và tăng tụ \texorpdfstring{$C_2 = 220\,\mu\text{F}$}{C2 = 220uF}}
+Hoàn thiện mạch bằng cách mắc một Diode Zener $5\text{ V}$ ($D_5$) phân cực ngược tại ngõ ra, thay tụ điện ngõ ra thành $C_2 = 220\,\mu\text{F}$, và đặt đầu dò dòng điện (\textbf{Current Marker}) tại diode Zener.
+
+\given{ex10_step3_given}{0.85\textwidth}{Mạch hoàn chỉnh với Diode Zener và tụ lọc $C_2 = 220\,\mu\text{F}$ (Hình 2.36)}
+
+\simresult
+\simfig{ex10_step3_sim}{Kết quả mô phỏng dạng sóng ngõ ra và dòng qua Diode Zener tại Bước 3}
+
+\noindent\textbf{Giải thích vai trò của các linh kiện bổ sung:}
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Vai trò của Diode (Freewheeling/Catch Diode):} Trong chu kỳ công tắc bán dẫn của LM2596 ngắt (OFF), từ trường tích lũy trong cuộn cảm $L_1$ suy giảm sinh ra suất điện động tự cảm chống lại sự sụt giảm dòng. Diode mở ra tạo thành một đường khép kín (vòng xả tự do) cho dòng cuộn cảm tiếp tục chạy qua tải mà không bị ngắt quãng, đồng thời ghim điện thế và bảo vệ IC khỏi các xung điện áp âm phá hủy.
+  \item \textbf{Vai trò của tụ lọc $C_2 = 220\,\mu\text{F}$:} Tụ dung lượng lớn kết hợp cùng cuộn cảm $L_1$ tạo thành bộ lọc thông thấp LC bậc 2 lý tưởng, triệt tiêu gần như hoàn toàn thành phần sóng hài tần số cao $150\text{ kHz}$ của xung PWM.
+  \item \textbf{Kết quả tổng thể:} Điện áp ngõ ra được ghìm phẳng hoàn hảo ở mức chuẩn $5.00\text{ Vdc}$, đáp ứng tiêu chuẩn cung cấp nguồn một chiều ổn định và tin cậy cho toàn bộ hệ thống số.
+\end{itemize}
