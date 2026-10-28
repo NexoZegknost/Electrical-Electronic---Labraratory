@@ -1,4 +1,4 @@
-\section{Bài tập 6: Mạch chỉnh lưu nửa sóng (Half-wave Rectifier)}
+\section{Bài tập 6: Half-wave Rectifier}
 
 Cho mạch chỉnh lưu nửa sóng như hình bên dưới. Mạch gồm một nguồn điện áp xoay chiều hình sin $V_1$ (linh kiện \texttt{VSIN}), một diode $D_1$ (\texttt{Dbreak}) và điện trở tải $R_1 = 1\text{ k}\Omega$.
 
@@ -60,14 +60,24 @@ Biểu thức điện áp nguồn tức thời:
   \item Tạo hồ sơ mô phỏng mới với \textbf{Analysis Type}: \texttt{Time Domain (Transient)}.
   \item Cài đặt thời gian mô phỏng:
     \begin{itemize}
-      \item \textbf{Run to time}: $100\text{ ms}$ (tương ứng với 5 chu kỳ đầy đủ của tín hiệu $50\text{ Hz}$).
+      \item \textbf{Run to time}: $100\text{ ms}$ (tương ứng với 5 chu kỳ của tín hiệu $50\text{ Hz}$).
       \item \textbf{Maximum step size}: $0.1\text{ ms}$ (để dạng sóng hiển thị mịn và chính xác).
     \end{itemize}
   \item Chạy mô phỏng (nhấn F11) và sử dụng công cụ \textbf{Toggle Cursor} trên cửa sổ Probe để đọc tọa độ điểm cực đại, điểm cực tiểu và khoảng thời gian một chu kỳ.
 \end{itemize}
 
 \simresult
-\simfig{ex6_sim}{Dạng sóng điện áp ngõ ra của mạch chỉnh lưu nửa sóng trong miền thời gian}
+\noindent Các giá trị cực đại, cực tiểu và chu kỳ được đọc bằng công cụ \textbf{Toggle Cursor} trên cửa sổ Probe (cửa sổ \textit{Probe Cursor}).
+\simfig[8cm]{ex6_sim1}{Dạng sóng điện áp ngõ ra $V_{R1}$ trong miền thời gian; con trỏ 1 đặt tại đoạn phẳng ($t = 15\text{ ms}$, $V = -22\text{ nV} \approx 0$) và con trỏ 2 đặt tại đỉnh ($t = 25\text{ ms}$, $V = 21.261\text{ V}$)}
+
+\noindent Từ dạng sóng và các con trỏ ở trên, các giá trị của $V_{R1}$ đọc được từ mô phỏng như sau:
+\begin{dapsobox}[title=Kết quả mô phỏng]
+  \begin{itemize}[leftmargin=1.5em]
+    \item Giá trị nhỏ nhất của $V_{R1}$ (\textit{Minimum Value of $V_{R1}$}) $\approx 0\text{ V}$ (con trỏ 1 tại $t = 15\text{ ms}$ đọc được $-22\text{ nV}$).
+    \item Giá trị lớn nhất của $V_{R1}$ (\textit{Maximum Value of $V_{R1}$}) $= 21.261\text{ V}$ (con trỏ 2 tại $t = 25\text{ ms}$).
+    \item Thời gian một chu kỳ của $V_{R1}$ (\textit{Duration for a cycle of $V_{R1}$}) $= 20\text{ ms}$ (các đỉnh liên tiếp nằm tại $5, 25, 45, 65, 85\text{ ms}$ trên đồ thị).
+  \end{itemize}
+\end{dapsobox}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
@@ -78,7 +88,7 @@ Biểu thức điện áp nguồn tức thời:
     \textbf{Phương pháp} & \textbf{Giá trị nhỏ nhất $V_{\min}$ (V)} & \textbf{Giá trị lớn nhất $V_{\max}$ (V)} & \textbf{Chu kỳ $T$ (ms)} \\
     \midrule
     Lý thuyết (Theory) & $0.00$  & $21.22$ & $20.0$ \\
-    Mô phỏng (PSpice)  & --      & --      & --     \\
+    Mô phỏng (PSpice)  & $\approx 0$ & $21.261$ & $20.0$ \\
     \bottomrule
   \end{tabular}
 \end{table}

@@ -17,6 +17,7 @@
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{booktabs}
+\usepackage{colortbl}
 \usepackage{array}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=black]{hyperref}
 \usepackage[most]{tcolorbox}
@@ -49,17 +50,30 @@
 
 \newcommand{\notes}{}
 
-\newcommand{\figslot}[3]{
+% Ô dán ảnh: tự hiện ảnh nếu tệp tồn tại, nếu chưa có thì hiện khung màu cam để biết chỗ dán
+\newcommand{\figslot}[4]{%
   \begin{figure}[H]
     \centering
-    \IfFileExists{#1}{\includegraphics[#2]{#1}}{
-      \fbox{\parbox[c][5cm][c]{0.8\textwidth}{\centering\itshape Chèn ảnh vào đây\\{\small(\detokenize{#1})}}}}
+    \IfFileExists{#1}{\includegraphics[#2]{#1}}{%
+      \begin{tcolorbox}[enhanced,center,width=0.92\linewidth,height=#4,valign=center,halign=center,
+          colback=yellow!8,colframe=orange!80!black,boxrule=1pt,arc=1.5mm]
+        \textbf{Ô DÁN ẢNH}\\[2pt]
+        {\small\itshape Lưu ảnh thành tệp\\ \texttt{\detokenize{#1}}\\ (khung này tự biến mất khi có ảnh)}
+      \end{tcolorbox}}%
     \caption{#3}
   \end{figure}}
 
-\newcommand{\given}[3]{\figslot{images/given/#1.png}{width=#2,height=0.32\textheight,keepaspectratio}{#3}}
-\newcommand{\simfig}[2]{\figslot{images/sim/#1.png}{width=\linewidth,height=0.8\textheight,keepaspectratio}{#2}}
-\newcommand{\drawfig}[2]{\figslot{images/draw/#1.png}{width=0.9\linewidth,height=0.45\textheight,keepaspectratio}{#2}}
+\newcommand{\given}[3]{\figslot{images/given/#1.png}{width=#2,height=0.32\textheight,keepaspectratio}{#3}{5cm}}
+% \simfig[chiều cao ô]{tên tệp trong images/sim}{chú thích}
+\newcommand{\simfig}[3][6.5cm]{\figslot{images/sim/#2.png}{width=\linewidth,height=0.5\textheight,keepaspectratio}{#3}{#1}}
+\newcommand{\drawfig}[2]{\figslot{images/draw/#1.png}{width=0.9\linewidth,height=0.45\textheight,keepaspectratio}{#2}{4cm}}
+
+% Ô số liệu mô phỏng trong bảng: thay \fillcell bằng giá trị đọc được
+\newcommand{\fillcell}{\fcolorbox{orange!80!black}{yellow!25}{\rule{0pt}{1.3em}\rule{1.05cm}{0pt}}}
+
+% Ô ghi nhận xét / quan sát của sinh viên
+\newtcolorbox{notebox}[2][]{enhanced,colback=yellow!8,colframe=orange!80!black,fonttitle=\bfseries,
+  title={#2},boxrule=0.8pt,arc=1.5mm,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
 
 \newcommand{\simresult}{\par\noindent\textbf{\textit{Kết quả mô phỏng (hình ảnh):}}\par}
 

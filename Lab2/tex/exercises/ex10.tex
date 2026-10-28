@@ -1,12 +1,12 @@
-\section{Bài tập 10: Ứng dụng nguồn xung chuyển mạch dùng LM2596 (Switching Power Supply With LM2596)}
+\section{Bài tập 10: Switching Power Supply With LM2596}
 
 Trong các hệ thống nguồn xung (switching mode power supply - SMPS), IC ổn áp hạ áp (Buck Regulator) như Texas Instruments LM2596-5.0 đóng vai trò cực kỳ quan trọng nhờ hiệu suất chuyển đổi năng lượng rất cao ($\ge 80\%$) và ít tỏa nhiệt so với các bộ ổn áp tuyến tính.
 
 Bài tập này khảo sát từng bước cấu trúc hoàn chỉnh của một bộ nguồn xung sử dụng IC LM2596-5.0, từ dạng mạch chưa hoàn chỉnh đến mạch chuẩn công nghiệp qua 3 giai đoạn.
 
-\subsection{Bước 1: Mạch nguồn xung chưa hoàn chỉnh (thiếu cuộn cảm và Diode xả)}
+\subsection{Bước 1: Mạch nguồn xung chưa hoàn chỉnh (thiếu cuộn cảm và Zener ổn áp)}
 \label{ssec:ex10:step1}
-Sơ đồ mạch ban đầu như hình bên dưới. Mạch chỉ gồm cầu chỉnh lưu nắn dòng với tụ $C_1 = 680\,\mu\text{F}$, đưa vào chân \texttt{VIN} của IC LM2596, chân \texttt{FEEDBACK} nối trực tiếp tới ngõ ra \texttt{OUTPUT}, và tải $R_1 = 1\text{ k}\Omega$ có tụ ngõ ra $C_2 = 10\,\mu\text{F}$. Mạch chưa có cuộn cảm tích trữ năng lượng và chưa có diode hoàn năng (catch/freewheeling diode).
+Sơ đồ mạch ban đầu như hình bên dưới. Mạch chỉ gồm cầu chỉnh lưu nắn dòng với tụ $C_1 = 680\,\mu\text{F}$, đưa vào chân \texttt{VIN} của IC LM2596, chân \texttt{FEEDBACK} nối trực tiếp tới ngõ ra \texttt{OUTPUT}, và tải $R_1 = 1\text{ k}\Omega$ có tụ ngõ ra $C_2 = 10\,\mu\text{F}$. Mạch chưa có cuộn cảm lọc ở ngõ ra và chưa có diode Zener ổn áp.
 
 \given{ex10_given}{0.85\textwidth}{Sơ đồ mạch nguồn xung chưa hoàn chỉnh với LM2596 (Hình 2.32)}
 
@@ -15,7 +15,7 @@ Sơ đồ mạch ban đầu như hình bên dưới. Mạch chỉ gồm cầu ch
   \item Lấy linh kiện \texttt{LM2596\_5P0\_TRANS} từ thư viện bằng cách vào: \texttt{Place > PSpice Component... > Search...}
   \item Thiết lập cấu hình mô phỏng Transient:
     \begin{itemize}
-      \item Thời gian mô phỏng (\textit{Run to time}): $50\text{ ms}$ hoặc $100\text{ ms}$.
+      \item Thời gian mô phỏng (\textit{Run to time}): $10\text{ ms}$ (đủ để quan sát quá trình khởi động và trạng thái xác lập của nguồn xung ở cả 3 bước).
       \item Độ chính xác mô phỏng (\textit{Options}): điều chỉnh các tham số dung sai số như \texttt{RELTOL}, \texttt{VNTOL}, \texttt{ABSTOL} theo hướng dẫn để mô phỏng nguồn xung hội tụ tốt và không bị lỗi tràn tính toán.
     \end{itemize}
 \end{itemize}
@@ -23,10 +23,19 @@ Sơ đồ mạch ban đầu như hình bên dưới. Mạch chỉ gồm cầu ch
 \simresult
 \simfig{ex10_step1_sim}{Kết quả mô phỏng dạng sóng điện áp ngõ ra tại Bước 1}
 
-\noindent\textbf{Hiện tượng và giải thích nguyên nhân:}
+\begin{notebox}{Quan sát và số liệu đọc từ mô phỏng, Bước 1}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Điện áp ngõ ra bằng $0\text{ V}$ trong khoảng $0.9\text{ ms}$ đầu, sau đó tăng gần tuyến tính lên mức cao hơn $5\text{ V}$.
+    \item Đỉnh vọt lố đọc bằng con trỏ: $V_{\text{peak}} = 5.6515\text{ V}$ tại $t = 3.892\text{ ms}$ (cao hơn $5\text{ V}$ khoảng $0.65\text{ V}$, tương đương $13\%$).
+    \item Sau đỉnh điện áp giảm xuống đáy $V_{\text{dip}} = 4.8336\text{ V}$ tại $t = 5.318\text{ ms}$, rồi ổn định quanh $5.0\text{ V}$ từ khoảng $5.5\text{ ms}$.
+  \end{itemize}
+\end{notebox}
+
+\noindent\textbf{Hiện tượng và giải thích nguyên nhân (đối chiếu với đồ thị mô phỏng):}
 \begin{itemize}[leftmargin=1.5em]
-  \item Điện áp ngõ ra tại $R_1$ dao động cực kỳ mạnh, không thể đạt được mức $5.0\text{ V}$ ổn định và xuất hiện các gai nhọn điện áp (spikes) rất lớn.
-  \item \textbf{Nguyên nhân:} IC LM2596 hoạt động theo nguyên lý điều chế độ rộng xung (PWM) đóng/cắt công tắc điện tử bên trong với tần số cao ($150\text{ kHz}$). Khi thiếu cuộn cảm tích lũy năng lượng và diode dẫn xả, dòng điện nạp vào tụ $C_2$ bị đóng cắt đột ngột, mạch không thể lọc trung bình hóa điện áp và vòng phản hồi (feedback) bị mất ổn định.
+  \item Điện áp ngõ ra tại $R_1$ không lên $5.0\text{ V}$ một cách êm mà bị \textbf{vọt lố} (overshoot) tới $5.65\text{ V}$, rồi tụt xuống $4.83\text{ V}$ trước khi ổn định quanh $5\text{ V}$ (đối chiếu với đồ thị mô phỏng).
+  \item \textbf{Nguyên nhân:} chân \texttt{OUTPUT} của LM2596 là nút chuyển mạch, xuất ra chuỗi xung đóng/cắt tần số cao (khoảng $150\text{ kHz}$) có biên độ cỡ điện áp vào. Khi không có cuộn cảm, các xung này nạp trực tiếp vào tụ $C_2$ và tải, dòng nạp không được giới hạn và làm trơn; đồng thời tín hiệu hồi tiếp (\texttt{FEEDBACK}) lấy trực tiếp từ nút xung nên vòng điều khiển phản ứng trễ, gây vọt lố rồi mới ổn định.
+  \item Mạch cũng chưa có Zener ghim áp ở ngõ ra nên đỉnh vọt lố ($5.65\text{ V} > 5\text{ V}$) truyền thẳng ra tải, có thể gây quá áp cho tải.
 \end{itemize}
 
 \subsection{Bước 2: Bổ sung cuộn cảm \texorpdfstring{$L_1 = 33\,\mu\text{H}$}{L1 = 33uH}}
@@ -37,11 +46,19 @@ Thêm cuộn cảm $L_1 = 33\,\mu\text{H}$ nối tiếp giữa chân ngõ ra \te
 \simresult
 \simfig{ex10_step2_sim}{Kết quả mô phỏng dạng sóng ngõ ra sau khi thêm cuộn cảm $L_1 = 33\,\mu\text{H}$}
 
+\begin{notebox}{Quan sát và số liệu đọc từ mô phỏng, Bước 2}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Điện áp ngõ ra bắt đầu tăng sau khoảng $0.9\text{ ms}$ và đạt mức $5\text{ V}$ chỉ trong khoảng $0.9\text{ ms}$ (nhanh hơn rõ rệt so với Bước 1).
+    \item Đỉnh vọt lố đọc bằng con trỏ: $V_{\text{peak}} = 5.0745\text{ V}$ tại $t = 1.812\text{ ms}$ (cao hơn $5\text{ V}$ khoảng $0.07\text{ V}$, tương đương $1.5\%$).
+    \item Đáy sau vọt lố: $V_{\text{dip}} = 4.9624\text{ V}$ tại $t = 2.045\text{ ms}$; sau đó điện áp ổn định quanh $5.0\text{ V}$.
+  \end{itemize}
+\end{notebox}
+
 \noindent\textbf{Giải thích sự cải thiện:}
 \begin{itemize}[leftmargin=1.5em]
   \item \textbf{Tác dụng của cuộn cảm $L_1$:} Cuộn cảm có đặc tính chống lại sự biến thiên đột ngột của dòng điện ($v_L = L \frac{di}{dt}$). Trong giai đoạn công tắc bên trong IC đóng (ON), cuộn cảm tích lũy năng lượng dưới dạng từ trường và hạn chế dòng điện tăng vọt, giúp làm mịn dòng nạp vào tải và tụ điện ngõ ra.
-  \item Kết quả là biên độ gai nhọn điện áp đầu ra giảm đi rõ rệt, dạng sóng ngõ ra bắt đầu có xu hướng tiến dần về vùng điện áp ổn định.
-  \item Tuy nhiên, khi công tắc bên trong IC ngắt (OFF), dòng điện trong cuộn cảm bị đứt đoạn đột ngột nếu không có đường thoát, vẫn gây ra hiện tượng quá áp ngược và nhiễu lớn.
+  \item Kết quả là vọt lố giảm từ $5.65\text{ V}$ (Bước 1) xuống $5.07\text{ V}$, thời gian ổn định rút ngắn từ khoảng $5.5\text{ ms}$ xuống khoảng $2\text{ ms}$, dạng sóng ngõ ra tiến nhanh và êm về $5\text{ V}$.
+  \item Tuy nhiên, ngõ ra vẫn còn vọt lố nhỏ khi khởi động và chưa có linh kiện ghim áp ở ngõ ra để bảo vệ tải khỏi quá áp (được bổ sung ở Bước 3).
 \end{itemize}
 
 \subsection{Bước 3: Bổ sung Diode Zener \texorpdfstring{$5\text{ V}$}{5V} và tăng tụ \texorpdfstring{$C_2 = 220\,\mu\text{F}$}{C2 = 220uF}}
@@ -52,9 +69,32 @@ Hoàn thiện mạch bằng cách mắc một Diode Zener $5\text{ V}$ ($D_5$) p
 \simresult
 \simfig{ex10_step3_sim}{Kết quả mô phỏng dạng sóng ngõ ra và dòng qua Diode Zener tại Bước 3}
 
-\noindent\textbf{Giải thích vai trò của các linh kiện bổ sung:}
+\begin{notebox}{Quan sát và số liệu đọc từ mô phỏng, Bước 3}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Điện áp ngõ ra tăng sau khoảng $0.9\text{ ms}$, đạt mức $5\text{ V}$ sau khoảng $2\text{ ms}$ và giữ ổn định đến hết thời gian mô phỏng.
+    \item Đỉnh điện áp đọc bằng con trỏ: $V_{\text{peak}} = 5.0560\text{ V}$ tại $t = 2.102\text{ ms}$ (cao hơn $5\text{ V}$ khoảng $0.06\text{ V}$, nhỏ hơn mức $5.0745\text{ V}$ ở Bước 2).
+    \item Giá trị xác lập: $V_{\text{out}} = 4.9915\text{ V}$ tại $t = 9.5\text{ ms}$.
+    \item Dòng qua Zener $I(D_5{:}2)$ chỉ cỡ femtoampe ($-59.8\text{ fA}$ và $-147.5\text{ fA}$), tức $I_Z \approx 0$: Zener $5\text{ V}$ gần như không dẫn trong suốt quá trình mô phỏng.
+  \end{itemize}
+\end{notebox}
+
+\noindent\textbf{Giải thích vai trò của Diode Zener và các linh kiện bổ sung:}
 \begin{itemize}[leftmargin=1.5em]
-  \item \textbf{Vai trò của Diode (Freewheeling/Catch Diode):} Trong chu kỳ công tắc bán dẫn của LM2596 ngắt (OFF), từ trường tích lũy trong cuộn cảm $L_1$ suy giảm sinh ra suất điện động tự cảm chống lại sự sụt giảm dòng. Diode mở ra tạo thành một đường khép kín (vòng xả tự do) cho dòng cuộn cảm tiếp tục chạy qua tải mà không bị ngắt quãng, đồng thời ghim điện thế và bảo vệ IC khỏi các xung điện áp âm phá hủy.
-  \item \textbf{Vai trò của tụ lọc $C_2 = 220\,\mu\text{F}$:} Tụ dung lượng lớn kết hợp cùng cuộn cảm $L_1$ tạo thành bộ lọc thông thấp LC bậc 2 lý tưởng, triệt tiêu gần như hoàn toàn thành phần sóng hài tần số cao $150\text{ kHz}$ của xung PWM.
-  \item \textbf{Kết quả tổng thể:} Điện áp ngõ ra được ghìm phẳng hoàn hảo ở mức chuẩn $5.00\text{ Vdc}$, đáp ứng tiêu chuẩn cung cấp nguồn một chiều ổn định và tin cậy cho toàn bộ hệ thống số.
+  \item \textbf{Diode Zener $5\text{ V}$ ($D_5$):} mắc ngược từ ngõ ra xuống mass, song song với tải, đóng vai trò ổn áp/ghim áp. Khi điện áp ngõ ra có xu hướng vượt $V_Z = 5\text{ V}$ (do gai điện áp hoặc gợn sóng của xung PWM), Zener bị đánh thủng và dẫn dòng $I_Z$ xuống mass, giữ điện áp tải gần $5\text{ V}$ và bảo vệ tải khỏi quá áp. Khi điện áp dưới $5\text{ V}$, Zener không dẫn ($I_Z \approx 0$); đầu dò dòng (\textit{Current Marker}) tại $D_5$ trong mô phỏng cho thấy $I_Z$ chỉ cỡ femtoampe vì điện áp ngõ ra chỉ vọt lên tối đa $5.056\text{ V}$ rồi giữ dưới $5\text{ V}$, nên Zener đóng vai trò dự phòng bảo vệ quá áp chứ chưa phải thành phần dẫn dòng chính.
+  \item \textbf{Tụ lọc $C_2 = 220\,\mu\text{F}$:} kết hợp với cuộn cảm $L_1$ tạo bộ lọc thông thấp LC, làm trơn thành phần xung tần số cao $\approx 150\text{ kHz}$; dung lượng lớn hơn giúp giảm gợn sóng ngõ ra.
+  \item \textbf{Kết quả tổng thể (đối chiếu với mô phỏng):} điện áp ngõ ra ổn định xấp xỉ $5\text{ V}$ ($4.99\text{ V}$), vọt lố khởi động chỉ còn $0.06\text{ V}$ ($\approx 1.1\%$).
 \end{itemize}
+
+\begin{table}[H]
+  \centering
+  \caption{Tổng hợp điện áp ngõ ra tại $R_1$ qua 3 bước (số liệu đọc từ PSpice)}
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Bước} & $V_{\text{out}}\text{ xác lập (V)}$ & Biên độ gai/gợn $\text{(V)}$ & $I_Z\text{ lớn nhất (mA)}$ \\
+    \midrule
+    1: chưa có $L_1$, $D_5$          & $\approx 5.0$ & $0.65$ (đỉnh $5.652$) & --- \\
+    2: thêm $L_1 = 33\,\mu\text{H}$  & $\approx 5.0$ & $0.07$ (đỉnh $5.074$) & --- \\
+    3: thêm $D_5$, $C_2 = 220\,\mu\text{F}$ & $\approx 5.0$ ($4.99$) & $0.06$ (đỉnh $5.056$) & $\approx 0$ (cỡ fA) \\
+    \bottomrule
+  \end{tabular}
+\end{table}

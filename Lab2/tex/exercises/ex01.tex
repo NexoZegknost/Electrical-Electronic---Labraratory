@@ -1,13 +1,14 @@
-\section{Bài tập 1: Mô hình Diode hoàn chỉnh (Complete Diode Model)}
+\section{Bài tập 1: Complete diode model}
 
 Cho mạch điện như hình bên dưới gồm nguồn điện áp một chiều $V_1 = 5\text{ V}$, một điện trở $R_1$ và một diode phân cực thuận. Hãy xác định điện áp trên điện trở $V_R$, điện áp trên diode $V_D$ và dòng điện $I$ trong mạch với hai giá trị khác nhau của $R_1$:
 \begin{itemize}[leftmargin=1.5em]
   \item Trường hợp 1: $R_1 = 220\,\Omega$.
   \item Trường hợp 2: $R_1 = 1.5\text{ k}\Omega = 1500\,\Omega$.
 \end{itemize}
-Giả thiết sử dụng \textbf{mô hình diode hoàn chỉnh (complete diode model)} với điện áp phân cực thuận ngưỡng $V_F = 0.7\text{ V}$ và điện trở trong động $r_d = 50\,\Omega$. Sau đó, tiến hành mô phỏng trên PSpice để kiểm chứng và so sánh kết quả.
 
 \given{ex1_given}{0.5\textwidth}{Mạch điện mô phỏng cơ bản với Diode (Hình 2.1)}
+
+Giả thiết sử dụng \textbf{mô hình diode hoàn chỉnh (complete diode model)} với điện áp phân cực thuận ngưỡng $V_F = 0.7\text{ V}$ và điện trở trong động $r_d = 50\,\Omega$. Sau đó, tiến hành mô phỏng trên PSpice để kiểm chứng và so sánh kết quả.
 
 \subsection{Tính toán lý thuyết}
 Trong mô hình diode hoàn chỉnh, khi diode phân cực thuận, diode được thay thế tương đương bằng một nguồn sụt áp $V_F = 0.7\text{ V}$ nối tiếp với điện trở nội $r_d = 50\,\Omega$.
@@ -36,14 +37,14 @@ Trong mô hình diode hoàn chỉnh, khi diode phân cực thuận, diode đư�
 \begin{align*}
   I &= \frac{4.3}{220 + 50} = \frac{4.3}{270} \approx 0.01593\text{ A} = 15.93\text{ mA} \\
   V_R &= 15.926\text{ mA} \times 220\,\Omega \approx 3.504\text{ V} \\
-  V_D &= 5\text{ V} - 3.504\text{ V} = 1.496\text{ V} \quad (\text{hoặc } 0.7\text{ V} + 15.926\text{ mA} \times 50\,\Omega = 1.496\text{ V})
+  V_D &= 5\text{ V} - 3.504\text{ V} = 1.496\text{ V}
 \end{align*}
 
 \subsubsection*{2. Khi $R_1 = 1.5\text{ k}\Omega = 1500\,\Omega$:}
 \begin{align*}
   I &= \frac{4.3}{1500 + 50} = \frac{4.3}{1550} \approx 0.002774\text{ A} = 2.774\text{ mA} \\
   V_R &= 2.774\text{ mA} \times 1500\,\Omega \approx 4.161\text{ V} \\
-  V_D &= 5\text{ V} - 4.161\text{ V} = 0.839\text{ V} \quad (\text{hoặc } 0.7\text{ V} + 2.774\text{ mA} \times 50\,\Omega = 0.839\text{ V})
+  V_D &= 5\text{ V} - 4.161\text{ V} = 0.839\text{ V}
 \end{align*}
 
 \begin{dapsobox}
@@ -55,14 +56,12 @@ Trong mô hình diode hoàn chỉnh, khi diode phân cực thuận, diode đư�
 
 \subsection{Mô phỏng PSpice}
 \begin{itemize}[leftmargin=1.5em]
-  \item Tạo project mới, lấy linh kiện \texttt{Dbreak}, \texttt{VDC} ($5\text{ V}$), điện trở $R_1$ và mass \texttt{0}.
-  \item Tạo Simulation Profile với kiểu phân tích \textbf{Bias Point}.
-  \item Bật tính năng hiển thị điện áp (\textbf{Enable Voltage Bias Display}) và dòng điện (\textbf{Enable Current Bias Display}).
-  \item Lần lượt gán giá trị $R_1 = 220\,\Omega$ và $R_1 = 1.5\text{ k}\Omega$ để thực hiện mô phỏng.
+  \item Tạo hồ sơ mô phỏng \textbf{Bias Point}, bật \textit{Enable Bias Voltage Display} và \textit{Enable Bias Current Display} để hiển thị điện áp, dòng điện trên sơ đồ.
+  \item Để khớp mô hình diode hoàn chỉnh của đề, tạo model riêng \texttt{D50} bằng dòng lệnh \texttt{.model D50 D(Rs=50)} (điện trở nội $R_s = 50\,\Omega$, các tham số khác giữ mặc định của \texttt{Dbreak}: $I_S = 10^{-14}\text{ A}$, $n = 1$) và gán cho diode $D_1$. Chạy lần lượt với $R_1 = 220\,\Omega$ và $R_1 = 1.5\text{ k}\Omega$, chụp màn hình từng trường hợp.
 \end{itemize}
-
 \simresult
-\simfig{ex1_sim}{Kết quả mô phỏng Bias Point của Bài tập 1 ($R_1 = 220\,\Omega$ và $R_1 = 1.5\text{ k}\Omega$)}
+\simfig{ex1_sim1}{Kết quả mô phỏng Bias Point của Bài tập 1 với $R_1 = 220\,\Omega$}
+\simfig{ex1_sim2}{Kết quả mô phỏng Bias Point của Bài tập 1 với $R_1 = 1.5\text{ k}\Omega$}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
@@ -74,15 +73,16 @@ Trong mô hình diode hoàn chỉnh, khi diode phân cực thuận, diode đư�
     \cmidrule(lr){2-4} \cmidrule(lr){5-7}
     & $V_R\text{ (V)}$ & $V_D\text{ (V)}$ & $I\text{ (mA)}$ & $V_R\text{ (V)}$ & $V_D\text{ (V)}$ & $I\text{ (mA)}$ \\
     \midrule
-    $R_1 = 220\,\Omega$ & $3.504$ & $1.496$ & $15.93$ & -- & -- & -- \\
-    $R_1 = 1.5\text{ k}\Omega$ & $4.161$ & $0.839$ & $2.77$ & -- & -- & -- \\
+    $R_1 = 220\,\Omega$ & $3.504$ & $1.496$ & $15.93$ & $3.482$ & $1.518$ & $15.83$ \\
+    $R_1 = 1.5\text{ k}\Omega$ & $4.161$ & $0.839$ & $2.774$ & $4.179$ & $0.821$ & $2.786$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\noindent\textbf{Nhận xét:}
-\begin{itemize}[leftmargin=1.5em]
-  \item Khi giá trị điện trở $R_1$ nhỏ ($220\,\Omega$), dòng điện qua mạch lớn dẫn đến độ sụt áp trên điện trở nội $r_d$ của diode tăng đáng kể, làm cho $V_D$ tăng lên cao hơn so với mức $0.7\text{ V}$ tiêu chuẩn.
-  \item Khi điện trở $R_1$ tăng lên $1.5\text{ k}\Omega$, dòng điện trong mạch giảm, sụt áp trên $r_d$ giảm rõ rệt và điện áp trên diode tiệm cận dần về mức sụt áp phân cực thuận lý tưởng ($0.7\text{ V} - 0.8\text{ V}$).
-  \item PSpice sử dụng mô hình diode phi tuyến bán dẫn của Shockley (với các tham số như $I_S, N, R_S$), do đó kết quả mô phỏng sẽ có độ chênh lệch nhỏ so với mô hình tuyến tính từng đoạn (piecewise linear complete model) dùng trong tính toán lý thuyết.
+\begin{notebox}{Nhận xét}
+\begin{itemize}[leftmargin=1.5em,itemsep=2pt,topsep=0pt]
+  \item Kết quả mô phỏng khớp tốt với tính toán lý thuyết ở cả hai trường hợp, sai lệch nhỏ (dưới $3\%$): $I = 15.83\text{ mA}$, $V_D = 1.518\text{ V}$ khi $R_1 = 220\,\Omega$ và $I = 2.786\text{ mA}$, $V_D = 0.821\text{ V}$ khi $R_1 = 1.5\text{ k}\Omega$.
+  \item Khi $R_1$ nhỏ, dòng điện lớn nên điện áp trên diode cao ($1.5\text{ V}$); khi $R_1$ lớn, dòng nhỏ nên điện áp trên diode giảm về gần mức $0.7\text{ V}$ đến $0.8\text{ V}$.
+  \item Điện áp rơi trên diode không cố định ở $0.7\text{ V}$ mà tăng theo dòng điện, nên mô hình diode hoàn chỉnh cho kết quả sát thực tế hơn mô hình lý tưởng.
 \end{itemize}
+\end{notebox}

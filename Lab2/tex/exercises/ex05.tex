@@ -1,7 +1,4 @@
-\section{Bài tập 5: Mạch tự động chuyển nguồn (Power Switching Circuit)}
-
-Trong nhiều ứng dụng thực tế (chẳng hạn như các hệ thống nhúng, vi điều khiển), việc mất nguồn đột ngột có thể làm mất dữ liệu quan trọng trong RAM hoặc gián đoạn hoạt động. Để giải quyết vấn đề này, người ta thường thiết kế mạch tự động chuyển sang nguồn phụ (pin/ắc quy dự phòng) khi nguồn chính bị ngắt.
-
+\section{Bài tập 5: Power Switching Circuit}
 Cho mạch điện tự động chuyển nguồn như hình bên dưới. Mạch sử dụng hai nguồn: nguồn chính $V_2 = 9\text{ Vdc}$, nguồn dự phòng $V_3 = 5\text{ Vdc}$, hai diode $D_3, D_4$ và điện trở tải $R_L = 1\text{ k}\Omega$.
 
 Giả thiết sử dụng mô hình diode thực tế với sụt áp phân cực thuận $V_D = 0.7\text{ V}$. Hãy thiết lập các phương trình và tính toán các dòng điện $I_{D3}, I_{D4}, I_{RL}$ cùng điện áp trên tải $V_{RL}$ trong ba trường hợp:
@@ -60,31 +57,31 @@ Do $V_{AK,D3} < 0$, diode $D_3$ bị phân cực ngược hoàn toàn và khóa 
 
 \subsection{Mô phỏng PSpice}
 \begin{itemize}[leftmargin=1.5em]
-  \item Vẽ sơ đồ mạch gồm nguồn $V_2 = 9\text{ Vdc}$, $V_3 = 5\text{ Vdc}$, hai diode \texttt{Dbreak} ($D_3, D_4$) và tải $R_L = 1\text{ k}\Omega$.
-  \item Thiết lập cấu hình mô phỏng \textbf{Bias Point} khi cả hai nguồn cùng được kết nối.
-  \item Bật hiển thị điện áp và dòng điện để đọc giá trị mô phỏng.
+  \item Dùng hồ sơ \textbf{Bias Point} với cả hai nguồn $V_2 = 9\text{ V}$ và $V_3 = 5\text{ V}$ cùng hoạt động, bật hiển thị điện áp và dòng điện, chụp màn hình.
 \end{itemize}
 
 \simresult
-\simfig{ex5_sim}{Kết quả mô phỏng Bias Point của Bài tập 5 (kết nối cả hai nguồn)}
+\simfig{ex5_sim1}{Kết quả mô phỏng Bias Point của Bài tập 5 (kết nối cả hai nguồn)}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
   \centering
-  \caption{So sánh kết quả khi kết nối đồng thời cả hai nguồn $5\text{ V}$ và $9\text{ V}$}
+  \caption{So sánh kết quả lý thuyết và mô phỏng PSpice khi cả hai nguồn $5\text{ V}$ và $9\text{ V}$ cùng kết nối}
   \begin{tabular}{lcccc}
     \toprule
-    \textbf{Phương pháp} & $I_{D3}\text{ (mA)}$ & $I_{D4}\text{ (mA)}$ & $I_{RL}\text{ (mA)}$ & $V_{RL}\text{ (V)}$ \\
+    \textbf{Phương pháp} & $I_{D1}\text{ (mA)}$ & $I_{D2}\text{ (mA)}$ & $I_{RL}\text{ (mA)}$ & $V_{RL}\text{ (V)}$ \\
     \midrule
-    Lý thuyết (Theory)  & $0$  & $8.300$ & $8.300$ & $8.300$ \\
-    Mô phỏng (PSpice)   & --   & --      & --      & --      \\
+    Lý thuyết (Theory) & $0$ & $8.300$ & $8.300$ & $8.300$ \\
+    Mô phỏng (PSpice)  & $\approx 0$ & $8.289$ & $8.289$ & $8.289$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\noindent\textbf{Cơ chế hoạt động và vai trò linh kiện:}
+\noindent\textit{Chú thích:} theo cách đặt tên của đề, $D_1$ là diode nối nguồn $5\text{ V}$ (ký hiệu $D_3$ ở phần tính toán) và $D_2$ là diode nối nguồn $9\text{ V}$ (ký hiệu $D_4$). Dòng qua $D_1$ trong mô phỏng chỉ khoảng $3.3\text{ pA}$, coi như bằng $0$.
+
+\noindent\textbf{Nhận xét:}
 \begin{itemize}[leftmargin=1.5em]
-  \item \textbf{Tự động ưu tiên nguồn có điện áp cao hơn:} Khi nguồn chính ($9\text{ V}$) hoạt động, nó phân cực ngược diode của nguồn phụ ($5\text{ V}$), cách ly hoàn toàn nguồn phụ để tránh tiêu hao pin dự phòng. Khi nguồn chính bị mất ($9\text{ V} \to 0\text{ V}$), nguồn phụ ngay lập tức dẫn mà không làm gián đoạn hệ thống.
-  \item \textbf{Chống dòng ngược (Reverse Current Protection):} Diode ngăn không cho dòng điện từ nguồn $9\text{ V}$ nạp ngược vào nguồn $5\text{ V}$, bảo vệ an toàn cho cổng USB máy tính hoặc pin dự phòng.
-  \item \textbf{Ưu điểm của Diode Schottky trong thực tế:} Diode silicon thông thường có sụt áp khoảng $0.7\text{ V} - 0.8\text{ V}$, gây tổn thất công suất đáng kể trên tải điện thế thấp. Sử dụng diode Schottky với điện áp phân cực thuận cực thấp ($\approx 0.2\text{ V} - 0.3\text{ V}$) sẽ giúp giảm thiểu tổn thất năng lượng và tăng hiệu suất mạch chuyển nguồn.
+  \item Khi cả hai nguồn cùng bật, nguồn $9\text{ V}$ thắng thế: nút tải ở $8.3\text{ V}$ làm $D_3$ bị phân cực ngược ($V_{AK} = 5 - 8.3 = -3.3\text{ V}$), nguồn $5\text{ V}$ được ngắt khỏi tải. Khi nguồn $9\text{ V}$ mất, $D_4$ khóa và $D_3$ dẫn, tải tự động chuyển sang nguồn dự phòng ($V_{RL}$ giảm từ $8.3\text{ V}$ xuống $4.3\text{ V}$).
+  \item \textbf{Bảo vệ dòng ngược:} diode ngăn nguồn mạnh hơn đẩy dòng ngược vào nguồn còn lại khi cả hai nguồn cùng bật (ví dụ vi điều khiển vừa cấp nguồn qua USB vừa qua adapter ngoài).
+  \item Nhược điểm của cách làm này là sụt áp thuận $0.7\text{ V}$ của diode thường làm điện áp tải thấp hơn nguồn. Nếu thay bằng diode Schottky có sụt áp khoảng $250\text{ mV}$ thì $V_{RL} \approx 9 - 0.25 = 8.75\text{ V}$ (khi chỉ có nguồn $5\text{ V}$: $V_{RL} \approx 4.75\text{ V}$), tải nhận được điện áp cao hơn.
 \end{itemize}

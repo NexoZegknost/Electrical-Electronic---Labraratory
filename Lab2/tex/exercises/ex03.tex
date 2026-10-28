@@ -1,4 +1,4 @@
-\section{Bài tập 3: Phân tích mạch có Diode (Circuit Analysis with Diode)}
+\section{Bài tập 3: Circuit Analysis with Diode}
 
 Cho mạch điện hình cầu chứa diode và các điện trở như hình bên dưới. Mạch gồm nguồn điện áp $V$, các điện trở $R_1 = 2\text{ k}\Omega$, $R_2 = 8\text{ k}\Omega$, $R_3 = 4\text{ k}\Omega$, $R_4 = 6\text{ k}\Omega$ và diode $D_3$ đặt ở nhánh cầu giữa nối từ nút $1$ (anode) sang nút $2$ (cathode). 
 
@@ -14,13 +14,13 @@ Sau đó, tiến hành mô phỏng PSpice ở chế độ Bias Point để kiể
 \subsection{Tính toán lý thuyết}
 Gọi $V_1$ là điện thế tại nút anode của diode (giữa $R_1$ và $R_2$) và $V_2$ là điện thế tại nút cathode của diode (giữa $R_3$ và $R_4$). Chọn nút cực âm của nguồn $V$ làm mass tham chiếu ($0\text{ V}$).
 
-\noindent Khi chưa có diode (hoặc khi diode ngắt):
+\noindent Khi ngắt diode:
 \begin{align*}
   V_{1,\text{open}} &= V \cdot \frac{R_2}{R_1 + R_2} = V \cdot \frac{8}{2 + 8} = 0.8\,V \\
   V_{2,\text{open}} &= V \cdot \frac{R_4}{R_3 + R_4} = V \cdot \frac{6}{4 + 6} = 0.6\,V \\
   V_{1,\text{open}} - V_{2,\text{open}} &= 0.8\,V - 0.6\,V = 0.2\,V
 \end{align*}
-Với cả hai giá trị nguồn $V = 8\text{ V}$ ($0.2 \times 8 = 1.6\text{ V} > 0.7\text{ V}$) và $V = 12\text{ V}$ ($0.2 \times 12 = 2.4\text{ V} > 0.7\text{ V}$), hiệu điện thế thuận đều lớn hơn điện áp ngưỡng $0.7\text{ V}$. Do đó diode $D_3$ phân cực thuận và dẫn điện (ON).
+Với cả hai giá trị nguồn $V = 8\text{ V}$ ($0.2 \times 8 = 1.6\text{ V} > 0.7\text{ V}$) và $V = 12\text{ V}$ ($0.2 \times 12 = 2.4\text{ V} > 0.7\text{ V}$), hiệu điện thế thuận đều lớn hơn điện áp ngưỡng $0.7\text{ V}$. Do đó diode $D_3$ phân cực thuận.
 
 \noindent Theo mô hình thực tế, hiệu điện thế giữa hai nút thỏa mãn:
 \begin{equation}
@@ -87,36 +87,28 @@ Với cả hai giá trị nguồn $V = 8\text{ V}$ ($0.2 \times 8 = 1.6\text{ V}
 
 \subsection{Mô phỏng PSpice}
 \begin{itemize}[leftmargin=1.5em]
-  \item Vẽ mạch cầu theo đúng sơ đồ Hình 2.16 với các điện trở $R_1, R_2, R_3, R_4$ và diode \texttt{Dbreak}.
-  \item Thiết lập hồ sơ mô phỏng chế độ \textbf{Bias Point}.
-  \item Bật hiển thị dòng điện và điện áp trên sơ đồ mạch để đối chiếu kết quả.
+  \item Dùng hồ sơ \textbf{Bias Point}; lần lượt đặt $V = 8\text{ V}$ và $V = 12\text{ V}$, chụp màn hình có hiển thị dòng qua các điện trở và điện thế các nút $V_1$, $V_2$.
 \end{itemize}
-
 \simresult
-\simfig{ex3_sim}{Kết quả mô phỏng Bias Point của Bài tập 3 ($V = 8\text{ V}$ và $V = 12\text{ V}$)}
+\simfig{ex3_sim1}{Kết quả mô phỏng Bias Point của Bài tập 3 với $V = 8\text{ V}$}
+\simfig{ex3_sim2}{Kết quả mô phỏng Bias Point của Bài tập 3 với $V = 12\text{ V}$}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
-  \centering
-  \caption{So sánh kết quả tính toán lý thuyết và mô phỏng PSpice cho Bài tập 3}
-  \begin{tabular}{lcccccc}
-    \toprule
-    \textbf{Đại lượng} & \multicolumn{2}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{2}{c}{\textbf{Mô phỏng (PSpice)}} & \multicolumn{2}{c}{\textbf{Sai số (\%)}} \\
-    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
-    & $V = 8\text{ V}$ & $V = 12\text{ V}$ & $V = 8\text{ V}$ & $V = 12\text{ V}$ & $V = 8\text{ V}$ & $V = 12\text{ V}$ \\
-    \midrule
-    $I_{R1}\text{ (mA)}$ & $0.980$ & $1.540$ & -- & -- & -- & -- \\
-    $I_{R2}\text{ (mA)}$ & $0.755$ & $1.115$ & -- & -- & -- & -- \\
-    $I_{R3}\text{ (mA)}$ & $0.665$ & $0.945$ & -- & -- & -- & -- \\
-    $I_{R4}\text{ (mA)}$ & $0.890$ & $1.370$ & -- & -- & -- & -- \\
-    $V_1\text{ (V)}$     & $6.040$ & $8.920$ & -- & -- & -- & -- \\
-    $V_2\text{ (V)}$     & $5.340$ & $8.220$ & -- & -- & -- & -- \\
-    \bottomrule
-  \end{tabular}
+	\centering
+	\caption{So sánh kết quả tính toán lý thuyết và mô phỏng PSpice cho Bài tập 3}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccc}
+		\toprule
+		\textbf{Đại lượng} & \multicolumn{2}{c}{\textbf{Lý thuyết (Theory)}} & \multicolumn{2}{c}{\textbf{Mô phỏng (PSpice)}} \\
+		\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+		& $V = 8\text{ V}$ & $V = 12\text{ V}$ & $V = 8\text{ V}$ & $V = 12\text{ V}$ \\
+		\midrule
+		$I_{R1}\text{ (mA)}$ & $0.980$ & $1.540$ & $0.996$ & $1.553$ \\
+		$I_{R2}\text{ (mA)}$ & $0.755$ & $1.115$ & $0.751$ & $1.112$ \\
+		$I_{R3}\text{ (mA)}$ & $0.665$ & $0.945$ & $0.653$ & $0.935$ \\
+		$I_{R4}\text{ (mA)}$ & $0.890$ & $1.370$ & $0.898$ & $1.377$ \\
+		$V_1\text{ (V)}$     & $6.040$ & $8.920$ & $6.008$ & $8.894$ \\
+		$V_2\text{ (V)}$     & $5.340$ & $8.220$ & $5.389$ & $8.260$ \\
+		\bottomrule
+	\end{tabular*}
 \end{table}
-
-\noindent\textbf{Nhận xét:}
-\begin{itemize}[leftmargin=1.5em]
-  \item Ở cả hai mức điện áp nguồn $8\text{ V}$ và $12\text{ V}$, diode đều phân cực thuận vì tỷ số phân áp tại nút 1 lớn hơn tại nút 2.
-  \item Kết quả tính toán giải tích hoàn toàn phù hợp với mô phỏng PSpice. Sự sai lệch rất nhỏ giữa hai phương pháp xuất phát từ việc mô hình thực tế xem sụt áp diode cố định $0.7\text{ V}$, trong khi PSpice sử dụng đường cong $I-V$ hàm mũ chính xác của mô hình linh kiện bán dẫn.
-\end{itemize}

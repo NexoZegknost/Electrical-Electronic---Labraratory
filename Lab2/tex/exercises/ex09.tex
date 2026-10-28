@@ -1,4 +1,4 @@
-\section{Bài tập 9: Ứng dụng mạch nguồn AC sang DC (AC/DC Power Circuit Application)}
+\section{Bài tập 9: AC/DC Power Circuit Application}
 
 Trong bài tập này, chúng ta sẽ từng bước khảo sát quá trình xây dựng một bộ nguồn chuyển đổi từ điện áp xoay chiều (AC) sang điện áp một chiều (DC) ổn định qua 5 bước thực nghiệm. Mỗi bước sẽ được tiến hành mô phỏng trong miền thời gian (Transient analysis), kèm theo đồ thị và lời giải thích chi tiết về vai trò của từng linh kiện.
 
@@ -11,6 +11,14 @@ Mạch gồm cuộn thứ cấp biến áp kết nối với cầu chỉnh lưu 
 
 \simresult
 \simfig{ex9_step1_sim}{Kết quả mô phỏng dạng sóng điện áp ngõ ra tại Bước 1}
+
+\begin{notebox}{Quan sát và số liệu đọc từ mô phỏng, Bước 1}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Điện áp ngõ ra $V(R1{:}2)$ là sóng một chiều nhấp nhô, các đỉnh cách nhau $10\text{ ms}$ (tần số gợn sóng $100\text{ Hz}$), điện áp luôn $\ge 0$.
+    \item Đỉnh đọc bằng con trỏ: $V_{\max} = 21.105\text{ V}$ (tại $t = 15\text{ ms}$).
+    \item Đáy đọc bằng con trỏ: $V_{\min} \approx 0.156\text{ V} \approx 0\text{ V}$ (tại $t \approx 30\text{ ms}$), gợn sóng $V_r \approx 20.95\text{ V}$.
+  \end{itemize}
+\end{notebox}
 
 \noindent\textbf{Giải thích và nhận xét:}
 \begin{itemize}[leftmargin=1.5em]
@@ -26,12 +34,20 @@ Mắc song song một tụ điện dung lượng nhỏ $C_1 = 10\,\mu\text{F}$ v
 \simresult
 \simfig{ex9_step2_sim}{Kết quả mô phỏng dạng sóng ngõ ra tại Bước 2 ($C_1 = 10\,\mu\text{F}$)}
 
+\begin{notebox}{Quan sát và số liệu đọc từ mô phỏng, Bước 2}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Điện áp ngõ ra không còn về $0\text{ V}$ mà có dạng răng cưa: tăng nhanh theo đỉnh chỉnh lưu (tụ nạp), giảm dần giữa hai đỉnh (tụ xả qua $R_1$).
+    \item Đỉnh đọc bằng con trỏ: $V_{\max} = 21.110\text{ V}$ (tại $t = 15\text{ ms}$).
+    \item Đáy đọc bằng con trỏ: $V_{\min} = 10.836\text{ V}$ (tại $t \approx 31.5\text{ ms}$), gợn sóng $V_r \approx 10.27\text{ V}$ còn rất lớn.
+  \end{itemize}
+\end{notebox}
+
 \noindent\textbf{Giải thích và nhận xét:}
 \begin{itemize}[leftmargin=1.5em]
   \item \textbf{Cơ chế nạp - xả của tụ điện:} Khi điện áp chỉnh lưu tăng từ $0\text{ V}$ lên đỉnh ($20.6\text{ V}$), tụ điện $C_1$ được nạp nhanh qua các diode. Khi điện áp chỉnh lưu giảm xuống dưới điện áp trên tụ, các diode bị phân cực ngược và ngắt, tụ $C_1$ phóng điện qua tải $R_1$ để duy trì điện áp cấp cho tải.
-  \item Tuy nhiên, do dung lượng tụ khá nhỏ ($C_1 = 10\,\mu\text{F}$), hằng số thời gian phóng điện $\tau = R_1 C_1 = 1000 \times 10 \times 10^{-6} = 10\text{ ms}$ chỉ ngang với nửa chu kỳ tín hiệu ($10\text{ ms}$). Do đó, tụ phóng điện tương đối nhanh, biên độ gợn sóng (ripple voltage) vẫn còn rất lớn:
+  \item Tuy nhiên, do dung lượng tụ khá nhỏ ($C_1 = 10\,\mu\text{F}$), hằng số thời gian phóng điện $\tau = R_1 C_1 = 1000 \times 10 \times 10^{-6} = 10\text{ ms}$ chỉ ngang với nửa chu kỳ tín hiệu ($10\text{ ms}$). Do đó, tụ phóng điện nhanh và biên độ gợn sóng (ripple voltage) vẫn còn rất lớn. Công thức gần đúng $V_r \approx I_{dc}/(2fC_1)$ chỉ đúng khi gợn sóng nhỏ, nên ở đây dùng mô hình xả mũ $v_C(t) = V_p\,e^{-(t-t_0)/\tau}$: tụ xả khoảng $8\text{ ms}$ giữa hai đỉnh nên điện áp trên tụ giảm xuống còn khoảng $V_{\min} \approx 10.8\text{ V}$, tức gợn sóng:
   \begin{equation}
-    V_r \approx \frac{I_{dc}}{2 f C_1} \approx \frac{V_p / R_1}{2 f C_1} = \frac{20.6 / 1000}{100 \times 10 \times 10^{-6}} \approx 20.6\text{ V}
+    V_r = V_{\max} - V_{\min} \approx 20.6 - 10.8 \approx 9.8\text{ V}
   \end{equation}
 \end{itemize}
 
@@ -40,6 +56,14 @@ Thay thế tụ $10\,\mu\text{F}$ bằng tụ có dung lượng lớn $C_1 = 680
 
 \simresult
 \simfig{ex9_step3_sim}{Kết quả mô phỏng dạng sóng ngõ ra tại Bước 3 ($C_1 = 680\,\mu\text{F}$)}
+
+\begin{notebox}{Quan sát và số liệu đọc từ mô phỏng, Bước 3}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Sau khoảng $15\text{ ms}$ đầu (giai đoạn tụ nạp), điện áp ngõ ra gần như phẳng ở mức xấp xỉ $20.5\text{ V}$; gợn sóng nhỏ hơn rất nhiều so với Bước 2.
+    \item Đọc bằng con trỏ trong một chu kỳ ổn định ($t = 75\text{ ms}$ đến $85\text{ ms}$): $V_{\max} = 20.684\text{ V}$, $V_{\min} = 20.420\text{ V}$.
+    \item Gợn sóng $V_r = 20.684 - 20.420 \approx 0.263\text{ V}$.
+  \end{itemize}
+\end{notebox}
 
 \noindent\textbf{Giải thích và nhận xét:}
 \begin{itemize}[leftmargin=1.5em]
@@ -51,7 +75,7 @@ Thay thế tụ $10\,\mu\text{F}$ bằng tụ có dung lượng lớn $C_1 = 680
   \begin{equation}
     V_r \approx \frac{I_{dc}}{2 f C_1} \approx \frac{20\text{ mA}}{100 \times 680 \times 10^{-6}} \approx 0.29\text{ V}
   \end{equation}
-  \item Điện áp ngõ ra hầu như được làm phẳng hoàn toàn, duy trì mức điện áp một chiều ổn định xấp xỉ $\approx 20.3\text{ V} - 20.4\text{ V}$.
+  \item Điện áp ngõ ra hầu như được làm phẳng hoàn toàn, duy trì mức điện áp một chiều gần như không đổi, dao động trong khoảng $20.3\text{ V}$ đến $20.6\text{ V}$.
 \end{itemize}
 
 \subsection{Bước 4: Mắc thêm Diode Zener ổn áp (\texorpdfstring{$V_Z = 22\text{ V}$}{VZ = 22V})}
@@ -62,10 +86,18 @@ Mắc thêm một diode Zener parameterized (\texttt{Zener\_P}) song song với 
 \simresult
 \simfig{ex9_step4_sim}{Kết quả mô phỏng dạng sóng ngõ ra và dòng Zener tại Bước 4 ($V_Z = 22\text{ V}$)}
 
+\begin{notebox}{Quan sát và số liệu đọc từ mô phỏng, Bước 4}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Dạng sóng ngõ ra $V(D5{:}2)$ giống Bước 3: phẳng ở mức xấp xỉ $20.5\text{ V}$ sau giai đoạn nạp ban đầu.
+    \item Đọc bằng con trỏ trong chu kỳ ổn định ($t \approx 94\text{--}95\text{ ms}$): $V_{\max} = 20.652\text{ V}$, $V_{\min} = 20.146\text{ V}$, gợn sóng $V_r \approx 0.506\text{ V}$.
+    \item Dòng qua Zener $I(D5{:}2) \approx 0.12\text{ mA}$ ($121\text{--}124\,\mu\text{A}$), xấp xỉ $0$ trong suốt thời gian mô phỏng: Zener $22\text{ V}$ chưa dẫn.
+  \end{itemize}
+\end{notebox}
+
 \noindent\textbf{Giải thích và nhận xét:}
 \begin{itemize}[leftmargin=1.5em]
-  \item Điện áp một chiều sau mạch lọc ở Bước 3 chỉ đạt khoảng $20.3\text{ V} - 20.4\text{ V}$.
-  \item Do điện áp trên tụ ($20.4\text{ V}$) \textbf{nhỏ hơn} điện áp đánh thủng ngược của diode Zener ($V_Z = 22\text{ V}$), diode Zener hoàn toàn chưa dẫn điện (dòng qua Zener xấp xỉ bằng $0$: $I_Z \approx 0$).
+  \item Điện áp một chiều sau mạch lọc ở Bước 3 có đỉnh khoảng $20.6\text{ V}$ và thấp nhất khoảng $20.3\text{ V}$.
+  \item Do điện áp trên tụ ($\le 20.6\text{ V}$) \textbf{nhỏ hơn} điện áp đánh thủng ngược của diode Zener ($V_Z = 22\text{ V}$), diode Zener hoàn toàn chưa dẫn điện (dòng qua Zener xấp xỉ bằng $0$: $I_Z \approx 0$).
   \item Do đó, diode Zener ở bước này chưa tham gia vào quá trình điều chỉnh điện áp, hình dạng sóng đầu ra hoàn toàn giống như ở Bước 3.
 \end{itemize}
 
@@ -75,8 +107,35 @@ Thay đổi thuộc tính điện áp Zener thành \texttt{ZENER\_VOLTAGE} = $20
 \simresult
 \simfig{ex9_step5_sim}{Kết quả mô phỏng dạng sóng ngõ ra và dòng Zener tại Bước 5 ($V_Z = 20\text{ V}$)}
 
+\begin{notebox}{Quan sát và số liệu đọc từ mô phỏng, Bước 5}
+  \begin{itemize}[leftmargin=1.5em]
+    \item Điện áp ngõ ra $V(R1{:}2)$ bị ghim quanh $20\text{ V}$ (thấp hơn mức $\approx 20.5\text{ V}$ ở Bước 4).
+    \item Đọc bằng con trỏ trong chu kỳ ổn định ($t \approx 94\text{--}95\text{ ms}$): $V_{\max} = 20.081\text{ V}$, $V_{\min} = 19.746\text{ V}$, gợn sóng $V_r \approx 0.334\text{ V}$ (nhỏ hơn $0.506\text{ V}$ ở Bước 4).
+    \item Dòng qua Zener xuất hiện thành các xung dẫn tại các đỉnh điện áp ($t \approx 15, 35, 55, 75, 95\text{ ms}$), đỉnh xung đọc được $I_Z \approx 2.21\text{ A}$ tại $t = 94.9\text{ ms}$; ngoài xung, $I_Z \approx 0.13\text{ mA}$.
+  \end{itemize}
+\end{notebox}
+
 \noindent\textbf{Giải thích và nhận xét:}
 \begin{itemize}[leftmargin=1.5em]
-  \item Vì điện áp đỉnh của tụ lọc ($\approx 20.4\text{ V}$) \textbf{lớn hơn} điện áp đánh thủng Zener ($V_Z = 20\text{ V}$), diode Zener lập tức bị đánh thủng ngược và ghim chặt điện áp đầu ra ở mức chính xác $20\text{ V}$.
-  \item Dòng điện dư thừa và độ gợn sóng còn sót lại trên tụ lọc được dẫn xả qua diode Zener xuống đất (dòng $I_Z > 0$). Nhờ đó, dạng sóng đầu ra trở thành đường thẳng điện áp một chiều phẳng tuyệt đối ở mức $20\text{ V}$, loại bỏ triệt để hiện tượng nhấp nhô của nguồn AC.
+  \item Vì điện áp đỉnh của tụ lọc ($20.3\text{ V}$ đến $20.6\text{ V}$) \textbf{lớn hơn} điện áp đánh thủng Zener ($V_Z = 20\text{ V}$), diode Zener lập tức bị đánh thủng ngược và ghim điện áp đầu ra quanh mức $20\text{ V}$.
+  \item Dòng điện dư thừa và độ gợn sóng còn sót lại trên tụ lọc được dẫn xả qua diode Zener xuống đất (dòng $I_Z > 0$). Nhờ đó, dạng sóng đầu ra gần như phẳng ở mức xấp xỉ $20\text{ V}$ (còn sai lệch nhỏ do nội trở động của Zener thực tế), gợn sóng giảm còn khoảng $0.33\text{ V}$ (so với $0.51\text{ V}$ ở Bước 4).
 \end{itemize}
+
+\subsection{Bảng tổng hợp kết quả}
+\begin{table}[H]
+  \centering
+  \caption{Tổng hợp điện áp ngõ ra qua 5 bước (lý thuyết là giá trị ước tính theo mô hình diode $V_F = 0.7\text{ V}$)}
+  \begin{tabular}{lcccccc}
+    \toprule
+    & \multicolumn{3}{c}{\textbf{Lý thuyết (ước tính)}} & \multicolumn{3}{c}{\textbf{PSpice}} \\
+    \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+    \textbf{Bước} & $V_{\max}\text{ (V)}$ & $V_{\min}\text{ (V)}$ & $V_r\text{ (V)}$ & $V_{\max}\text{ (V)}$ & $V_{\min}\text{ (V)}$ & $V_r\text{ (V)}$ \\
+    \midrule
+    1: không lọc               & $20.6$ & $0$    & $20.6$   & $21.105$ & $0.156$ & $20.949$ \\
+    2: $C_1 = 10\,\mu\text{F}$ & $20.6$ & $10.8$ & $9.8$    & $21.110$ & $10.836$ & $10.273$ \\
+    3: $C_1 = 680\,\mu\text{F}$& $20.6$ & $20.3$ & $0.3$    & $20.684$ & $20.420$ & $0.263$ \\
+    4: Zener $22\text{ V}$     & $20.6$ & $20.3$ & $0.3$    & $20.652$ & $20.146$ & $0.506$ \\
+    5: Zener $20\text{ V}$     & $\approx 20$ & $\approx 20$ & $\approx 0$ & $20.081$ & $19.746$ & $0.334$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}

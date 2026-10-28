@@ -1,4 +1,4 @@
-\section{Bài tập 7: Mạch chỉnh lưu toàn sóng dạng cầu (Full-wave Rectifier)}
+\section{Bài tập 7: Full-wave Rectifier}
 
 Cho mạch chỉnh lưu cầu toàn sóng sử dụng máy biến áp như hình bên dưới. Nguồn điện áp đầu vào là nguồn sin xoay chiều $V_1$ có các thông số:
 \begin{itemize}[leftmargin=1.5em]
@@ -27,8 +27,8 @@ Giả thiết các diode có điện áp phân cực thuận ngưỡng là $V_F 
 
 \noindent Trong mạch chỉnh lưu cầu, ở mỗi nửa chu kỳ luôn có 2 diode mắc nối tiếp nhau cùng dẫn điện:
 \begin{itemize}[leftmargin=1.5em]
-  \item Bán kỳ $V_{AB} > 0$: cặp diode $D_1$ và $D_4$ dẫn thuận, dòng điện đi từ nút A qua $D_1 \to$ tải $R_1$ (từ C xuống D) $\to D_4 \to$ nút B.
-  \item Bán kỳ $V_{AB} < 0$: cặp diode $D_2$ và $D_3$ dẫn thuận, dòng điện đi từ nút B qua $D_3 \to$ tải $R_1$ (từ C xuống D) $\to D_2 \to$ nút A.
+  \item Bán kỳ $V_{AB} > 0$ (A dương hơn B): cặp $D_2$ và $D_3$ dẫn thuận ($D_2$: anode A, cathode C; $D_3$: anode D, cathode B). Dòng điện đi từ nút A qua $D_2 \to$ nút C $\to$ tải $R_1$ (từ C xuống D) $\to$ nút D $\to D_3 \to$ nút B.
+  \item Bán kỳ $V_{AB} < 0$ (B dương hơn A): cặp $D_1$ và $D_4$ dẫn thuận ($D_1$: anode B, cathode C; $D_4$: anode D, cathode A). Dòng điện đi từ nút B qua $D_1 \to$ nút C $\to$ tải $R_1$ (từ C xuống D) $\to$ nút D $\to D_4 \to$ nút A.
 \end{itemize}
 Tổng sụt áp trên hai diode dẫn là:
 \begin{equation}
@@ -72,11 +72,27 @@ Tổng sụt áp trên hai diode dẫn là:
 \begin{itemize}[leftmargin=1.5em]
   \item Đặt biến áp: vào \texttt{Place > PSpice Component > Modeling Application... > System Modules > Transformer}, thiết lập tỷ số biến áp $10:1$.
   \item Đặt đầu dò vi sai (\textbf{Voltage Differential Marker}): cặp que đo vi sai thứ nhất tại hai đầu A và B của cuộn thứ cấp; cặp que đo vi sai thứ hai tại hai đầu C và D của điện trở tải $R_1$.
-  \item Chạy mô phỏng Transient với các thông số vừa tính toán.
+  \item Chạy mô phỏng Transient với \textit{Run to time} = $100\text{ ms}$ (tương ứng 5 chu kỳ của $V_{AB}$) và \textit{Maximum step size} = $0.1\text{ ms}$.
 \end{itemize}
 
 \simresult
-\simfig{ex7_sim}{Đồ thị so sánh dạng sóng ngõ vào $V_{AB}$ và ngõ ra $V_{CD}$ trên cùng một cửa sổ}
+\simfig[8cm]{ex7_sim1}{Đồ thị so sánh dạng sóng ngõ vào $V_{AB}$ và ngõ ra $V_{CD}$ trên cùng một cửa sổ (con trỏ 1 tại $t = 5\text{ ms}$, con trỏ 2 tại $t = 15\text{ ms}$)}
+
+\begin{table}[H]
+  \centering
+  \caption{Số liệu đọc bằng con trỏ để kiểm chứng phương trình $V_{AB}(t)$ và $V_{CD}(t)$}
+  \begin{tabular}{lcccccc}
+    \toprule
+    & \multicolumn{3}{c}{\textbf{Lý thuyết}} & \multicolumn{3}{c}{\textbf{PSpice (cursor)}} \\
+    \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+    \textbf{Vị trí đo} & $t\text{ (ms)}$ & $V_{AB}\text{ (V)}$ & $V_{CD}\text{ (V)}$ & $t\text{ (ms)}$ & $V_{AB}\text{ (V)}$ & $V_{CD}\text{ (V)}$ \\
+    \midrule
+    Đỉnh dương của $V_{AB}$ & $5$  & $22.0$  & $20.6$ & $5.0$ & $21.317$ & $19.848$ \\
+    Điểm qua $0$            & $10$ & $0$     & $0$    & $10$ & $\approx 0$ & $\approx 0$ \\
+    Đỉnh âm của $V_{AB}$    & $15$ & $-22.0$ & $20.6$ & $15.0$ & $-22.585$ & $21.113$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \subsection{So sánh và nhận xét}
 \begin{table}[H]
@@ -86,10 +102,10 @@ Tổng sụt áp trên hai diode dẫn là:
     \toprule
     \textbf{Đại lượng} & \textbf{Lý thuyết (Theory)} & \textbf{Mô phỏng (PSpice)} & \textbf{Sai lệch} \\
     \midrule
-    Biên độ cực đại $V_{AB,\max}\text{ (V)}$ & $22.0$ & -- & -- \\
-    Biên độ cực đại $V_{CD,\max}\text{ (V)}$ & $20.6$ & -- & -- \\
-    Tần số gợn sóng $f_{\text{out}}\text{ (Hz)}$ & $100.0$ & -- & -- \\
-    Chu kỳ ngõ ra $T_{\text{out}}\text{ (ms)}$   & $10.0$ & -- & -- \\
+    Biên độ cực đại $V_{AB,\max}\text{ (V)}$ & $22.0$ & $22.585$ & $2.7\%$ \\
+    Biên độ cực đại $V_{CD,\max}\text{ (V)}$ & $20.6$ & $21.113$ & $2.5\%$ \\
+    Tần số gợn sóng $f_{\text{out}}\text{ (Hz)}$ & $100.0$ & $100.0$ & $0\%$ \\
+    Chu kỳ ngõ ra $T_{\text{out}}\text{ (ms)}$   & $10.0$ & $10.0$ & $0\%$ \\
     \bottomrule
   \end{tabular}
 \end{table}

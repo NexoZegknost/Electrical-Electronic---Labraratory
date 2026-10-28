@@ -13,7 +13,7 @@ Lab2/
 │   ├── common/              logo (hcmut.png)
 │   ├── given/               hình đề bài (exN_given.png)
 │   ├── draw/                mạch vẽ lại / biến đổi (nếu có)
-│   └── sim/                 ảnh kết quả mô phỏng (exN_sim.png)
+│   └── sim/                 ảnh kết quả mô phỏng (exN_simK.png; bài 9, 10: exN_stepK_sim.png)
 ├── pspice/
 │   └── ex1 ... ex10/        mỗi bài một project PSpice (exN.opj, EXN.DSN)
 ├── docs/
