@@ -1,0 +1,54 @@
+{
+    "InternalPDFViewer": {
+        "Embedded": false,
+        "File": ""
+    },
+    "Session": {
+        "Bookmarks": [
+            {
+                "bookmarkNumber": 1,
+                "fileName": "../../../../../02_Resource/06_LaTeXTemplate/HCMUT_01_Report_VI/frontmatter/titlepage.tex",
+                "lineNumber": 33,
+                "text": "titlepage.tex\n{\\fontsize{13pt}{16pt}\\selectfont\\textbf{\\Truong}\\par}"
+            },
+            {
+                "bookmarkNumber": 2,
+                "fileName": "../../../../../02_Resource/06_LaTeXTemplate/HCMUT_01_Report_VI/frontmatter/titlepage.tex",
+                "lineNumber": 35,
+                "text": "titlepage.tex\n{\\fontsize{14pt}{17pt}\\selectfont\\textbf{\\DonVi}\\par}"
+            },
+            {
+                "bookmarkNumber": 3,
+                "fileName": "../../../../../02_Resource/06_LaTeXTemplate/HCMUT_01_Report_VI/frontmatter/titlepage.tex",
+                "lineNumber": 37,
+                "text": "titlepage.tex\n{\\fontsize{13pt}{16pt}\\selectfont\\textbf{\\Khoa}\\par}"
+            },
+            {
+                "bookmarkNumber": 4,
+                "fileName": "../../../../../02_Resource/06_LaTeXTemplate/HCMUT_01_Report_VI/frontmatter/titlepage.tex",
+                "lineNumber": 56,
+                "text": "titlepage.tex\n{\\fontsize{20pt}{15pt}\\selectfont\\textbf{\\LoaiBaoCao}\\par}"
+            },
+            {
+                "bookmarkNumber": 5,
+                "fileName": "../../../../../02_Resource/06_LaTeXTemplate/HCMUT_01_Report_VI/frontmatter/titlepage.tex",
+                "lineNumber": 58,
+                "text": "titlepage.tex\n{\\fontsize{14pt}{17pt}\\selectfont\\textbf{\\color{bkblue}\\TenMon{} -- \\MaMon}\\par}"
+            }
+        ],
+        "CurrentFile": "main.tex",
+        "FileVersion": 1,
+        "Files": [
+            {
+                "Col": 0,
+                "EditorGroup": 0,
+                "FileName": "main.tex",
+                "FirstLine": 0,
+                "FoldedLines": "",
+                "Line": 0
+            }
+        ],
+        "MasterFile": "",
+        "VerticalSplit": false
+    }
+}

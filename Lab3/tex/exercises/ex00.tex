@@ -1,0 +1,15 @@
+\section*{BJT simulation circuit (mạch mẫu)}
+\addcontentsline{toc}{section}{BJT simulation circuit (mạch mẫu)}
+Mô phỏng mạch Hình~\ref{fig:3-02} bằng PSpice (linh kiện \texttt{QbreakN}, $\beta = 100$, $V_{CE(sat)} = 0.65\,\text{V}$, $V_{BE} = 0.7\,\text{V}$), chế độ \textit{Bias Point}.
+
+\given{fig3_02}{0.6\linewidth}{Simple connection with transistor\label{fig:3-02}}
+\given{fig3_03}{0.7\linewidth}{Bias profile simulation results (đề cho)}
+
+\simresult
+\simfigs{ex00_bias}{Kết quả Bias Point của mạch mẫu ($R_1 = 10\,\text{k}\Omega$)}
+
+\begin{itemize}
+  \item $I_B = \dfrac{V_{BB}-V_{BE}}{R_1} = \dfrac{5-0.7}{10\,\text{k}} = 0.43\,\text{mA}$
+  \item Giả sử BJT ở vùng tích cực: $I_C = \beta I_B = 43\,\text{mA}$
+  \item $V_{CE} = V_{CC} - I_C R_2 = 10 - 43\,\text{mA}\cdot 100 = 5.7\,\text{V} > V_{CE(sat)}$ $\Rightarrow$ đúng vùng tích cực.
+\end{itemize}

@@ -1,0 +1,14 @@
+\section{BJT's logic gate application}
+Mạch cổng NOT dùng BJT NPN (Hình~\ref{fig:3-14}) hoạt động ở chế độ bão hòa. Nguồn xung: $V_1 = 0$, $V_2 = 5\,\text{V}$, $TD = 0$, $TR = 5\,\text{ns}$, $TF = 3\,\text{ns}$, $PW = 50\,\text{ms}$, $PER = 100\,\text{ms}$ (\textit{Place $\to$ PSpice Component $\to$ Source $\to$ Voltage Sources $\to$ Pulse}).
+
+\given{fig3_14}{0.55\linewidth}{NPN theoretical NOT gate\label{fig:3-14}}
+
+\subsection{Mô phỏng}
+\simfig{ex12_not_gate}{Dạng sóng vào/ra của cổng NOT (Transient)}
+
+\subsection{Ngõ ra cực thu hở (open-collector)}
+Dòng ra tối đa của cổng NOT bị giới hạn bởi $5\,\text{V}/10\,\text{k}\Omega$. Để kéo LED, người ta để hở cực thu và dùng điện trở kéo lên bên ngoài.
+
+\given{fig3_15}{0.7\linewidth}{Open-collector output example}
+\given{fig3_16}{0.6\linewidth}{External pull-up resistor whose value selected by the users}
+\given{fig3_17}{0.55\linewidth}{Wired open-collector outputs}

@@ -1,0 +1,34 @@
+\section{Drive a device with an NPN BJT}
+Ngõ ra logic $5\,\text{V}$ ($V_{ter}$) cấp tối đa $10\,\text{mA}$ (không sụt áp), chịu tối đa $20\,\text{mA}$. Tải $5\,\Omega$ cần $300$--$500\,\text{mA}$. BJT: $\beta = 100$, $I_{C(max)} = 400\,\text{mA}$, $V_{BE} = 0.7\,\text{V}$. Chọn $R_B$ theo giá trị thương mại.
+
+\given{fig3_06}{0.85\linewidth}{Select a resistor available in the market for $R_B$}
+
+\subsection{Tính toán lý thuyết}
+Theo giới hạn của tải và transistor:
+\dotlineeq{\hspace{3cm}(min) $< I_C <$}{(max)}
+\dotlineeq{\hspace{3cm}(min) $< I_B <$}{(max)}
+\dotline{Với $I_{B(min)} = $ \hspace{3cm} ta có $R_{B(max)} = $}
+\dotline{Với $I_{B(max)} = $ \hspace{3cm} ta có $R_{B(min)} = $}
+\dotlineeq{Vậy \hspace{2cm}(min) $< R_B <$}{(max)}
+\dotline{$R_B$ chọn (dãy E12/E24): }
+
+\subsection{Mô phỏng}
+\simfigs{ex04_rbmin}{Mô phỏng với $R_{B(min)}$}
+\simfigs{ex04_rbmax}{Mô phỏng với $R_{B(max)}$}
+\simfigs{ex04_rbsel}{Mô phỏng với $R_B$ đã chọn}
+
+\subsection{So sánh}
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|ccc|ccc}
+\toprule
+ & & \multicolumn{3}{c|}{Lý thuyết} & \multicolumn{3}{c}{PSpice}\\
+ & $R_B$ & $V_{BE}$ & $I_B$ & $I_C$ & $V_{BE}$ & $I_B$ & $I_C$\\
+\midrule
+$R_{B(min)}$      & & & & & \fillcell & \fillcell & \fillcell\\
+$R_{B(max)}$      & & & & & \fillcell & \fillcell & \fillcell\\
+$R_{B(selected)}$ & & & & & \fillcell & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 4}
+\end{table}
