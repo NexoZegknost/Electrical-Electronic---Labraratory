@@ -1,18 +1,40 @@
 \section{BJT in Saturation Mode}
-Đổi $R_1 = 1\,\text{k}\Omega$ trong mạch Hình~\ref{fig:3-02}, chạy lại Bias Point; giải thích $I_B$, $I_C$, $V_{CE}$ ($\beta = 100$, $V_{CE(sat)} = 0.65\,\text{V}$, $V_{BE} = 0.7\,\text{V}$).
+Đổi $R_1 = 1\,\text{k}\Omega$ trong mạch Hình~\ref{fig:3-02} (linh kiện \texttt{QbreakN}), chạy lại Bias Point; giải thích $I_B$, $I_C$, $V_{CE}$ ($\beta = 100$, $V_{CE(sat)} = 0.65\,\text{V}$, $V_{BE} = 0.7\,\text{V}$).
+
+\given{fig3_02}{0.6\linewidth}{Simple connection with transistor (đổi $R_1$ thành $1\,\text{k}\Omega$)\label{fig:3-02}}
 
 \simresult
 \simfigs{ex01_bias}{Bias Point với $R_1 = 1\,\text{k}\Omega$}
 
 \subsection{Giải thích}
 \begin{itemize}
-  \item Theo định luật Ohm: $I_B = $ \dotfill
-  \item Giả sử BJT ở vùng tích cực: $I_C = \beta I_B = $ \dotfill
-  \item Kiểm tra: $V_{CE} = V_{CC} - I_C R_2 = $ \dotfill
+  \item Theo định luật Ohm:
+  \[ I_B = \frac{V_{BB}-V_{BE}}{R_1} = \frac{5\,\text{V} - 0.7\,\text{V}}{1\,\text{k}\Omega} = 4.3\,\text{mA} \]
+  \item Giả sử BJT ở vùng tích cực:
+  \[ I_C = \beta I_B = 100 \times 4.3\,\text{mA} = 430\,\text{mA} \]
+  \item Kiểm tra giả thiết:
+  \[ V_{CE} = V_{CC} - I_C R_2 = 10\,\text{V} - 430\,\text{mA}\times 100\,\Omega = 10 - 43 = -33\,\text{V} \]
 \end{itemize}
-Vì $V_{CE} < 0$, giả thiết sai $\Rightarrow$ BJT ở vùng bão hòa:
-\[ I_C = \frac{V_{CC} - V_{CE(sat)}}{R_2} = \dots \]
+Vì $V_{CE} = -33\,\text{V} < $ $V_{CE(sat)}$ = 0.65V, giả thiết vùng tích cực là sai. BJT ở \textbf{vùng bão hòa}, khi đó $V_{CE} = V_{CE(sat)} = 0.65\,\text{V}$ và $I_C$ do mạch ngoài ($V_{CC}$, $R_2$) quyết định, không còn bằng $\beta I_B$:
+\[ I_C = \frac{V_{CC} - V_{CE(sat)}}{R_2} = \frac{10\,\text{V} - 0.65\,\text{V}}{100\,\Omega} = 93.5\,\text{mA} \]
+Kiểm tra: $I_C = 93.5\,\text{mA} < \beta I_B = 430\,\text{mA}$, tức $I_B$ dư để đẩy BJT vào bão hòa (hệ số bão hòa $\beta_{forced} = I_C/I_B \approx 21.7 < \beta$).
 
 \begin{dapsobox}
-$I_B = \dots$ \qquad $I_C = \dots$ \qquad $V_{CE} = \dots$
+$I_B = 4.3\,\text{mA}$ \qquad $I_C = 93.5\,\text{mA}$ \qquad $V_{CE} = 0.65\,\text{V}$
 \end{dapsobox}
+
+\subsection{So sánh với mô phỏng}
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết & PSpice \\
+\midrule
+$I_B$ & $4.3\,\text{mA}$ & $4.105\,\text{mA}$ \\
+$I_C$ & $93.5\,\text{mA}$ & $99.09\,\text{mA}$ \\
+$V_{CE}$ & $0.65\,\text{V}$ & $0.09155\,\text{V}$ \\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 3.1}
+\end{table}
+Kết quả mô phỏng xác nhận BJT bão hòa: $I_C \approx 99\,\text{mA} \ll \beta I_B \approx 410\,\text{mA}$ và $V_{CE}$ rất nhỏ. Các giá trị lệch nhẹ so với lý thuyết vì đề giả định $V_{BE} = 0.7\,\text{V}$ và $V_{CE(sat)} = 0.65\,\text{V}$, còn model \texttt{QbreakN} cho $V_{BE} \approx 0.89\,\text{V}$ (nên $I_B$ nhỏ hơn: $(5-0.8946)/1\,\text{k} = 4.105\,\text{mA}$) và $V_{CE(sat)} \approx 0.09\,\text{V}$ (nên $I_C = (10-0.0916)/100\,\Omega \approx 99.1\,\text{mA}$, lớn hơn $93.5\,\text{mA}$).

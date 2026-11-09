@@ -1,11 +1,41 @@
 \section{DC Sweep Simulation}
-Dùng lại mạch bài 1 ($R_1 = 1\,\text{k}\Omega$), quét DC $V_1$ từ $0$ đến $5\,\text{V}$, bước $0.1\,\text{V}$; vẽ $I_C$ theo $V_1$ (tăng độ dày nét).
+Dùng lại mạch bài 3.1 ($R_1 = 1\,\text{k}\Omega$), quét DC $V_1$ từ $0$ đến $5\,\text{V}$, bước $0.1\,\text{V}$; vẽ $I_C$ theo $V_1$ (tăng độ dày nét).
 
 \given{fig3_04}{0.75\linewidth}{DC-Sweep profile for simulation}
 
 \simresult
-\simfig{ex02_dcsweep}{Đặc tuyến $I_C$ theo $V_1$}
+\simfig{ex02_dcsweep}{Đặc tuyến $I_C$ theo $V_1$ ($R_1 = 1\,\text{k}\Omega$)}
 
-\dotline{Khi BJT bắt đầu bão hòa, $V_1 = $}
-\dotline{Tại giá trị này, $I_B = $}
-\dotline{Và $I_{C(sat)} = $}
+\subsection{Nhận xét đồ thị}
+\begin{itemize}
+  \item $V_1 < 0.7\,\text{V}$: chưa đủ để phân cực thuận mối nối BE, BJT \textbf{ngắt} ($I_C \approx 0$).
+  \item $0.7\,\text{V} < V_1 \lesssim 1.9\,\text{V}$: BJT ở \textbf{vùng tích cực}, $I_C = \beta I_B = \beta\,\dfrac{V_1 - V_{BE}}{R_1}$ tăng tuyến tính theo $V_1$ (độ dốc $\approx \beta/R_1 = 100\,\text{mA/V}$).
+  \item $V_1 \gtrsim 1.9\,\text{V}$: $I_C$ đi ngang, BJT \textbf{bão hòa}, dòng bị giới hạn bởi mạch ngoài $I_{C(sat)} = (V_{CC} - V_{CE(sat)})/R_2$.
+\end{itemize}
+
+\subsection{Giá trị tại điểm bắt đầu bão hòa}
+Lý thuyết ($V_{CE(sat)} = 0.65\,\text{V}$, $V_{BE} = 0.7\,\text{V}$, $\beta = 100$):
+\begin{align*}
+I_{C(sat)} &= \frac{10 - 0.65}{100\,\Omega} = 93.5\,\text{mA}\\
+I_B &= \frac{I_{C(sat)}}{\beta} = 0.935\,\text{mA}\\
+V_1 &= V_{BE} + I_B R_1 = 0.7 + 0.935 = 1.635\,\text{V}
+\end{align*}
+Mô phỏng: đọc bằng con trỏ Probe tại chỗ đường cong bắt đầu đi ngang: $V_1 \approx 1.9\,\text{V}$, $I_C \approx 97.92\,\text{mA}$.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết & PSpice \\
+\midrule
+$V_1$ khi bắt đầu bão hòa & $1.635\,\text{V}$ & $\approx 1.9\,\text{V}$ \\
+$I_B$ tại điểm đó & $0.935\,\text{mA}$ & \fillcell \\
+$I_{C(sat)}$ & $93.5\,\text{mA}$ & $\approx 97.92\,\text{mA}$ \\
+\bottomrule
+\end{tabular}
+\caption{Điểm bắt đầu bão hòa (ô cam: đọc $I_B$ bằng trace \texttt{IB(Q1)} tại $V_1 = 1.9\,\text{V}$)}
+\end{table}
+
+\begin{notebox}{Giải thích sai lệch}
+Mô phỏng cho điểm bão hòa muộn hơn ($\approx 1.9\,\text{V}$ so với $1.635\,\text{V}$) và $I_{C(sat)}$ cao hơn ($\approx 98\,\text{mA}$ so với $93.5\,\text{mA}$) vì: (1) model \texttt{QbreakN} có $V_{BE}$ thực tế cao hơn $0.7\,\text{V}$ ở dòng lớn (phần dốc cắt trục $V_1$ ở khoảng $0.8\,\text{V}$), làm điểm gãy dịch sang phải; (2) $V_{CE(sat)}$ của model chỉ khoảng $0.1$--$0.2\,\text{V}$, nhỏ hơn $0.65\,\text{V}$ của đề, nên $I_C$ bão hòa lớn hơn và còn nhích nhẹ lên khi $V_1$ tăng. Điểm gãy cũng chuyển tiếp ``mềm'' nên giá trị đọc được chỉ xấp xỉ.
+\end{notebox}
