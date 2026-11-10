@@ -1,0 +1,45 @@
+\section{Voltage Regulator using LM2596}\label{sec:lm2596}
+\textbf{LM2596} là IC ổn áp xung hạ áp (\textit{DC-DC buck converter}), cấp cho tải đến $3\,\text{A}$; khi hạ áp thì dòng ra tăng. IC có ổn định tải và ổn định nguồn tốt, có bản điện áp ra cố định ($3.3\,\text{V}$, $5\,\text{V}$, $12\,\text{V}$) và bản điều chỉnh được (ADJ); tích hợp bộ dao động tần số cố định và bù tần số nội.
+
+Mạch này đã được mô phỏng bằng PSpice ở bài trước; ở bài này thực hiện trên Altium Designer theo sơ đồ đề xuất của Texas Instruments (Hình~\ref{fig:4-04}).
+
+\given{fig4_04}{0.9\linewidth}{Typical connection for LM2596\label{fig:4-04}}
+
+\video{https://www.youtube.com/watch?v=57Ra92p3C0k}
+
+\subsection*{Danh sách linh kiện}
+\begin{table}[H]
+\centering
+\begin{tabular}{l l l l}
+\toprule
+\textbf{Designator} & \textbf{Linh kiện} & \textbf{Giá trị} & \textbf{Footprint}\\
+\midrule
+U1        & IC ổn áp xung         & LM2596-5.0          & \fillcell\\
+$C_{IN}$  & Tụ hóa ngõ vào        & $680\,\mu\text{F}$  & \fillcell\\
+$C_{OUT}$ & Tụ hóa ngõ ra         & $220\,\mu\text{F}$  & \fillcell\\
+L1        & Cuộn cảm              & $33\,\mu\text{H}$   & \fillcell\\
+D1        & Diode Schottky        & 1N5824              & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Linh kiện mạch ổn áp LM2596 (theo sơ đồ TI)}
+\end{table}
+
+\subsection{Schematic design}
+\video{https://www.youtube.com/watch?v=DGiHsGWPyYw}
+
+\altfig{ex02_sch}{Sơ đồ nguyên lý mạch ổn áp LM2596 (Altium Designer)}
+
+\subsection{PCB layout}
+\video{https://www.youtube.com/watch?v=WXszMiTSGPo}
+
+\altfig{ex02_pcb_top}{PCB mạch LM2596 -- lớp TOP}
+\altfig{ex02_pcb_bottom}{PCB mạch LM2596 -- lớp BOTTOM}
+\altfig{ex02_3d_top}{Mô hình 3D mạch LM2596 -- mặt trên}
+\altfigs{ex02_3d_bottom}{Mô hình 3D mạch LM2596 -- mặt dưới / góc nghiêng}
+
+\begin{notebox}{Thông số mạch in}
+\dotline{Kích thước board:}
+\dotline{Số lớp đồng:}
+\dotline{Độ rộng đường nguồn / đường tín hiệu:}
+\dotline{Kết quả kiểm tra DRC:}
+\end{notebox}

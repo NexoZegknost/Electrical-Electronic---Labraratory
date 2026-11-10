@@ -1,0 +1,52 @@
+\section{Voltage Regulator using 7805}\label{sec:7805}
+IC \textbf{7805} thuộc họ 78xx (xx là điện áp ra cố định), là IC ổn áp tuyến tính 3 chân cho ngõ ra $+5\,\text{V}$ ($4.8$--$5.2\,\text{V}$). Vỏ thường gặp: SOT-223, TO-263, TO-220, TO-3 (phổ biến nhất là TO-220).
+\begin{itemize}
+  \item \textbf{Pin 1 -- Input:} điện áp vào chưa ổn định, từ $7$ đến $35\,\text{V}$ (hiệu suất tốt nhất ở khoảng $7.2\,\text{V}$).
+  \item \textbf{Pin 2 -- Ground:} chân mass, chung cho ngõ vào và ngõ ra.
+  \item \textbf{Pin 3 -- Output:} điện áp ra đã ổn định $\approx 5\,\text{V}$.
+\end{itemize}
+
+\given{fig4_02}{0.45\linewidth}{LM7805 Pin Out}
+\given{fig4_03}{0.9\linewidth}{Voltage regulator using 78xx schematic in Altium Designer\label{fig:4-03}}
+
+\video{https://www.youtube.com/watch?v=mSEBrma5MNM}
+
+\subsection*{Danh sách linh kiện}
+\begin{table}[H]
+\centering
+\begin{tabular}{l l l l}
+\toprule
+\textbf{Designator} & \textbf{Linh kiện} & \textbf{Giá trị} & \textbf{Footprint}\\
+\midrule
+CON1   & Jack nguồn DC          & --            & \fillcell\\
+D1     & Diode chống ngược cực  & 1N4007        & \fillcell\\
+C1, C3 & Tụ hóa                 & $1000\,\mu\text{F}$ & \fillcell\\
+C2, C4 & Tụ gốm                 & 104 ($100\,\text{nF}$) & \fillcell\\
+U1     & IC ổn áp               & 7805          & \fillcell\\
+R1     & Điện trở hạn dòng LED  & $1\,\text{k}\Omega$ & \fillcell\\
+D2     & LED báo nguồn          & --            & \fillcell\\
+P1     & Header 2 chân (ngõ ra) & --            & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Linh kiện mạch ổn áp 7805}
+\end{table}
+
+\subsection{Schematic design}
+Vẽ lại sơ đồ nguyên lý Hình~\ref{fig:4-03} trong Altium Designer.
+
+\altfig{ex01_sch}{Sơ đồ nguyên lý mạch ổn áp 7805 (Altium Designer)}
+
+\subsection{PCB layout}
+\video{https://www.youtube.com/watch?v=PW_QQpoODDk}
+
+\altfig{ex01_pcb_top}{PCB mạch 7805 -- lớp TOP}
+\altfig{ex01_pcb_bottom}{PCB mạch 7805 -- lớp BOTTOM}
+\altfig{ex01_3d_top}{Mô hình 3D mạch 7805 -- mặt trên}
+\altfigs{ex01_3d_bottom}{Mô hình 3D mạch 7805 -- mặt dưới / góc nghiêng}
+
+\begin{notebox}{Thông số mạch in}
+\dotline{Kích thước board:}
+\dotline{Số lớp đồng:}
+\dotline{Độ rộng đường nguồn / đường tín hiệu:}
+\dotline{Kết quả kiểm tra DRC:}
+\end{notebox}

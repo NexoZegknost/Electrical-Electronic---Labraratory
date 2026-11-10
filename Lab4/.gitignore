@@ -1,0 +1,17 @@
+build/
+pspice/
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+# Altium: file sinh tự động
+altium/**/History/
+altium/**/Project Logs for */
+altium/**/Project Outputs for */
+altium/**/__Previews/
+altium/**/*.PrjPcbStructure
+altium/**/*.SchDocPreview
+altium/**/*.PcbDocPreview
