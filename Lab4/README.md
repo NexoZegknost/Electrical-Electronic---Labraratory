@@ -1,28 +1,27 @@
 # Chapter 4 - Circuit Design with Altium Designer (CO2104)
 
+Đề không yêu cầu báo cáo riêng: chỉ nộp file thiết kế Altium của 2 mạch.
+
 ```
 Lab4/
-├── main.tex                 file chính (chỉ \input các phần)
-├── latexmkrc                cấu hình biên dịch (XeLaTeX, kết quả vào build/)
-├── tex/
-│   ├── preamble.tex         gói, macro, header/footer (\altfig, \altfigs, \video cho Lab 4)
-│   ├── config.tex           thông tin môn học, lớp, sinh viên (sửa ở đây)
-│   ├── cover.tex            trang bìa
-│   └── exercises/           ex00 (giới thiệu), ex01 (7805), ex02 (LM2596)
-├── images/
-│   ├── common/              logo (hcmut.png)
-│   ├── given/               hình đề bài (fig4_01 ... fig4_04)
-│   └── altium/              ảnh chụp từ Altium:
-│                              exN_sch, exN_pcb_top, exN_pcb_bottom, exN_3d_top, exN_3d_bottom (.png)
 ├── altium/
-│   ├── ex01_7805/           project Altium mạch 7805 (.PrjPcb, .SchDoc, .PcbDoc)
-│   └── ex02_lm2596/         project Altium mạch LM2596
-├── report/                  file nộp bài
-├── docs/
-│   └── Ch4.pdf              đề bài gốc Chapter 4
-└── build/                   file trung gian và main.pdf (không đưa vào git)
+│   ├── 7805/        7805.PrjPcb, 7805.SchDoc, 7805.PcbDoc     (mạch ổn áp 7805)
+│   └── LM2596/      LM2596.PrjPcb, LM2596.SchDoc, LM2596.PcbDoc  (mạch giảm áp LM2596)
+├── report/          nơi tạo file zip để nộp
+├── docs/Ch4.pdf     đề bài gốc
+├── images/          ảnh đề bài (given/) và ảnh chụp Altium (altium/) - chỉ cần nếu muốn làm sổ ghi chép
+├── main.tex, tex/   khung báo cáo LaTeX (tùy chọn, KHÔNG bắt buộc nộp)
+└── latexmkrc
 ```
 
-Biên dịch: chạy `latexmk` trong thư mục này, kết quả là `build/main.pdf`.
-Ảnh chưa có sẽ hiện thành khung cam "Ô DÁN ẢNH" kèm đúng tên tệp cần lưu; lưu ảnh đúng tên vào `images/altium/` là khung tự biến mất.
-Nộp bài: project Altium của 2 mạch và `report.pdf` (đổi tên từ `build/main.pdf`), nén thành `<MSSV>_<HoVaTen>.zip`.
+## Yêu cầu từng mạch
+1. Vẽ đầy đủ schematic theo mạch mẫu (7805: Hình 4.3; LM2596: Hình 4.4 của TI).
+2. Gán footprint phù hợp cho mọi linh kiện.
+3. Update PCB, sắp xếp linh kiện hợp lý, hoàn thành routing (chạy DRC không lỗi).
+4. Kiểm tra PCB ở chế độ 3D (phím 3) - linh kiện và footprint hiển thị đúng.
+
+## Nộp bài
+File tối thiểu: `7805.SchDoc`, `7805.PcbDoc`, `LM2596.SchDoc`, `LM2596.PcbDoc`
+(nên kèm `7805.PrjPcb`, `LM2596.PrjPcb` và thư viện tự tạo nếu có, để mở lại không bị thiếu).
+Nén thành một file: `2510290_NguyenHuynhHuuDuc_Chapter4.zip`
+Trước khi nén: đóng Altium, mở thử lại từng `.PrjPcb` để chắc chắn file mở được và đủ schematic + PCB.
