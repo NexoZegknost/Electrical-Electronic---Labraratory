@@ -1,18 +1,38 @@
 \section{PNP Circuit}
 Tính $I_B$, $I_E$, $I_C$ của mạch PNP Hình~\ref{fig:3-08} ($\beta = 100$), sau đó mô phỏng kiểm chứng.
 
-\given{fig3_08}{0.45\linewidth}{A PNP Circuit\label{fig:3-08}}
+\given{fig3_08}{0.3\linewidth}{A PNP Circuit\label{fig:3-08}}
 
 \subsection{Tính toán lý thuyết}
-\dotline{$V_{EB} = $}
-\dotline{$I_B = $}
-\dotline{$I_C = $}
-\dotline{$I_E = $}
+Emitter nối $12\,\text{V}$, mối nối BE phân cực thuận nên:
+\[ V_{EB} = 0.7\,\text{V} \;\Rightarrow\; V_B = V_E - V_{EB} = 12 - 0.7 = 11.3\,\text{V} \]
+Dòng base của PNP chảy \textbf{ra khỏi} base, qua $R_1 = 40\,\text{k}\Omega$ tới nguồn $8\,\text{V}$:
+\[ I_B = \frac{V_B - 8}{R_1} = \frac{11.3 - 8}{40\,\text{k}\Omega} = 82.5\,\mu\text{A} \]
+Giả sử BJT ở vùng tích cực:
+\[ I_C = \beta I_B = 100\times 82.5\,\mu\text{A} = 8.25\,\text{mA} \]
+\[ I_E = (\beta + 1) I_B = I_B + I_C = 8.3325\,\text{mA} \approx 8.33\,\text{mA} \]
+Kiểm tra giả thiết: $V_C = I_C R_2 = 8.25\,\text{mA}\times 1\,\text{k}\Omega = 8.25\,\text{V}$, nên $V_{EC} = 12 - 8.25 = 3.75\,\text{V}$, lớn hơn nhiều so với $V_{EC(sat)}$ $\Rightarrow$ BJT ở vùng tích cực, giả thiết đúng.
 
-\subsection{Mô phỏng}
-\simfigs{ex06_pnp}{Kết quả mô phỏng mạch PNP}
+\begin{dapsobox}
+$V_{EB} = 0.7\,\text{V}$ \quad $I_B = 82.5\,\mu\text{A}$ \quad $I_C = 8.25\,\text{mA}$ \quad $I_E = 8.33\,\text{mA}$
+\end{dapsobox}
+
+\subsection{Kết quả mô phỏng}
+\simfigs{ex06_pnp}{Kết quả mô phỏng mạch PNP (Bias Point)}
 
 \subsection{So sánh}
-\dotlineeq{$I_B$ (lý thuyết) $=$}{$I_B$ (mô phỏng) $=$ \fillcell}
-\dotlineeq{$I_C$ (lý thuyết) $=$}{$I_C$ (mô phỏng) $=$ \fillcell}
-\dotlineeq{$I_E$ (lý thuyết) $=$}{$I_E$ (mô phỏng) $=$ \fillcell}
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết & PSpice \\
+\midrule
+$V_{EB}$ & $0.7\,\text{V}$ & $0.83\,\text{V}$ ($12.00 - 11.17$) \\
+$I_B$ & $82.5\,\mu\text{A}$ & $79.31\,\mu\text{A}$ \\
+$I_C$ & $8.25\,\text{mA}$ & $7.931\,\text{mA}$ \\
+$I_E$ & $8.33\,\text{mA}$ & $8.010\,\text{mA}$ \\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 3.6}
+\end{table}
+Mô phỏng nhỏ hơn lý thuyết khoảng $4\%$ do $V_{EB}$ thực là $12.00 - 11.17 = 0.83\,\text{V}$; quan hệ $I_E = I_B + I_C$ vẫn thỏa ($7.931 + 0.0793 = 8.010\,\text{mA}$) và $V_{EC} \approx 4.07\,\text{V}$ nên BJT ở vùng tích cực.

@@ -1,24 +1,50 @@
 \section{Circuit with NPN and PNP bipolar junction transistors}
 Tính điện áp tại mọi nút và dòng trong mọi nhánh của mạch Hình~\ref{fig:3-09} (cả hai BJT có $\beta = 100$), sau đó mô phỏng và so sánh.
 
-\given{fig3_09}{0.45\linewidth}{Circuit with NPN and PNP bipolar junction transistors\label{fig:3-09}}
+\given{fig3_09}{0.35\linewidth}{Circuit with NPN and PNP bipolar junction transistors\label{fig:3-09}}
 
 \subsection{Tính toán lý thuyết}
-\dotline{Ta có $V_E$ (so với) \hspace{1.5cm} $V_B$, do đó transistor $Q_2$}
-\dotline{Theo định luật \hspace{3cm}, ta có phương trình:}
-\dotlineeq{$I_{BE}$ (gọi tắt $I_B$) $=$}{(1)}
-\dotline{Giải (1): $I_B = $}
-\dotline{$I_C = $}
-\dotline{$I_{EG} = $}
-\dotline{$V_E = $}
-\dotline{$V_B = $}
+Mạch gồm $Q_1$ (NPN, collector nối $+5\,\text{V}$) và $Q_2$ (PNP, collector nối $-5\,\text{V}$) chung emitter tại nút E, chung base tại nút B; base được cấp từ $+5\,\text{V}$ qua $10\,\text{k}\Omega$, tải $1\,\text{k}\Omega$ nối từ E xuống đất (G).
 
-\subsection{Mô phỏng}
+Ta có $V_E < V_B$ (E thấp hơn B), nên mối nối BE của $Q_2$ (PNP) bị phân cực \textbf{ngược}, do đó transistor $Q_2$ \textbf{tắt} (cutoff, dòng qua $Q_2$ bằng $0$). Chỉ còn $Q_1$ (NPN) dẫn, ở vùng tích cực.
+
+Theo định luật Kirchhoff về điện áp (KVL) cho vòng $+5\,\text{V} \to 10\,\text{k}\Omega \to$ BE của $Q_1 \to 1\,\text{k}\Omega \to$ đất, ta có phương trình:
+\[ 5 = I_B\cdot 10\,\text{k}\Omega + V_{BE} + (\beta + 1) I_B \cdot 1\,\text{k}\Omega \tag{1} \]
+trong đó $I_B$ là dòng $I_{BE}$ của $Q_1$ (cũng là dòng qua $10\,\text{k}\Omega$).
+
+Giải (1):
+\[ I_B = \frac{5 - 0.7}{10\,\text{k} + 101\cdot 1\,\text{k}} = \frac{4.3}{111\,\text{k}\Omega} \approx 38.74\,\mu\text{A} \]
+\[ I_C = \beta I_B = 100\times 38.74\,\mu\text{A} \approx 3.874\,\text{mA} \]
+\[ I_{EG} = (\beta + 1) I_B \approx 3.913\,\text{mA} \]
+\[ V_E = I_{EG}\cdot 1\,\text{k}\Omega \approx 3.913\,\text{V} \]
+\[ V_B = V_E + V_{BE} = 3.913 + 0.7 \approx 4.613\,\text{V} \]
+Kiểm tra: $V_{CE(Q_1)} = 5 - 3.913 = 1.087\,\text{V} > V_{CE(sat)}$ nên $Q_1$ đúng ở vùng tích cực; $V_{EB(Q_2)} = V_E - V_B = -0.7\,\text{V} < 0$ nên $Q_2$ đúng là tắt.
+
+\begin{dapsobox}
+\textbf{Điện áp các nút:} $V_A = 5\,\text{V}$, $V_B = 4.613\,\text{V}$, $V_C = 5\,\text{V}$, $V_D = -5\,\text{V}$, $V_E = 3.913\,\text{V}$, $V_G = 0\,\text{V}$. \\
+\textbf{Dòng các nhánh:} $I_{AB} = I_B = 38.74\,\mu\text{A}$, $I_C = 3.874\,\text{mA}$, $I_{EG} = 3.913\,\text{mA}$, dòng qua $Q_2 = 0$.
+\end{dapsobox}
+
+\subsection{Kết quả mô phỏng}
 \simfigs{ex07_npn_pnp}{Kết quả mô phỏng mạch NPN--PNP}
 
 \subsection{So sánh}
-\dotlineeq{$I_B$ (lý thuyết) $=$}{$I_B$ (mô phỏng) $=$ \fillcell}
-\dotlineeq{$I_C$ (lý thuyết) $=$}{$I_C$ (mô phỏng) $=$ \fillcell}
-\dotlineeq{$I_{EG}$ (lý thuyết) $=$}{$I_{EG}$ (mô phỏng) $=$ \fillcell}
-\dotlineeq{$V_E$ (lý thuyết) $=$}{$V_E$ (mô phỏng) $=$ \fillcell}
-\dotlineeq{$V_B$ (lý thuyết) $=$}{$V_B$ (mô phỏng) $=$ \fillcell}
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết & PSpice \\
+\midrule
+$I_B$ & $38.74\,\mu\text{A}$ & $37.76\,\mu\text{A}$ \\
+$I_C$ & $3.874\,\text{mA}$ & $3.776\,\text{mA}$ \\
+$I_{EG}$ & $3.913\,\text{mA}$ & $3.814\,\text{mA}$ \\
+$V_E$ & $3.913\,\text{V}$ & $3.814\,\text{V}$ \\
+$V_B$ & $4.613\,\text{V}$ & $4.622\,\text{V}$ \\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 3.7}
+\end{table}
+
+Các nút còn lại trong mô phỏng: $V_A = V_C = 5.000\,\text{V}$, $V_D = -5.000\,\text{V}$, $V_G = 0\,\text{V}$, khớp với lý thuyết. Dòng qua $Q_2$ chỉ cỡ pA ($I_C \approx 9.6\,\text{pA}$, $I_B \approx -18\,\text{pA}$), tức $Q_2$ \textbf{tắt}, đúng như nhận định khi tính.
+
+Các dòng và $V_E$ nhỏ hơn lý thuyết khoảng $2.5\%$ do $V_{BE}$ thực là $V_B - V_E = 0.808\,\text{V}$.

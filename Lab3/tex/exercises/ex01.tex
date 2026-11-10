@@ -1,9 +1,7 @@
 \section{BJT in Saturation Mode}
-Đổi $R_1 = 1\,\text{k}\Omega$ trong mạch Hình~\ref{fig:3-02} (linh kiện \texttt{QbreakN}), chạy lại Bias Point; giải thích $I_B$, $I_C$, $V_{CE}$ ($\beta = 100$, $V_{CE(sat)} = 0.65\,\text{V}$, $V_{BE} = 0.7\,\text{V}$).
+Đổi $R_1 = 1\,\text{k}\Omega$ trong mạch mô phỏng mẫu của đề (Hình 3.2, linh kiện \texttt{QbreakN}), chạy lại Bias Point; giải thích $I_B$, $I_C$, $V_{CE}$ ($\beta = 100$, $V_{CE(sat)} = 0.65\,\text{V}$, $V_{BE} = 0.7\,\text{V}$).
 
-\given{fig3_02}{0.6\linewidth}{Simple connection with transistor (đổi $R_1$ thành $1\,\text{k}\Omega$)\label{fig:3-02}}
-
-\simresult
+\subsection{Kết quả mô phỏng}
 \simfigs{ex01_bias}{Bias Point với $R_1 = 1\,\text{k}\Omega$}
 
 \subsection{Giải thích}
@@ -37,4 +35,4 @@ $V_{CE}$ & $0.65\,\text{V}$ & $0.09155\,\text{V}$ \\
 \end{tabular}
 \caption{So sánh lý thuyết và mô phỏng bài 3.1}
 \end{table}
-Kết quả mô phỏng xác nhận BJT bão hòa: $I_C \approx 99\,\text{mA} \ll \beta I_B \approx 410\,\text{mA}$ và $V_{CE}$ rất nhỏ. Các giá trị lệch nhẹ so với lý thuyết vì đề giả định $V_{BE} = 0.7\,\text{V}$ và $V_{CE(sat)} = 0.65\,\text{V}$, còn model \texttt{QbreakN} cho $V_{BE} \approx 0.89\,\text{V}$ (nên $I_B$ nhỏ hơn: $(5-0.8946)/1\,\text{k} = 4.105\,\text{mA}$) và $V_{CE(sat)} \approx 0.09\,\text{V}$ (nên $I_C = (10-0.0916)/100\,\Omega \approx 99.1\,\text{mA}$, lớn hơn $93.5\,\text{mA}$).
+Mô phỏng xác nhận BJT bão hòa: $I_C \approx 99\,\text{mA} \ll \beta I_B \approx 410\,\text{mA}$ và $V_{CE}$ rất nhỏ. Các giá trị lệch nhẹ so với lý thuyết vì đề giả định $V_{BE} = 0.7\,\text{V}$ và $V_{CE(sat)} = 0.65\,\text{V}$, còn model \texttt{QbreakN} cho $V_{BE} \approx 0.89\,\text{V}$ (nên $I_B$ nhỏ hơn: $(5-0.8946)/1\,\text{k} = 4.105\,\text{mA}$) và $V_{CE(sat)} \approx 0.09\,\text{V}$ (nên $I_C = (10-0.0916)/100\,\Omega \approx 99.1\,\text{mA}$, lớn hơn $93.5\,\text{mA}$). Nguyên nhân này ($V_{BE}$ và $V_{CE(sat)}$ thực của model khác giả thiết của đề) cũng là lý do của các sai lệch nhỏ giữa lý thuyết và mô phỏng ở những bài sau.

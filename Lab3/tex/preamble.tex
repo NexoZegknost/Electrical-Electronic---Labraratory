@@ -27,6 +27,7 @@
 \setlength{\cftsubsecnumwidth}{3.6em}
 
 \newtcolorbox{dapsobox}[1][]{
+  breakable,
   colback=blue!3!white,
   colframe=blue!60!black,
   fonttitle=\bfseries,
@@ -79,7 +80,7 @@
 \newcommand{\fillcell}{\fcolorbox{orange!80!black}{yellow!25}{\rule{0pt}{1.3em}\rule{1.05cm}{0pt}}}
 
 % Ô ghi nhận xét / quan sát của sinh viên
-\newtcolorbox{notebox}[2][]{enhanced,colback=gray!7,colframe=gray!65!black,fonttitle=\bfseries,
+\newtcolorbox{notebox}[2][]{enhanced,breakable,colback=gray!7,colframe=gray!65!black,fonttitle=\bfseries,
   title={#2},boxrule=0.8pt,arc=1.5mm,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
 
 \newcommand{\simresult}{\Needspace{0.55\textheight}\par\noindent\textbf{\textit{Kết quả mô phỏng (hình ảnh):}}\par}

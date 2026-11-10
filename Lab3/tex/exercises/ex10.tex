@@ -4,11 +4,36 @@ Tính $I_E$, $I_B$, $I_C$, $V_{CE}$ của mạch base chung Hình~\ref{fig:3-12}
 \given{fig3_12}{0.6\linewidth}{Common base\label{fig:3-12}}
 
 \subsection{Tính toán lý thuyết}
-\dotline{Theo định luật \hspace{3cm}, ta có:}
-\dotline{$I_E = $}
-\dotline{$I_B = $}
-\dotline{$I_C = $}
-\dotline{$V_{CE} = $}
+Theo hình: base nối đất ($V_B = 0\,\text{V}$); emitter nối $R_1 = 1.2\,\text{k}\Omega$ tới cực âm của nguồn $V_1 = 4\,\text{V}$ (cực dương nối đất, nên đầu dưới của $R_1$ ở $-4\,\text{V}$); collector nối $R_2 = 2.4\,\text{k}\Omega$ tới $V_2 = 10\,\text{V}$.
 
-\subsection{Mô phỏng}
+Theo định luật Kirchhoff về điện áp (KVL) cho vòng đất $\to$ BE $\to R_1 \to V_1$, với $V_E = V_B - V_{BE} = -0.7\,\text{V}$, ta có:
+\[ I_E = \frac{V_E - (-4)}{R_1} = \frac{-0.7 + 4}{1.2\,\text{k}\Omega} = \frac{3.3}{1.2\,\text{k}} = 2.75\,\text{mA} \]
+\[ I_B = \frac{I_E}{\beta + 1} = \frac{2.75\,\text{mA}}{101} \approx 27.23\,\mu\text{A} \]
+\[ I_C = \beta I_B = 100\times 27.23\,\mu\text{A} \approx 2.723\,\text{mA} \]
+\[ V_C = V_2 - I_C R_2 = 10 - 2.723\,\text{mA}\times 2.4\,\text{k}\Omega \approx 3.465\,\text{V} \]
+\[ V_{CE} = V_C - V_E = 3.465 - (-0.7) \approx 4.165\,\text{V} \]
+Vì $V_{CE} \approx 4.17\,\text{V} > V_{CE(sat)}$ và $V_{CB} = V_C - V_B = 3.465\,\text{V} > 0$ (mối nối BC phân cực ngược), BJT đúng ở vùng tích cực.
+
+\begin{dapsobox}
+$I_E \approx 2.75\,\text{mA}$ \quad $I_B \approx 27.23\,\mu\text{A}$ \quad $I_C \approx 2.723\,\text{mA}$ \quad $V_{CE} \approx 4.165\,\text{V}$
+\end{dapsobox}
+
+\subsection{Kết quả mô phỏng}
 \simfigs{ex10_common_base}{Kết quả mô phỏng mạch base chung}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết & PSpice \\
+\midrule
+$I_E$ & $2.75\,\text{mA}$ & $2.667\,\text{mA}$ \\
+$I_B$ & $27.23\,\mu\text{A}$ & $26.41\,\mu\text{A}$ \\
+$I_C$ & $2.723\,\text{mA}$ & $2.641\,\text{mA}$ \\
+$V_{CE}$ & $4.165\,\text{V}$ & $4.461\,\text{V}$ ($3.662 - (-0.799)$) \\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 3.10}
+\end{table}
+
+Mô phỏng khớp lý thuyết: các dòng thấp hơn khoảng $3\%$ do $V_{BE}$ thực là $0.799\,\text{V}$ (nên $V_C$ và $V_{CE}$ cao hơn). Trong cấu hình base chung, $I_C \approx \alpha I_E$ với $\alpha = \beta/(\beta+1) \approx 0.99$.

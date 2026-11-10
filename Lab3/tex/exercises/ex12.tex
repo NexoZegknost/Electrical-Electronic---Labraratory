@@ -3,12 +3,14 @@ Mạch cổng NOT dùng BJT NPN (Hình~\ref{fig:3-14}) hoạt động ở chế 
 
 \given{fig3_14}{0.55\linewidth}{NPN theoretical NOT gate\label{fig:3-14}}
 
-\subsection{Mô phỏng}
-\simfig{ex12_not_gate}{Dạng sóng vào/ra của cổng NOT (Transient)}
+\subsection{Kết quả mô phỏng}
+\simfig{ex12_not_gate}{Dạng sóng vào \texttt{V(R1:1)} (đỏ, nét liền) và ra \texttt{V(Q1:c)} (xanh, nét gạch chấm) của cổng NOT (Transient, $0$--$200\,\text{ms}$)}
 
-\subsection{Ngõ ra cực thu hở (open-collector)}
-Dòng ra tối đa của cổng NOT bị giới hạn bởi $5\,\text{V}/10\,\text{k}\Omega$. Để kéo LED, người ta để hở cực thu và dùng điện trở kéo lên bên ngoài.
-
-\given{fig3_15}{0.7\linewidth}{Open-collector output example}
-\given{fig3_16}{0.6\linewidth}{External pull-up resistor whose value selected by the users}
-\given{fig3_17}{0.55\linewidth}{Wired open-collector outputs}
+\begin{notebox}{Nhận xét}
+Ngõ ra luôn \textbf{đảo} mức của ngõ vào, đúng chức năng cổng NOT:
+\begin{itemize}[nosep]
+  \item Vào $= 5\,\text{V}$ (các khoảng $0$--$50\,\text{ms}$ và $100$--$150\,\text{ms}$): ngõ ra $\approx 0\,\text{V}$ (mức thấp).
+  \item Vào $= 0\,\text{V}$ (các khoảng $50$--$100\,\text{ms}$ và $150$--$200\,\text{ms}$): ngõ ra $= 5\,\text{V}$ (mức cao).
+\end{itemize}
+Giải thích: khi vào $= 5\,\text{V}$, $I_B \approx (5 - 0.7)/10\,\text{k}\Omega = 0.43\,\text{mA}$; nếu BJT ở vùng tích cực thì $\beta I_B = 43\,\text{mA}$, nhưng $R_2 = 10\,\text{k}\Omega$ chỉ cho phép $I_{C(sat)} \approx 5\,\text{V}/10\,\text{k}\Omega = 0.5\,\text{mA}$. Vì $I_B$ dư rất nhiều so với mức cần ($I_{C(sat)}/\beta = 5\,\mu\text{A}$) nên BJT bão hòa sâu và $V_{CE} = V_{CE(sat)} \approx 0$ ($V_{out}$ thấp). Khi vào $= 0\,\text{V}$, $V_{BE} = 0 < 0.7\,\text{V}$ nên BJT tắt, $I_C = 0$, không có sụt áp trên $R_2$ và $V_{out} = 5\,\text{V}$. Chu kỳ của sóng là $100\,\text{ms}$ ($PW = 50\,\text{ms}$), khớp với thông số nguồn xung.
+\end{notebox}

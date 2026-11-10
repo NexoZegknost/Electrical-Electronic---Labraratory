@@ -1,13 +1,43 @@
 \section{Darlington circuit}
 Tính $I_{BE}$, $I_{AC}$, $I_{AL}$ và hệ số khuếch đại tổng $\dfrac{I_{AL}}{I_{BE}}$ của mạch Darlington Hình~\ref{fig:3-11} ($\beta_1 = \beta_2 = 100$), sau đó mô phỏng kiểm chứng.
 
-\given{fig3_11}{0.55\linewidth}{Darlington circuit\label{fig:3-11}}
+\given{fig3_11}{0.42\linewidth}{Darlington circuit\label{fig:3-11}}
 
 \subsection{Tính toán lý thuyết}
-\dotline{$I_{BE} = $}
-\dotline{$I_{AC} = $}
-\dotline{$I_{AL} = $}
-\dotline{$\dfrac{I_{AL}}{I_{BE}} = $}
+Theo hình: nguồn $3\,\text{V}$ cấp cho base $Q_1$ qua $470\,\text{k}\Omega$; emitter $Q_1$ nối trực tiếp vào base $Q_2$, nên $I_{B2} = I_{E1} = (\beta_1+1) I_{B1}$; collector $Q_1$ nối $A = 10\,\text{V}$ qua $4.7\,\text{k}\Omega$, collector $Q_2$ nối $A$ qua $470\,\Omega$, emitter $Q_2$ nối đất. Ký hiệu $I_{BE}$ là dòng base của $Q_1$, $I_{AC}$ là dòng qua $4.7\,\text{k}\Omega$ ($= I_{C1}$) và $I_{AL}$ là dòng qua $470\,\Omega$ ($= I_{C2}$).
 
-\subsection{Mô phỏng}
+Hai mối nối BE mắc nối tiếp nên $V_B = V_{BE1} + V_{BE2} = 1.4\,\text{V}$:
+\[ I_{BE} = \frac{3 - 1.4}{470\,\text{k}\Omega} = \frac{1.6}{470\,\text{k}} \approx 3.404\,\mu\text{A} \]
+\[ I_{AC} = I_{C1} = \beta_1 I_{BE} = 100\times 3.404\,\mu\text{A} \approx 340.4\,\mu\text{A} \]
+\[ I_{B2} = I_{E1} = (\beta_1 + 1) I_{BE} \approx 343.8\,\mu\text{A} \]
+Nếu $Q_2$ ở vùng tích cực thì $I_{C2} = \beta_2 I_{B2} \approx 34.38\,\text{mA}$, khi đó $V_{C2} = 10 - 34.38\,\text{mA}\times 470\,\Omega \approx -6.16\,\text{V} < 0$: \textbf{vô lý}, vậy giả thiết sai và $Q_2$ \textbf{bão hòa}. Dòng $I_{AL}$ khi đó bị giới hạn bởi mạch ngoài (lấy $V_{CE2(sat)} \approx 0.2\,\text{V}$):
+\[ I_{AL} = I_{C2} \approx \frac{10 - 0.2}{470\,\Omega} \approx 20.85\,\text{mA} \]
+Hệ số khuếch đại tổng:
+\[ \frac{I_{AL}}{I_{BE}} \approx \frac{20.85\,\text{mA}}{3.404\,\mu\text{A}} \approx 6125 \]
+(Nếu $Q_2$ còn ở vùng tích cực thì hệ số này đạt giá trị lý tưởng $I_{C2}/I_{BE} = \beta_2(\beta_1+1) = 10100$; ở đây bị chặn lại vì tải $470\,\Omega$ bão hòa $Q_2$.) Kiểm tra $Q_1$: $V_{C1} = 10 - 0.3404\,\text{mA}\times 4.7\,\text{k} \approx 8.40\,\text{V}$, $V_{CE1} = V_{C1} - V_{B2} \approx 7.7\,\text{V}$, nên $Q_1$ ở vùng tích cực.
+
+\begin{dapsobox}
+$I_{BE} \approx 3.404\,\mu\text{A}$ \quad $I_{AC} \approx 340.4\,\mu\text{A}$ \quad $I_{AL} \approx 20.85\,\text{mA}$ ($Q_2$ bão hòa) \quad $\dfrac{I_{AL}}{I_{BE}} \approx 6125$
+\end{dapsobox}
+
+\subsection{Kết quả mô phỏng}
 \simfigs{ex09_darlington}{Kết quả mô phỏng mạch Darlington}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết & PSpice \\
+\midrule
+$I_{BE}$ & $3.404\,\mu\text{A}$ & $2.987\,\mu\text{A}$ \\
+$I_{AC}$ & $340.4\,\mu\text{A}$ & $298.7\,\mu\text{A}$ \\
+$I_{AL}$ & $20.85\,\text{mA}$ & $20.98\,\text{mA}$ \\
+$I_{AL}/I_{BE}$ & $6125$ & $7024$ \\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 3.9}
+\end{table}
+
+\begin{notebox}{Nhận xét}
+Mô phỏng xác nhận $Q_2$ bão hòa ($V_{C2} = 141.2\,\text{mV}$, $I_{C2}/I_{B2} = 20.98\,\text{mA}/301.7\,\mu\text{A} \approx 70 < \beta$) còn $Q_1$ ở vùng tích cực ($I_{AC}/I_{BE} = 100$). $I_{AL}$ khớp lý thuyết; $I_{BE}$, $I_{AC}$ thấp hơn khoảng $12\%$ do $V_{BE1} + V_{BE2}$ thực là $1.596\,\text{V}$ thay vì $1.4\,\text{V}$, kéo theo $I_{AL}/I_{BE}$ lệch.
+\end{notebox}

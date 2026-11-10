@@ -4,18 +4,28 @@ Ngõ ra logic $5\,\text{V}$ ($V_{ter}$) cấp tối đa $10\,\text{mA}$ (không 
 \given{fig3_06}{0.85\linewidth}{Select a resistor available in the market for $R_B$}
 
 \subsection{Tính toán lý thuyết}
-Theo giới hạn của tải và transistor:
-\dotlineeq{\hspace{3cm}(min) $< I_C <$}{(max)}
-\dotlineeq{\hspace{3cm}(min) $< I_B <$}{(max)}
-\dotline{Với $I_{B(min)} = $ \hspace{3cm} ta có $R_{B(max)} = $}
-\dotline{Với $I_{B(max)} = $ \hspace{3cm} ta có $R_{B(min)} = $}
-\dotlineeq{Vậy \hspace{2cm}(min) $< R_B <$}{(max)}
-\dotline{$R_B$ chọn (dãy E12/E24): }
+Theo giới hạn của tải và transistor (tải cần tối thiểu $300\,\text{mA}$; BJT chịu tối đa $400\,\text{mA}$, nhỏ hơn $500\,\text{mA}$ của tải):
+\[ 300\,\text{mA}\ (\text{min}) < I_C < 400\,\text{mA}\ (\text{max}) \]
+BJT ở vùng tích cực ($V_{CE} \approx 12 - 0.4\cdot 5 = 10\,\text{V}$, không bão hòa) nên $I_C = \beta I_B$:
+\[ \frac{300\,\text{mA}}{100} = 3\,\text{mA}\ (\text{min}) < I_B < 4\,\text{mA}\ (\text{max}) = \frac{400\,\text{mA}}{100} \]
+Cả hai đều nhỏ hơn $10\,\text{mA}$ nên ngõ logic không bị sụt áp.
 
-\subsection{Mô phỏng}
-\simfigs{ex04_rbmin}{Mô phỏng với $R_{B(min)}$}
-\simfigs{ex04_rbmax}{Mô phỏng với $R_{B(max)}$}
-\simfigs{ex04_rbsel}{Mô phỏng với $R_B$ đã chọn}
+Với $I_{B(min)} = 3\,\text{mA}$ ta có:
+\[ R_{B(max)} = \frac{V_{ter} - V_{BE}}{I_{B(min)}} = \frac{5 - 0.7}{3\,\text{mA}} \approx 1433\,\Omega \]
+Với $I_{B(max)} = 4\,\text{mA}$ ta có:
+\[ R_{B(min)} = \frac{V_{ter} - V_{BE}}{I_{B(max)}} = \frac{5 - 0.7}{4\,\text{mA}} = 1075\,\Omega \]
+Vậy:
+\[ 1075\,\Omega\ (\text{min}) < R_B < 1433\,\Omega\ (\text{max}) \]
+Giá trị thương mại nằm trong khoảng này là $1.1\,\text{k}\Omega$, $1.2\,\text{k}\Omega$, $1.3\,\text{k}\Omega$; chọn nằm giữa khoảng:
+
+\begin{dapsobox}
+$R_B$ chọn: $1.2\,\text{k}\Omega$ \quad ($I_B = 3.58\,\text{mA}$, $I_C = 358\,\text{mA}$)
+\end{dapsobox}
+
+\subsection{Kết quả mô phỏng}
+\simfigs{ex04_rbmin}{Mô phỏng với $R_{B(min)} = 1075\,\Omega$}
+\simfigs{ex04_rbmax}{Mô phỏng với $R_{B(max)} = 1433\,\Omega$}
+\simfigs{ex04_rbsel}{Mô phỏng với $R_B$ chọn $= 1.2\,\text{k}\Omega$}
 
 \subsection{So sánh}
 \begin{table}[H]
@@ -25,10 +35,16 @@ Theo giới hạn của tải và transistor:
  & & \multicolumn{3}{c|}{Lý thuyết} & \multicolumn{3}{c}{PSpice}\\
  & $R_B$ & $V_{BE}$ & $I_B$ & $I_C$ & $V_{BE}$ & $I_B$ & $I_C$\\
 \midrule
-$R_{B(min)}$      & & & & & \fillcell & \fillcell & \fillcell\\
-$R_{B(max)}$      & & & & & \fillcell & \fillcell & \fillcell\\
-$R_{B(selected)}$ & & & & & \fillcell & \fillcell & \fillcell\\
+$R_{B(min)}$      & $1075\,\Omega$ & $0.7\,\text{V}$ & $4.00\,\text{mA}$ & $400\,\text{mA}$ & $925.5\,\text{mV}$ & $3.468\,\text{mA}$ & $346.8\,\text{mA}$\\
+$R_{B(max)}$      & $1433\,\Omega$ & $0.7\,\text{V}$ & $3.00\,\text{mA}$ & $300\,\text{mA}$ & $918.6\,\text{mV}$ & $2.662\,\text{mA}$ & $266.2\,\text{mA}$\\
+$R_{B(selected)}$ & $1.2\,\text{k}\Omega$ & $0.7\,\text{V}$ & $3.58\,\text{mA}$ & $358\,\text{mA}$ & $922.9\,\text{mV}$ & $3.136\,\text{mA}$ & $313.6\,\text{mA}$\\
 \bottomrule
 \end{tabular}
-\caption{So sánh lý thuyết và mô phỏng bài 4}
+\caption{So sánh lý thuyết và mô phỏng bài 3.4}
 \end{table}
+
+\begin{notebox}{Nhận xét}
+Mô phỏng cho $I_C$ nhỏ hơn lý thuyết ở cả ba trường hợp vì hai nguyên nhân: (1) $V_{BE}$ thực của \texttt{QbreakN} $\approx 0.92\,\text{V}$ chứ không phải $0.7\,\text{V}$; (2) dòng base còn đi qua nội trở $100\,\Omega$ của ngõ logic (ví dụ $V_{ter}$ còn $4.686\,\text{V}$ khi $R_B = 1.2\,\text{k}\Omega$). Do đó $I_B \approx (5 - 0.92)/(R_B + 100)$.
+
+Hệ quả là hai đầu mút của khoảng lý thuyết trở thành điểm biên: ở $R_{B(max)} = 1433\,\Omega$, $I_C = 266.2\,\text{mA} < 300\,\text{mA}$, tải \textbf{không đủ dòng}; $R_{B(min)} = 1075\,\Omega$ cho $I_C = 346.8\,\text{mA}$, đạt. Khoảng $R_B$ thực tế khi kể đến $V_{BE} \approx 0.92\,\text{V}$ và $100\,\Omega$ là khoảng $920\,\Omega$ đến $1260\,\Omega$. Giá trị chọn $R_B = 1.2\,\text{k}\Omega$ vẫn nằm trong khoảng này, cho $I_C = 313.6\,\text{mA}$ ($300\,\text{mA} < I_C < 400\,\text{mA}$), $I_B = 3.136\,\text{mA} < 10\,\text{mA}$ và $V_{ter} = 4.686\,\text{V} > 4\,\text{V}$, nên mạch hoạt động đạt yêu cầu.
+\end{notebox}

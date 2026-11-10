@@ -1,13 +1,26 @@
 \section{Opto}
 $OK_1$ (PC817) gồm LED và photodiode/phototransistor; $V_F = 1.7\,\text{V}$, $CTR = 2$. Tính $V_{OUT}$ khi công tắc đóng; nêu ứng dụng và cách dùng opto.
 
-\given{fig3_18}{0.75\linewidth}{Voltage isolation with opto}
+\given{fig3_18}{0.5\linewidth}{Voltage isolation with opto\label{fig:3-18}}
 
 \subsection{Tính toán}
-\dotline{$I_F = I_{R1} = $}
-\dotline{$I_{R2} = $}
-\dotline{$V_{OUT} = $}
+Theo hình: bên LED có pin $9\,\text{V}$, công tắc $S_1$, điện trở $R_1 = 10\,\text{k}\Omega$ nối chân 1 (anode) và chân 2 (cathode) nối về cực âm pin. Bên transistor quang: chân 4 (collector) nối $V_{OUT}$ và nối $5\,\text{V}$ qua $R_2 = 4.7\,\text{k}\Omega$, chân 3 (emitter) nối $GND$. Hai bên chỉ liên lạc bằng ánh sáng, không chung đất.
+
+Khi công tắc đóng, LED dẫn với $V_F = 1.7\,\text{V}$:
+\[ I_F = I_{R1} = \frac{V_{BAT} - V_F}{R_1} = \frac{9 - 1.7}{10\,\text{k}\Omega} = 0.73\,\text{mA} \]
+Opto có tỉ số truyền dòng $CTR = I_C / I_F = 2$ (tương tự $\beta$ của BJT), nên dòng collector tối đa theo $CTR$ là:
+\[ I_{C(CTR)} = CTR\times I_F = 2\times 0.73\,\text{mA} = 1.46\,\text{mA} \]
+Nhưng dòng qua $R_2$ bị giới hạn bởi nguồn $5\,\text{V}$: $I_{R2(max)} \approx 5\,\text{V}/4.7\,\text{k}\Omega \approx 1.06\,\text{mA}$. Nếu transistor quang tích cực thì $V_{OUT} = 5 - 1.46\,\text{mA}\times 4.7\,\text{k} \approx -1.86\,\text{V} < 0$: \textbf{vô lý}, nên transistor quang \textbf{bão hòa}:
+\[ I_{R2} \approx \frac{5 - V_{CE(sat)}}{R_2} \approx \frac{5}{4.7\,\text{k}\Omega} \approx 1.06\,\text{mA} \;(< 1.46\,\text{mA}) \]
+\[ V_{OUT} = V_{CE(sat)} \approx 0\,\text{V} \;\text{(mức thấp)} \]
+Khi công tắc mở: $I_F = 0$, LED tắt, transistor quang tắt, $I_{R2} = 0$ và $V_{OUT} = 5\,\text{V}$ (mức cao).
+
+\begin{dapsobox}
+$I_F = I_{R1} = 0.73\,\text{mA}$ \quad $I_{R2} \approx 1.06\,\text{mA}$ (bão hòa) \quad $V_{OUT} \approx 0\,\text{V}$ (công tắc đóng)
+\end{dapsobox}
 
 \begin{notebox}{Ứng dụng và cách sử dụng opto}
-\dotlines{10}
+\textbf{Ứng dụng:} opto dùng để \textbf{cách ly điện} (galvanic isolation) giữa hai mạch có mức điện áp hoặc đất khác nhau, truyền tín hiệu bằng ánh sáng nên không có đường dẫn điện giữa hai bên. Ví dụ: (1) cách ly vi điều khiển $5\,\text{V}$ với mạch công suất, relay, động cơ hoặc điện lưới; (2) chống nhiễu và vòng đất giữa các khối (đường truyền RS-485, USB, CAN); (3) nối hai nguồn khác mức như mạch này: pin $9\,\text{V}$ điều khiển, ngõ ra logic $5\,\text{V}$.
+
+\textbf{Cách dùng:} nối LED với tín hiệu điều khiển qua điện trở hạn dòng $R_1$ để đặt $I_F$ ($I_F = (V - V_F)/R_1$); phía transistor quang dùng như một công tắc cực thu hở: nối collector lên nguồn của mạch nhận qua điện trở kéo lên $R_2$ và đọc điện áp tại collector. Chọn $R_1$, $R_2$ sao cho $I_C = CTR\cdot I_F$ lớn hơn dòng cần có ($V_{CC}/R_2$) để transistor quang bão hòa. Lưu ý ngõ ra đảo mức: LED sáng thì $V_{OUT}$ thấp, LED tắt thì $V_{OUT}$ cao.
 \end{notebox}

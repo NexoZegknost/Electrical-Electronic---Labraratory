@@ -3,27 +3,65 @@ Phân tích mạch gương dòng Hình~\ref{fig:3-13} ($Q_1$, $Q_2$ giống nhau
 
 \given{fig3_13}{0.6\linewidth}{Current mirror circuit example\label{fig:3-13}}
 
-\subsection{Tính toán lý thuyết ($R_1 = 2\,\text{k}\Omega$)}
-\dotline{Theo định luật \hspace{3cm}, ta có:}
-\dotline{$I_{CTRL} = $}
-\dotline{$I_{C1} = $}
-\dotline{$I_{B1} = I_{B2} = $}
-\dotline{$I_L = $}
+\subsection{\texorpdfstring{Tính toán lý thuyết ($R_1 = 2\,\text{k}\Omega$)}{Tính toán lý thuyết (R1 = 2 kOhm)}}
+Theo hình: $V_1 = 12\,\text{V}$, collector $Q_1$ nối với base của nó (kiểu diode) nên $V_B = V_{BE} = 0.7\,\text{V}$; base $Q_2$ nối chung base $Q_1$; $Q_2$ có tải $R_2 = 1\,\text{k}\Omega$.
 
-\subsection{Mô phỏng}
+Theo định luật Ohm và định luật Kirchhoff về dòng điện (KCL) tại nút base, ta có:
+\[ I_{CTRL} = \frac{V_1 - V_{BE}}{R_1} = \frac{12 - 0.7}{2\,\text{k}\Omega} = 5.65\,\text{mA} \]
+Dòng $I_{CTRL}$ chia cho collector $Q_1$ và hai base ($I_{B1} = I_{B2} = I_B$ vì hai BJT giống nhau, cùng $V_{BE}$):
+\[ I_{CTRL} = I_{C1} + 2I_B = (\beta + 2) I_B \;\Rightarrow\; I_B = \frac{5.65\,\text{mA}}{102} \approx 55.39\,\mu\text{A} \]
+\[ I_{B1} = I_{B2} \approx 55.39\,\mu\text{A}, \qquad I_{C1} = \beta I_B \approx 5.539\,\text{mA} \]
+$Q_2$ có cùng $V_{BE}$ nên $I_L = I_{C2} = \beta I_{B2} \approx 5.539\,\text{mA}$. Kiểm tra $Q_2$: $V_{C2} = 12 - 5.539\,\text{mA}\times 1\,\text{k} \approx 6.46\,\text{V} > V_{BE}$, $Q_2$ ở vùng tích cực.
+
+\subsection{Kết quả mô phỏng}
 \simfigs{ex11_mirror_2k}{Mô phỏng gương dòng với $R_1 = 2\,\text{k}\Omega$}
-\dotline{Vì sao gọi là mạch gương dòng (current mirror)?}
-\dotlines{2}
 
-\subsection{Thay $R_1 = 100\,\Omega$}
-\dotline{$I_{CTRL} = $}
-\dotline{$I_{C1} = $}
-\dotline{$I_{B1} = I_{B2} = $}
-\dotline{$I_L = $}
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết & PSpice \\
+\midrule
+$I_{CTRL}$ & $5.65\,\text{mA}$ & $5.591\,\text{mA}$ \\
+$I_{C1}$ & $5.539\,\text{mA}$ & $5.481\,\text{mA}$ \\
+$I_{B1} = I_{B2}$ & $55.39\,\mu\text{A}$ & $54.81\,\mu\text{A}$ \\
+$I_L$ & $5.539\,\text{mA}$ & $5.481\,\text{mA}$ \\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 3.11 ($R_1 = 2\,\text{k}\Omega$)}
+\end{table}
+Kết quả khớp lý thuyết (lệch khoảng $1\%$ vì $V_{BE}$ thực $= 0.818\,\text{V}$ thay vì $0.7\,\text{V}$), và $I_{CTRL} = I_{C1} + I_{B1} + I_{B2} = 5.481 + 0.0548 + 0.0548 = 5.591\,\text{mA}$.
+
+\textbf{Vì sao gọi là mạch gương dòng (current mirror)?} Vì $Q_1$ và $Q_2$ giống nhau và có chung điện áp $V_{BE}$ nên dòng collector của chúng bằng nhau: dòng tải $I_L$ ở nhánh $Q_2$ luôn ``sao chép'' dòng $I_{C1}$ ở nhánh điều khiển ($5.481\,\text{mA}$ ở cả hai nhánh), giống như tấm gương phản chiếu lại dòng điện; giá trị dòng được đặt bởi $R_1$ và không phụ thuộc tải $R_2$ (miễn là $Q_2$ còn ở vùng tích cực).
+
+\subsection{\texorpdfstring{Thay $R_1 = 100\,\Omega$}{Thay R1 = 100 Ohm}}
+Tính lại theo cùng cách (giả sử hai BJT đều tích cực):
+\[ I_{CTRL} = \frac{12 - 0.7}{100\,\Omega} = 113\,\text{mA}, \quad I_B = \frac{113\,\text{mA}}{102} \approx 1.108\,\text{mA}, \quad I_{C1} = \beta I_B \approx 110.8\,\text{mA} \]
+Nếu $Q_2$ sao chép đúng thì $I_L = 110.8\,\text{mA}$, nhưng khi đó $V_{C2} = 12 - 110.8\,\text{mA}\times 1\,\text{k}\Omega \approx -98.8\,\text{V} < 0$: \textbf{vô lý}. Nhánh $Q_2$ chỉ có $12\,\text{V}$ trên $R_2 = 1\,\text{k}\Omega$ nên $I_L$ không thể vượt khoảng $12\,\text{mA}$; vậy $Q_2$ \textbf{bão hòa} và
+\[ I_L \approx \frac{12 - V_{CE(sat)}}{R_2} \approx \frac{12 - 0.2}{1\,\text{k}\Omega} \approx 11.8\,\text{mA} \ll I_{C1} \]
+(giả định $V_{CE(sat)} \approx 0.2\,\text{V}$). Lúc này $I_{B1} \ne I_{B2}$: $Q_2$ bão hòa hút nhiều dòng base hơn, làm $I_{C1}$ nhỏ hơn $110.8\,\text{mA}$.
 
 \simfigs{ex11_mirror_100}{Mô phỏng gương dòng với $R_1 = 100\,\Omega$}
 
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết (giả sử tích cực) & PSpice \\
+\midrule
+$I_{CTRL}$ & $113\,\text{mA}$ & $111.1\,\text{mA}$ \\
+$I_{C1}$ & $110.8\,\text{mA}$ & $77.06\,\text{mA}$ \\
+$I_{B1}$ & $1.108\,\text{mA}$ & $770.5\,\mu\text{A}$ \\
+$I_{B2}$ & $1.108\,\text{mA}$ & $33.31\,\text{mA}$ \\
+$I_L = I_{C2}$ & $110.8\,\text{mA}$ (thực tế $\approx 11.8\,\text{mA}$) & $11.98\,\text{mA}$ \\
+$V_{C2}$ & $<0$ (vô lý) & $22.30\,\text{mV}$ \\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 3.11 ($R_1 = 100\,\Omega$)}
+\end{table}
+
 \begin{notebox}{Hiện tượng \& giải thích}
-\dotline{Hiện tượng:}
-\dotlines{8}
+\textbf{Hiện tượng:} mạch \textbf{không còn sao chép dòng}: $I_L = 11.98\,\text{mA}$ trong khi $I_{C1} = 77.06\,\text{mA}$; $V_{C2}$ chỉ còn $22.30\,\text{mV}$ và $I_{B2} = 33.31\,\text{mA} \gg I_{B1} = 770.5\,\mu\text{A}$.
+
+\textbf{Giải thích:} gương dòng chỉ chính xác khi $Q_2$ ở vùng tích cực. Khi $R_1 = 100\,\Omega$, dòng điều khiển $I_{CTRL} \approx 111\,\text{mA}$ lớn hơn nhiều dòng tối đa mà nhánh $Q_2$ cho phép ($\approx 12\,\text{V}/1\,\text{k}\Omega = 12\,\text{mA}$). Khi đó $Q_2$ bão hòa ($V_{CE2} \approx 22\,\text{mV}$), $I_L$ bị giới hạn bởi $V_1$ và $R_2$, không còn là $\beta I_{B2}$ ($I_{C2}/I_{B2} = 11.98/33.31 \approx 0.36 \ll \beta$). $Q_2$ bão hòa kéo theo dòng base lớn, rút bớt dòng từ nút base chung nên $I_{B1}$ giảm và $I_{C1}$ chỉ còn $77.06\,\text{mA}$ thay vì $110.8\,\text{mA}$. Kết luận: điều kiện để gương dòng hoạt động là $Q_2$ phải ở vùng tích cực ($V_{CE2} > V_{CE(sat)}$), nghĩa là dòng cần sao chép nhân tải $R_2$ không được làm sụt hết điện áp nguồn.
 \end{notebox}

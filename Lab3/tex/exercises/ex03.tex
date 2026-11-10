@@ -1,13 +1,50 @@
 \section{BJT used as a Switch}
-Xác định $R_1$, $R_2$ để $I_C$ bão hòa tại $50\,\text{mA}$; $V_{CE(sat)} = 30\,\text{mV}$, $V_{BE} = 0.7\,\text{V}$, $\beta = 100$.
+Xác định $R_1$, $R_2$ để $I_C$ bão hòa tại $50\,\text{mA}$; $V_{CE(sat)} = 30\,\text{mV}$, $V_{BE} = 0.7\,\text{V}$, $\beta = 100$. Theo Hình~\ref{fig:3-05}: $V_{BB} = 5\,\text{V}$, $V_{CC} = 10\,\text{V}$.
 
-\given{fig3_05}{0.7\linewidth}{BJT used as switch in saturation mode}
+\given{fig3_05}{0.7\linewidth}{BJT used as switch in saturation mode\label{fig:3-05}}
 
 \subsection{Tính toán lý thuyết}
-\dotline{$R_2 = \dfrac{V_{CC} - V_{CE(sat)}}{I_{C(sat)}} = $}
-\dotline{$I_{B(min)} = \dfrac{I_{C(sat)}}{\beta} = $}
-\dotline{$R_1 \le \dfrac{V_{BB} - V_{BE}}{I_{B(min)}} = $}
-\dotline{Chọn $R_1 = $ \qquad $R_2 = $}
+\textbf{Chọn $R_2$} theo dòng bão hòa yêu cầu:
+\[ R_2 = \frac{V_{CC} - V_{CE(sat)}}{I_{C(sat)}} = \frac{10 - 0.03}{50\,\text{mA}} = 199.4\,\Omega \approx 200\,\Omega \]
+\textbf{Chọn $R_1$}: để BJT bão hòa thì $I_B \ge I_C/\beta$:
+\[ I_{B(min)} = \frac{I_{C(sat)}}{\beta} = \frac{50\,\text{mA}}{100} = 0.5\,\text{mA} \]
+\[ R_1 \le \frac{V_{BB} - V_{BE}}{I_{B(min)}} = \frac{5 - 0.7}{0.5\,\text{mA}} = 8.6\,\text{k}\Omega \]
+$8.6\,\text{k}\Omega$ chỉ là cận biên (BJT vừa chạm ngưỡng bão hòa). Để bão hòa chắc chắn, chọn $R_1$ nhỏ hơn nhiều, tức cấp dư dòng base (overdrive).
 
-\subsection{Mô phỏng}
-\simfigs{ex03_switch}{Kiểm chứng mạch khóa với $R_1$, $R_2$ đã chọn}
+\begin{dapsobox}
+$R_2 = 199.4\,\Omega \approx 200\,\Omega$ \\[2pt]
+$R_1 \le 8.6\,\text{k}\Omega$ \quad $\Rightarrow$ chọn $R_1 = 2\,\text{k}\Omega$ (dư dòng base để bão hòa chắc chắn)
+\end{dapsobox}
+
+Kiểm tra với giá trị đã chọn:
+\begin{align*}
+I_B &= \frac{5 - 0.7}{2\,\text{k}\Omega} = 2.15\,\text{mA}\\
+I_{C(sat)} &= \frac{10 - 0.03}{200\,\Omega} = 49.85\,\text{mA} \approx 50\,\text{mA}\\
+\beta_{forced} &= \frac{I_C}{I_B} = \frac{49.85}{2.15} \approx 23.2 < \beta = 100
+\end{align*}
+Vì $\beta_{forced} < \beta$ và $I_B = 2.15\,\text{mA} \gg I_{B(min)} = 0.5\,\text{mA}$, BJT làm việc ở vùng bão hòa.
+
+\subsection{Kết quả mô phỏng}
+\simfigs{ex03_switch}{Kiểm chứng mạch khóa với $R_1 = 2\,\text{k}\Omega$, $R_2 = 200\,\Omega$}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c}
+\toprule
+ & Lý thuyết & PSpice \\
+\midrule
+$I_B$ & $2.15\,\text{mA}$ & $2.062\,\text{mA}$ \\
+$I_C$ & $49.85\,\text{mA}$ & $49.54\,\text{mA}$ \\
+$V_{CE}$ & $30\,\text{mV}$ & $91.41\,\text{mV}$ \\
+$V_{BE}$ & $0.7\,\text{V}$ & $876.7\,\text{mV}$ \\
+$I_C/I_B$ & $23.2$ & $24.0$ \\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết và mô phỏng bài 3.3}
+\end{table}
+
+Mô phỏng xác nhận BJT bão hòa: $I_C \approx 49.5\,\text{mA}$, sát yêu cầu $50\,\text{mA}$, và $I_C/I_B = 24 \ll \beta = 100$, $V_{CE} = 91.41\,\text{mV}$ rất nhỏ.
+
+\begin{notebox}{Nhận xét về cách chọn $R_1$}
+Với $R_1 = 8.6\,\text{k}\Omega$ (đúng cận biên lý thuyết), mô phỏng cho $I_B = 479.7\,\mu\text{A} < 500\,\mu\text{A}$ vì $V_{BE}$ thực tế $\approx 0.874\,\text{V}$ cao hơn $0.7\,\text{V}$; khi đó $I_C/I_B = 100$, $V_{CE} = 405.5\,\text{mV}$ và $I_C = 47.97\,\text{mA}$, tức BJT chưa bão hòa. Vì vậy cần chọn $R_1$ nhỏ hơn hẳn cận $8.6\,\text{k}\Omega$ (ở đây $2\,\text{k}\Omega$) để đảm bảo bão hòa.
+\end{notebox}
