@@ -106,7 +106,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=KASMLSTF
 
 [Document5]
 DocumentPath=..\..\..\..\..\..\..\..\02_Resource\07_Library\Atlium\AD21\Library\chipfc_altium_libs-master\chipfc_libs\chipfc_libs.SchLib
@@ -192,6 +192,10 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=CMCCGCTO
+
+[GeneratedDocument1]
+DocumentPath=
+DItemRevisionGUID=
 
 [Configuration1]
 Name=Sources
