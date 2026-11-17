@@ -1,0 +1,43 @@
+\section{Altium: Relay Controller}\label{sec:relay}
+Mạch điều khiển rơ-le: dùng transistor đóng/ngắt cuộn dây rơ-le (kèm diode bảo vệ chống xung điện áp ngược khi ngắt cuộn dây), tiếp điểm rơ-le đóng/ngắt tải.
+
+\subsection{Schematic design}
+\video{https://www.youtube.com/watch?v=VcO_F97ydFM}
+
+\subsubsection*{Danh sách linh kiện}
+\begin{table}[H]
+\centering
+\begin{tabular}{l l l l}
+\toprule
+\textbf{Designator} & \textbf{Linh kiện} & \textbf{Giá trị} & \textbf{Footprint}\\
+\midrule
+\fillcell & \fillcell & \fillcell & \fillcell\\
+\fillcell & \fillcell & \fillcell & \fillcell\\
+\fillcell & \fillcell & \fillcell & \fillcell\\
+\fillcell & \fillcell & \fillcell & \fillcell\\
+\fillcell & \fillcell & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Linh kiện mạch relay controller}
+\end{table}
+
+\altfig{ex09_sch}{Sơ đồ nguyên lý mạch relay controller (Altium Designer)}
+
+\begin{notebox}{Nguyên lý hoạt động / vai trò diode bảo vệ}
+\dotlines{5}
+\end{notebox}
+
+\subsection{PCB layout}
+\video{https://www.youtube.com/watch?v=Dbqcb0zQ0E8}
+
+\altfig{ex09_pcb_top}{PCB mạch relay controller -- lớp TOP}
+\altfig{ex09_pcb_bottom}{PCB mạch relay controller -- lớp BOTTOM}
+\altfig{ex09_3d_top}{Mô hình 3D mạch relay controller -- mặt trên}
+\altfigs{ex09_3d_bottom}{Mô hình 3D mạch relay controller -- mặt dưới / góc nghiêng}
+
+\begin{notebox}{Thông số mạch in}
+\dotline{Kích thước board:}
+\dotline{Số lớp đồng:}
+\dotline{Độ rộng đường nguồn / đường tín hiệu:}
+\dotline{Kết quả kiểm tra DRC:}
+\end{notebox}

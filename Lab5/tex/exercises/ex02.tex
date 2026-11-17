@@ -1,0 +1,33 @@
+\section{High-Current Voltage Follower}\label{sec:hcfollower}
+Op-amp thường không cấp được dòng ngõ ra lớn. Để cấp dòng lớn cho tải (động cơ, LED công suất\dots), dùng thêm transistor (\textbf{QbreakN}) làm tầng đệm dòng; $V_{OUT}$ vẫn bám theo $V_{(+)}$ nhờ hồi tiếp lấy tại emitter ($R_{16}$ mô phỏng tải).
+
+\given{fig5_04}{0.6\linewidth}{Opamp follower circuit (high-current)\label{fig:5-04}}
+
+\subsection{Mô phỏng}
+Chạy \textbf{Bias Point}, chụp kết quả điện áp và dòng điện.
+
+\simresult
+\simfigs{ex02_bias}{Kết quả Bias Point mạch high-current follower}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c}
+\toprule
+\textbf{Đại lượng} & \textbf{Giá trị mô phỏng}\\
+\midrule
+$V_{(+)}$ (V)                  & \fillcell\\
+$V_{OUT}$ (V)                  & \fillcell\\
+$I_{R16}$ (mA) -- dòng qua tải & \fillcell\\
+$I_{C}$ (mA) -- dòng từ nguồn 12\,V & \fillcell\\
+$I_{B}$ ($\mu$A) -- dòng ngõ ra op-amp & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Kết quả mô phỏng mạch high-current follower}
+\end{table}
+
+\subsection{Tính toán}
+\calc[6]
+\begin{dapsobox}
+\dotlineeq{$V_{OUT} =$}{V \qquad $I_{LOAD} =$ \dotfill\ mA}
+\end{dapsobox}
+\remark[3]

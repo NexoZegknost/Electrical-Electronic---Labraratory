@@ -1,0 +1,32 @@
+\section{Voltage Follower}\label{sec:follower}
+Mạch đệm (\textit{voltage follower}) có độ lợi bằng 1: $V_{OUT} = V_{(+)}$, trở kháng vào rất lớn, trở kháng ra rất nhỏ. Mạch dùng làm tầng đệm giữa nguồn có trở kháng ra lớn và tải có trở kháng vào nhỏ.
+
+\given{fig5_03}{0.6\linewidth}{Opamp follower circuit\label{fig:5-03}}
+
+Yêu cầu: chạy mô phỏng \textbf{Bias Point}, kiểm chứng $V_{OUT} = V_{(+)}$ và \textbf{thay đổi giá trị điện trở hồi tiếp $R_{15}$}.
+
+\subsection{Mô phỏng}
+\simresult
+\simfigs{ex01_bias}{Kết quả Bias Point mạch follower (giá trị $R_{15}$ ban đầu)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c c c c}
+\toprule
+$R_{15}$ & $V_{(+)}$ (V) & $V_{(-)}$ (V) & $V_{OUT}$ (V)\\
+\midrule
+$1\,\text{k}\Omega$   & \fillcell & \fillcell & \fillcell\\
+$10\,\text{k}\Omega$  & \fillcell & \fillcell & \fillcell\\
+$100\,\text{k}\Omega$ & \fillcell & \fillcell & \fillcell\\
+$1\,\text{M}\Omega$   & \fillcell & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{$V_{OUT}$ theo $R_{15}$ (follower)}
+\end{table}
+
+\subsection{Tính toán}
+\calc[6]
+\begin{dapsobox}
+\dotlineeq{$V_{OUT} =$}{với mọi $R_{15}$}
+\end{dapsobox}
+\remark[3]

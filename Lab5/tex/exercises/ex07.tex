@@ -1,0 +1,42 @@
+\section{Comparator with Hysteresis (Schmitt Trigger)}\label{sec:schmitt}
+Hai điện trở $R_1$, $R_2$ tạo bộ chia áp, đưa một phần điện áp ra về ngõ vào không đảo (hồi tiếp dương). Hồi tiếp dương này tạo \textbf{độ trễ} (\textit{hysteresis}) giữa hai ngưỡng chuyển trạng thái. Ngõ ra luôn ngược dấu với ngõ vào khi ngõ vào vượt ngoài vùng trễ.
+
+\given{fig5_13}{0.5\linewidth}{Inverting Schmitt trigger\label{fig:5-13}}
+
+\subsection{Thiết lập trong PSpice}
+\given{fig5_14}{0.5\linewidth}{Schmitt trigger in PSPICE (3 voltage markers)\label{fig:5-14}}
+\begin{itemize}
+  \item Sửa thuộc tính linh kiện \texttt{OPAMP}: \texttt{VPOS} $=+5\,\text{V}$, \texttt{VNEG} $=-5\,\text{V}$ (chuột phải $\rightarrow$ \textit{Edit Properties}).
+  \item Nguồn \texttt{VSIN}: \texttt{VOFF} $=0$, \texttt{VAMPL} $=5$, \texttt{FREQ} $=50$, \texttt{AC} $=0$; $R_{23} = 4\,\text{k}\Omega$, $R_{22} = 1\,\text{k}\Omega$.
+  \item Simulation profile: \textbf{Time Domain}.
+\end{itemize}
+
+\given{fig5_15}{0.9\linewidth}{Cấu hình OPAMP trong PSpice (VPOS, VNEG)}
+\given{fig5_16}{0.8\linewidth}{Simulation profile}
+
+\simcfg{Time Domain (Transient)}{Run time, Max step\dots\ ghi lại giá trị đã đặt}
+
+\subsection{Kết quả mô phỏng}
+\simresult
+\simfigs{ex07_sch}{Sơ đồ Schmitt trigger đã đặt marker (PSpice)}
+\simfig{ex07_tran}{Kết quả mô phỏng: $V_{IN}$, $V_{(+)}$ và $V_{OUT}$ theo thời gian}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$V_{OUT}$ mức cao (V)      & \fillcell & \fillcell\\
+$V_{OUT}$ mức thấp (V)     & \fillcell & \fillcell\\
+Ngưỡng trên $V_{TH}$ (V)   & \fillcell & \fillcell\\
+Ngưỡng dưới $V_{TL}$ (V)   & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Thông số Schmitt trigger}
+\end{table}
+
+\subsection{Giải thích}
+Giải thích tín hiệu ngõ ra op-amp; vì sao ngõ ra chuyển trạng thái giữa $+4\,\text{V}$ và $-4\,\text{V}$.
+\calc[6]
+\remark[3]

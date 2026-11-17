@@ -1,0 +1,47 @@
+\section{Summing Amplifier}\label{sec:summing}
+
+\subsection{Non-inverting summing}
+Mạch cộng không đảo dùng op-amp (Hình~\ref{fig:5-06}). Mô phỏng với $R_1 = 1\,\text{k}\Omega$, $R_2 = 2\,\text{k}\Omega$, $R_3 = 5\,\text{k}\Omega$, $R_f = 9\,\text{k}\Omega$, $R_i = 1\,\text{k}\Omega$; ba ngõ vào $V_1 = 1\,\text{V}$, $V_2 = 2\,\text{V}$, $V_3 = 3\,\text{V}$.
+
+\given{fig5_06}{0.55\linewidth}{Non inverse summing using OPAMP\label{fig:5-06}}
+
+\simresult
+\simfigs{ex04a_bias}{Kết quả Bias Point mạch cộng không đảo}
+
+\subsubsection*{Tính toán $V_{OUT}$}
+\calc[6]
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$V_{IN}$ (V, tại ngõ vào $+$) & \fillcell & \fillcell\\
+$V_{OUT}$ (V)                 & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Mạch cộng không đảo}
+\end{table}
+
+\subsection{Inverting summing}
+Mạch cộng đảo (Hình~\ref{fig:5-07}) với $R_1 = 1\,\text{k}\Omega$, $R_2 = 2\,\text{k}\Omega$, $R_3 = 10\,\text{k}\Omega$ (điện trở hồi tiếp), $V_{i1} = 1\,\text{V}$, $V_{i2} = 5\,\text{V}$.
+
+\given{fig5_07}{0.5\linewidth}{Inverse summing using OPAMP\label{fig:5-07}}
+
+\simresult
+\simfigs{ex04b_bias}{Kết quả Bias Point mạch cộng đảo}
+
+\subsubsection*{Tính toán $V_{o}$}
+\calc[6]
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$V_{o}$ (V) & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Mạch cộng đảo}
+\end{table}
+\remark[3]

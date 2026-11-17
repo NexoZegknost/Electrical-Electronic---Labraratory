@@ -1,0 +1,46 @@
+\section{Voltage Follower with Gain}\label{sec:gain}
+Mạch đệm dòng có thể thêm độ lợi bằng cách đặt điện trở vào nhánh hồi tiếp: $\text{Gain} = 1 + R_2/R_1$.
+
+\given{fig5_05}{0.55\linewidth}{Opamp follower with gain for the output\label{fig:5-05}}
+
+Yêu cầu thực hiện trên PSpice: $V_{IN} = 2\,\text{V}$, độ lợi $= 3$, nguồn phía tải $12\,\text{V}_{DC}$, $R_{LOAD} = 1\,\text{k}\Omega$.
+
+\subsection{Chọn linh kiện}
+\calc[4]
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c}
+\toprule
+\textbf{Thông số} & \textbf{Giá trị}\\
+\midrule
+$R_1$ & \fillcell\\
+$R_2$ & \fillcell\\
+$R_{LOAD}$ & $1\,\text{k}\Omega$\\
+$V_{IN}$ / $V_{+}$ & $2\,\text{V}$ / $12\,\text{V}$\\
+\bottomrule
+\end{tabular}
+\caption{Thông số mạch follower có độ lợi}
+\end{table}
+
+\subsection{Mô phỏng}
+\simresult
+\simfigs{ex03_bias}{Kết quả Bias Point mạch follower with gain}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$V_{OUT}$ (V)         & \fillcell & \fillcell\\
+Gain                  & \fillcell & \fillcell\\
+$I_{LOAD}$ (mA)       & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết -- mô phỏng}
+\end{table}
+
+\begin{notebox}{Giải thích độ lợi của điện áp ra}
+\dotlines{5}
+\end{notebox}

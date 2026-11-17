@@ -1,0 +1,58 @@
+\section{Low Pass Filter}\label{sec:lpf}
+Bộ lọc thông thấp cho qua tín hiệu từ $0\,\text{Hz}$ (DC) đến tần số cắt trên $f_H$ và chặn tín hiệu có tần số cao hơn.
+
+\given{fig5_08}{0.6\linewidth}{Low pass filter principles}
+
+\subsection{Inverting low pass filter}
+Tần số cắt: $f_H = \dfrac{1}{2\pi R_2 C}$. Với $R_2 = 10\,\text{k}\Omega$, $C = 1\,\text{nF}$ thì $f_H \approx 16\,\text{kHz}$.
+
+\given{fig5_09}{0.55\linewidth}{Inverting low pass filter\label{fig:5-09}}
+
+\simcfg{AC Sweep}{Linear, Start $=1\,\text{Hz}$, Stop $=50\,\text{kHz}$, 200 points}
+\given{fig5_10}{0.5\linewidth}{AC Sweep simulation profile}
+
+\simresult
+\simfig{ex05a_sch}{Sơ đồ mạch inverting low pass filter (PSpice)}
+\simfig{ex05a_ac}{Kết quả AC Sweep: $V(\text{out})$ theo tần số}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$f_H$ (Hz)                      & \fillcell & \fillcell\\
+Gain tại $0\,\text{Hz}$ (V/V)   & \fillcell & \fillcell\\
+Gain tại $0\,\text{Hz}$ (dB)    & \fillcell & \fillcell\\
+Gain tại $f_H$ (V/V)            & \fillcell & \fillcell\\
+Gain tại $f_H$ (dB)             & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Inverting low pass filter ($V_{IN}=2\,\text{V}$)}
+\end{table}
+\remark[3]
+
+\subsection{Non-inverting low pass filter}
+Tính $R$, $C$ để độ lợi băng thông bằng $10$ và tần số cắt giống mục trước (Hình~\ref{fig:5-12}); vẽ kết quả AC Sweep.
+
+\given{fig5_12}{0.5\linewidth}{Non-inverting low pass filter\label{fig:5-12}}
+
+\calc[6]
+\begin{table}[H]
+\centering
+\begin{tabular}{l c}
+\toprule
+\textbf{Linh kiện} & \textbf{Giá trị chọn}\\
+\midrule
+$R_{11}$ & \fillcell\\
+$R$ (hồi tiếp) & \fillcell\\
+$C$ (hồi tiếp) & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Giá trị thiết kế non-inverting low pass filter}
+\end{table}
+
+\simresult
+\simfig{ex05b_sch}{Sơ đồ mạch non-inverting low pass filter (PSpice)}
+\simfig{ex05b_ac}{Kết quả AC Sweep: $V(\text{out})$ theo tần số}
+\remark[3]
