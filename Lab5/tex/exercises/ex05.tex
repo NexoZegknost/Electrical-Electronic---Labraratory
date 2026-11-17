@@ -1,52 +1,31 @@
 \secnum{7}
 \section{Comparator with Hysteresis (Schmitt Trigger)}\label{sec:schmitt}
-Hai điện trở tạo bộ chia áp đưa một phần điện áp ra về ngõ vào không đảo (hồi tiếp dương). Hồi tiếp dương này tạo \textbf{độ trễ} (\textit{hysteresis}) giữa hai ngưỡng chuyển trạng thái. Ngõ ra luôn ngược dấu với ngõ vào khi ngõ vào vượt ra ngoài vùng trễ.
-
-\given{fig5_13}{0.45\linewidth}{Inverting Schmitt trigger\label{fig:5-13}}
-
-\subsection{Thiết lập trong PSpice}
-\given{fig5_14}{0.45\linewidth}{Schmitt trigger in PSPICE (3 voltage markers)\label{fig:5-14}}
-\dsn{ex3.7.dsn}
-\begin{itemize}
-  \item Sửa thuộc tính \texttt{OPAMP}: \texttt{VPOS} $=+5\,\text{V}$, \texttt{VNEG} $=-5\,\text{V}$ (Hình 5.15).
-  \item Nguồn \texttt{VSIN} $V_{12}$ nối ngõ $(-)$: \texttt{VOFF} $=0$, \texttt{VAMPL} $=5$, \texttt{FREQ} $=50$, \texttt{AC} $=0$.
-  \item $R_{23} = 4\,\text{k}\Omega$ từ ngõ $(+)$ xuống đất, $R_{22} = 1\,\text{k}\Omega$ từ ngõ ra về ngõ $(+)$ (hồi tiếp dương).
-  \item Ba marker: $V(\text{V12:+})$ -- ngõ vào; $V(\text{R22:1})$ -- ngõ $(+)$; $V(\text{R22:2})$ -- ngõ ra.
-\end{itemize}
-\simcfg{Time Domain (Transient)}{Run To Time $=100\,\text{ms}$ (5 chu kỳ), Maximum Step Size $=0.1\,\text{ms}$ để đồ thị mịn}
+\given{fig5_14}{0.45\linewidth}{Schmitt trigger in PSPICE\label{fig:5-14}}
 
 \subsection{Tính toán lý thuyết}
-\begin{theorybox}
-\textbf{Mức ngõ ra.} Mạch có hồi tiếp dương, không có hồi tiếp âm, nên op-amp làm việc như bộ so sánh vòng hở: chỉ cần $V_{(+)} \neq V_{(-)}$ là ngõ ra bão hòa. Với \texttt{VPOS}/\texttt{VNEG} $= \pm 5\,\text{V}$:
+Hồi tiếp dương nên ngõ ra bão hòa: $V_{OUT} = \pm V_{sat} = \pm 5\,\text{V}$. Ngõ $(+)$ là cầu chia áp từ ngõ ra:
 \[
-V_{OUT} = +V_{sat} = +5\,\text{V} \;\text{ khi } V_{(+)} > V_{(-)},\qquad
-V_{OUT} = -V_{sat} = -5\,\text{V} \;\text{ khi } V_{(+)} < V_{(-)}.
+V_{(+)} = V_{OUT}\,\frac{R_{23}}{R_{22} + R_{23}} = 0.8\,V_{OUT} = \pm 4\,\text{V}.
 \]
-\textbf{Điện áp ngõ $(+)$.} Dòng vào ngõ $(+)$ bằng $0$, $R_{22}$ và $R_{23}$ là cầu chia áp từ ngõ ra:
+Ngõ ra đổi trạng thái khi $V_{IN}$ vượt $V_{(+)}$:
 \[
-V_{(+)} = V_{OUT}\,\frac{R_{23}}{R_{22} + R_{23}} = V_{OUT}\,\frac{4}{1 + 4} = 0.8\,V_{OUT} = \pm 4\,\text{V}.
+V_{TH} = +4\,\text{V}\;(V_{OUT} = +5\,\text{V}),\qquad
+V_{TL} = -4\,\text{V}\;(V_{OUT} = -5\,\text{V}),\qquad
+V_H = V_{TH} - V_{TL} = 8\,\text{V}.
 \]
-\textbf{Hai ngưỡng chuyển.} Ngõ vào $V_{IN}$ nối ngõ $(-)$, ngõ ra đổi trạng thái khi $V_{IN}$ vượt qua $V_{(+)}$:
+Thời điểm chuyển ($T = 20\,\text{ms}$): $5\sin(2\pi\cdot 50\,t) = 4$
 \[
-V_{TH} = +0.8 \times 5 = +4\,\text{V}\;(\text{khi } V_{OUT} = +5\,\text{V}),\qquad
-V_{TL} = -0.8 \times 5 = -4\,\text{V}\;(\text{khi } V_{OUT} = -5\,\text{V}),
+t_1 = \frac{\arcsin 0.8}{2\pi \cdot 50} \approx 2.95\,\text{ms}\;(\text{xuống}),\qquad
+t_2 = t_1 + \frac{T}{2} \approx 12.95\,\text{ms}\;(\text{lên}).
 \]
-\[
-\text{độ rộng vùng trễ } V_H = V_{TH} - V_{TL} = 8\,\text{V}.
-\]
-\textbf{Thời điểm chuyển.} $V_{IN} = 5\sin(2\pi\cdot 50\,t)$, chu kỳ $T = 20\,\text{ms}$. $V_{IN} = 4\,\text{V}$ khi $\sin(\omega t) = 0.8$:
-\[
-t_1 = \frac{\arcsin 0.8}{2\pi \cdot 50} \approx 2.95\,\text{ms}.
-\]
-Ngõ ra xuống $-5\,\text{V}$ tại $t \approx 2.95\,\text{ms}$ ($+$ $kT$), lên lại $+5\,\text{V}$ khi $V_{IN}$ giảm qua $-4\,\text{V}$ tại $t \approx 10 + 2.95 = 12.95\,\text{ms}$ ($+$ $kT$). Ngõ ra là sóng vuông $\pm 5\,\text{V}$ cùng tần số $50\,\text{Hz}$, ngược pha với ngõ vào và trễ $2.95\,\text{ms}$ so với các điểm qua $0$ của $V_{IN}$.
-\end{theorybox}
+
 \begin{dapsobox}
-$V_{OUT} = \pm 5\,\text{V}$, \quad $V_{(+)} = \pm 4\,\text{V}$, \quad $V_{TH} = +4\,\text{V}$, \quad $V_{TL} = -4\,\text{V}$, \quad $V_H = 8\,\text{V}$.
+$V_{OUT} = \pm 5\,\text{V}$, \quad $V_{TH} = +4\,\text{V}$, \quad $V_{TL} = -4\,\text{V}$, \quad $V_H = 8\,\text{V}$.
 \end{dapsobox}
 
 \subsection{Mô phỏng PSpice}
+\simcfg{Time Domain (Transient)}{Run To Time $=100\,\text{ms}$, Maximum Step Size $=0.1\,\text{ms}$}
 \simresult
-\simfigs{ex37_sch}{Sơ đồ Schmitt trigger đã đặt marker (PSpice)}
 \simfig{ex37_tran}{Kết quả Time Domain: $V_{IN}$, $V_{(+)}$ và $V_{OUT}$ theo thời gian}
 
 \begin{table}[H]
@@ -55,25 +34,23 @@ $V_{OUT} = \pm 5\,\text{V}$, \quad $V_{(+)} = \pm 4\,\text{V}$, \quad $V_{TH} = 
 \toprule
 \textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
 \midrule
-$V_{OUT}$ mức cao / thấp (V)      & $+5$ / $-5$ & \fillcell\\
-$V_{(+)}$ mức cao / thấp (V)      & $+4$ / $-4$ & \fillcell\\
-Ngưỡng trên $V_{TH}$ (V)          & $+4$        & \fillcell\\
-Ngưỡng dưới $V_{TL}$ (V)          & $-4$        & \fillcell\\
-Thời điểm chuyển xuống (ms)       & 2.95        & \fillcell\\
-Thời điểm chuyển lên (ms)         & 12.95       & \fillcell\\
+$V_{OUT}$ mức cao / thấp (V) & $+5$ / $-5$ & $+5.000$ / $-5.000$\\
+$V_{(+)}$ mức cao / thấp (V) & $+4$ / $-4$ & $+4.000$ / $-4.000$\\
+Ngưỡng trên $V_{TH}$ (V)     & $+4$        & $\approx +4$ (3.96)\\
+Ngưỡng dưới $V_{TL}$ (V)     & $-4$        & $\approx -4$\\
+Thời điểm chuyển xuống (ms)  & 2.95        & $\approx 2.93$\\
+Thời điểm chuyển lên (ms)    & 12.95       & $\approx 13.0$\\
 \bottomrule
 \end{tabular}
 \caption{Thông số Schmitt trigger}
 \end{table}
 
 \subsection{Giải thích hiện tượng}
-% TODO: kiểm lại sau khi có số liệu mô phỏng
 \begin{remarkbox}[Giải thích tín hiệu ngõ ra]
 \begin{itemize}[nosep]
-  \item \textbf{Ngõ ra là sóng vuông.} Không có hồi tiếp âm nên op-amp không làm việc ở vùng tuyến tính; với độ lợi vòng hở rất lớn, chênh lệch nhỏ giữa hai ngõ vào cũng đẩy ngõ ra lên mức bão hòa $\pm 5\,\text{V}$ (bằng \texttt{VPOS}/\texttt{VNEG}).
-  \item \textbf{Vì sao chuyển trạng thái ở $+4\,\text{V}$ và $-4\,\text{V}$.} Ngưỡng so sánh không cố định ở $0$ mà là $V_{(+)} = 0.8\,V_{OUT}$. Khi ngõ ra ở $+5\,\text{V}$, ngõ $(+)$ là $+4\,\text{V}$: ngõ ra chỉ lật xuống khi $V_{IN}$ tăng vượt $+4\,\text{V}$. Ngay khi lật, $V_{(+)}$ đổi thành $-4\,\text{V}$, nên ngõ ra chỉ lật lên lại khi $V_{IN}$ giảm dưới $-4\,\text{V}$. Trên đồ thị, đường $V_{(+)}$ (marker R22:1) là sóng vuông $\pm 4\,\text{V}$ và các điểm chuyển nằm đúng nơi đường sin $V_{IN}$ cắt $\pm 4\,\text{V}$.
-  \item \textbf{Hồi tiếp dương làm chuyển trạng thái dứt khoát.} Khi ngõ ra bắt đầu giảm, $V_{(+)}$ giảm theo, làm chênh lệch $V_{(+)} - V_{(-)}$ càng âm, đẩy ngõ ra giảm nhanh hơn (hiệu ứng tự kích, \textit{regenerative}).
-  \item \textbf{Ý nghĩa của hysteresis.} Trong vùng $-4\,\text{V} < V_{IN} < +4\,\text{V}$ ngõ ra giữ trạng thái trước đó (như một mạch chốt). Nhờ vậy nhiễu có biên độ nhỏ hơn $8\,\text{V}$ quanh ngưỡng không làm ngõ ra dao động lật liên tục, điều mà bộ so sánh không trễ (ngưỡng $0\,\text{V}$) mắc phải.
-  \item \textbf{Đầu đồ thị.} Tại $t = 0$, $V_{IN} = 0$ và PSpice tính điểm làm việc ban đầu với $V_{OUT} \approx 0$ (trạng thái không bền), nên khoảng thời gian đầu ngõ ra chưa ở mức bão hòa rõ ràng; sau lần chuyển đầu tiên mạch hoạt động tuần hoàn ổn định.
+  \item Ngõ ra là sóng vuông: không có hồi tiếp âm nên op-amp bão hòa ở $\pm 5\,\text{V}$ (bằng \texttt{VPOS}/\texttt{VNEG}).
+  \item Ngưỡng so sánh là $V_{(+)} = 0.8\,V_{OUT}$, không cố định ở $0$. Khi $V_{OUT} = +5\,\text{V}$ thì $V_{(+)} = +4\,\text{V}$: ngõ ra chỉ lật xuống khi $V_{IN} > +4\,\text{V}$; ngay sau đó $V_{(+)} = -4\,\text{V}$ nên ngõ ra chỉ lật lên khi $V_{IN} < -4\,\text{V}$. Vì vậy ngõ ra chuyển trạng thái ở $+4\,\text{V}$ và $-4\,\text{V}$.
+  \item Trong vùng $-4\,\text{V} < V_{IN} < +4\,\text{V}$ ngõ ra giữ trạng thái cũ (hysteresis), giúp chống nhiễu quanh ngưỡng.
+  \item Kết quả mô phỏng khớp lý thuyết: $V_{OUT} = \pm 5\,\text{V}$, $V_{(+)} = \pm 4\,\text{V}$; ngõ ra chuyển xuống tại $\approx 2.93\,\text{ms}$ khi $V_{IN} \approx +4\,\text{V}$ (lý thuyết $2.95\,\text{ms}$) và chuyển lên tại $\approx 13\,\text{ms}$ khi $V_{IN} \approx -4\,\text{V}$ (lý thuyết $12.95\,\text{ms}$), lặp lại sau mỗi $20\,\text{ms}$. Trong khoảng $3\,\text{ms}$ đầu, ngõ ra tăng dần từ $0$ (điểm làm việc ban đầu tại $t = 0$, khi $V_{IN} = 0$) lên $+5\,\text{V}$, rồi lật xuống khi $V_{IN}$ vượt $+4\,\text{V}$ lần đầu.
 \end{itemize}
 \end{remarkbox}

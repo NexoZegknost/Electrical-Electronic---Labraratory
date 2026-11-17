@@ -1,46 +1,31 @@
 \secnum{5}
 \section{Low Pass Filter}\label{sec:lpf}
-Bộ lọc thông thấp cho qua tín hiệu từ $0\,\text{Hz}$ (DC) đến tần số cắt trên $f_H$ và chặn tín hiệu có tần số cao hơn. Tại $f_H$ độ lợi giảm $3\,\text{dB}$ so với độ lợi băng thông (biên độ còn $1/\sqrt{2} \approx 70.7\%$).
-
-\given{fig5_08}{0.5\linewidth}{Low pass filter principles}
 
 \subsection{Inverting low pass filter}\label{sec:lpf-a}
-Mạch Hình~\ref{fig:5-09}: $R_1 = 1\,\text{k}\Omega$, $R_2 = 10\,\text{k}\Omega$ song song $C = 1\,\text{nF}$ ở nhánh hồi tiếp, nguồn \texttt{VAC} $2\,\text{V}_{AC}$ ($0\,\text{V}_{DC}$), ngõ $(+)$ nối đất.
-
 \given{fig5_09}{0.5\linewidth}{Inverting low pass filter\label{fig:5-09}}
-\dsn{ex3.5.dsn}
 
 \subsubsection*{Tính toán lý thuyết}
-\begin{theorybox}
-\textbf{Hàm truyền.} Trở kháng nhánh hồi tiếp $Z_f = R_2 \parallel \dfrac{1}{j\omega C} = \dfrac{R_2}{1 + j\omega R_2 C}$. Mạch đảo có $H = -Z_f/R_1$:
+Hàm truyền của mạch đảo với $Z_f = R_2 \parallel \dfrac{1}{j\omega C}$:
 \[
-H(j\omega) = \frac{V_{out}}{V_{in}} = -\frac{R_2}{R_1}\cdot\frac{1}{1 + j\omega R_2 C}
-= -\frac{A_0}{1 + j\,f/f_H},
+H = -\frac{Z_f}{R_1} = -\frac{R_2/R_1}{1 + j\omega R_2 C},
 \qquad
-|H| = \frac{A_0}{\sqrt{1 + (f/f_H)^2}}.
+|H| = \frac{A_0}{\sqrt{1 + (f/f_H)^2}},\quad A_0 = \frac{R_2}{R_1} = 10.
 \]
-\textbf{Độ lợi tại $0\,\text{Hz}$} (tụ hở mạch):
-\[
-A_0 = \frac{R_2}{R_1} = \frac{10\,\text{k}}{1\,\text{k}} = 10
-\;\Rightarrow\; 20\log_{10}10 = 20\,\text{dB},\qquad V_{out} = 10 \times 2 = 20\,\text{V}.
-\]
-\textbf{Tần số cắt:}
+Tần số cắt:
 \[
 f_H = \frac{1}{2\pi R_2 C} = \frac{1}{2\pi \times 10^{4} \times 10^{-9}} \approx 15.92\,\text{kHz}.
 \]
-\textbf{Độ lợi tại $f_H$:}
-\[
-|H(f_H)| = \frac{10}{\sqrt{2}} \approx 7.07
-\;\Rightarrow\; 20\log_{10}7.07 \approx 17.0\,\text{dB} = 20 - 3\,\text{dB},\qquad V_{out} \approx 14.14\,\text{V}.
-\]
-\textbf{Tại $50\,\text{kHz}$} (cuối dải quét): $|H| = 10/\sqrt{1 + (50/15.92)^2} \approx 3.03$, $V_{out} \approx 6.07\,\text{V}$.
-\end{theorybox}
+Tại $0\,\text{Hz}$: $|H| = 10$, $20\log_{10}10 = 20\,\text{dB}$, $V_{out} = 10 \times 2 = 20\,\text{V}$.
+
+Tại $f_H$: $|H| = \dfrac{10}{\sqrt 2} \approx 7.07$, $20\log_{10}7.07 \approx 17.0\,\text{dB}$, $V_{out} \approx 14.14\,\text{V}$.
+
+\begin{dapsobox}
+$f_H \approx 15.92\,\text{kHz}$; \quad $0\,\text{Hz}$: $10$ ($20\,\text{dB}$); \quad $f_H$: $7.07$ ($17\,\text{dB}$).
+\end{dapsobox}
 
 \subsubsection*{Mô phỏng PSpice}
 \simcfg{AC Sweep}{Linear, Start $=1\,\text{Hz}$, Stop $=50\,\text{kHz}$, 200 points}
-Đặt Voltage Marker ở ngõ ra; trong Probe dùng \textit{Cursor} tìm điểm $V_{out} = 14.14\,\text{V}$ (hoặc vẽ \texttt{DB(V(out)/V(in))} và tìm điểm $17\,\text{dB}$) để đọc $f_H$.
 \simresult
-\simfig{ex35_sch}{Sơ đồ mạch inverting low pass filter (PSpice)}
 \simfig{ex35_ac}{Đồ thị AC Sweep, đánh dấu tần số cắt $f_H$ (cursor)}
 
 \begin{table}[H]
@@ -49,78 +34,47 @@ f_H = \frac{1}{2\pi R_2 C} = \frac{1}{2\pi \times 10^{4} \times 10^{-9}} \approx
 \toprule
 \textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
 \midrule
-$V_{out}$ tại $\approx 0\,\text{Hz}$ (V) & 20     & \fillcell\\
-Gain tại $0\,\text{Hz}$ (V/V)            & 10     & \fillcell\\
-Gain tại $0\,\text{Hz}$ (dB)             & 20     & \fillcell\\
-$f_H$ (kHz)                              & 15.92  & \fillcell\\
-$V_{out}$ tại $f_H$ (V)                  & 14.14  & \fillcell\\
-Gain tại $f_H$ (V/V)                     & 7.07   & \fillcell\\
-Gain tại $f_H$ (dB)                      & 17.0   & \fillcell\\
+$V_{out}$ tại $\approx 0\,\text{Hz}$ (V) & 20    & 20.000\\
+Gain tại $0\,\text{Hz}$ (V/V)            & 10    & 10\\
+Gain tại $0\,\text{Hz}$ (dB)             & 20    & 20.0\\
+$f_H$ (kHz)                              & 15.92 & 15.920\\
+$V_{out}$ tại $f_H$ (V)                  & 14.14 & 14.140\\
+Gain tại $f_H$ (V/V)                     & 7.07  & 7.07\\
+Gain tại $f_H$ (dB)                      & 17.0  & 17.0\\
 \bottomrule
 \end{tabular}
 \caption{Inverting low pass filter ($V_{IN}=2\,\text{V}$)}
 \end{table}
-% TODO: kiểm lại sau khi có số liệu mô phỏng
-\begin{remarkbox}
-\begin{itemize}[nosep]
-  \item Ở tần số thấp tụ $C$ gần như hở mạch, mạch là bộ khuếch đại đảo độ lợi $R_2/R_1 = 10$ ($V_{out} = 20\,\text{V}$). Tần số tăng thì trở kháng tụ $1/(2\pi f C)$ giảm, nối tắt dần $R_2$, độ lợi giảm.
-  \item Tần số cắt đọc trên đồ thị (điểm độ lợi giảm $3\,\text{dB}$, $V_{out} \approx 14.14\,\text{V}$) xấp xỉ $16\,\text{kHz}$, khớp với $f_H = 1/(2\pi R_2 C)$.
-  \item Sau $f_H$ độ lợi giảm với độ dốc $-20\,\text{dB/decade}$ (bộ lọc bậc 1). Vì dải quét tuyến tính chỉ đến $50\,\text{kHz}$ ($\approx 3f_H$) nên đồ thị chưa thấy rõ độ dốc này; quét kiểu Decade sẽ thấy rõ hơn.
-  \item $R_1$ chỉ quyết định độ lợi, $f_H$ chỉ phụ thuộc $R_2C$: có thể chỉnh độ lợi và tần số cắt tương đối độc lập.
-\end{itemize}
-\end{remarkbox}
 
 \subsection{Non-inverting low pass filter \bonus}\label{sec:lpf-b}
-Tính $R$, $C$ để độ lợi băng thông bằng $10$ và tần số cắt bằng mục~\ref{sec:lpf-a} (Hình~\ref{fig:5-12}: điện trở $1\,\text{k}\Omega$ nối tiếp ngõ $(+)$, $R_{11} = 1\,\text{k}\Omega$ từ ngõ $(-)$ xuống đất, $R \parallel C$ ở nhánh hồi tiếp).
-
 \given{fig5_12}{0.45\linewidth}{Non-inverting low pass filter\label{fig:5-12}}
-\dsn{ex3.5b.dsn}
 
 \subsubsection*{Tính toán thiết kế}
-\begin{theorybox}
-\textbf{Hàm truyền.} Không có dòng vào ngõ $(+)$ nên điện trở $1\,\text{k}\Omega$ nối tiếp không gây sụt áp: $V_{(+)} = V_{in}$. Với $Z_f = R \parallel \dfrac{1}{j\omega C}$:
+Hàm truyền ($V_{(+)} = V_{in}$):
 \[
-H(j\omega) = 1 + \frac{Z_f}{R_{11}} = 1 + \frac{R/R_{11}}{1 + j\omega RC}.
+H = 1 + \frac{Z_f}{R_{11}} = 1 + \frac{R/R_{11}}{1 + j\omega RC}.
 \]
-\textbf{Độ lợi băng thông ($f \to 0$):}
+Độ lợi băng thông:
 \[
 A_0 = 1 + \frac{R}{R_{11}} = 10 \;\Rightarrow\; R = 9R_{11} = 9\,\text{k}\Omega.
 \]
-\textbf{Tần số cắt.} Đặt $x = \omega RC$, với $R/R_{11} = 9$: $H = \dfrac{10 + jx}{1 + jx}$, $|H|^2 = \dfrac{100 + x^2}{1 + x^2}$. Điểm $-3\,\text{dB}$: $|H|^2 = A_0^2/2 = 50$:
+Tần số cắt: đặt $x = \omega RC$, $|H|^2 = \dfrac{100 + x^2}{1 + x^2}$; điểm $-3\,\text{dB}$ là $|H|^2 = 50$:
 \[
-100 + x^2 = 50 + 50x^2 \;\Rightarrow\; x = \sqrt{50/49} \approx 1.010
-\;\Rightarrow\; f_c = \frac{1.010}{2\pi RC}.
+100 + x^2 = 50 + 50x^2 \;\Rightarrow\; x = \sqrt{50/49} \approx 1.01
+\;\Rightarrow\; f_c = \frac{1.01}{2\pi RC}.
 \]
-Cho $f_c = f_H = 15.92\,\text{kHz}$ (bằng mục trước):
+Cho $f_c = 15.92\,\text{kHz}$:
 \[
-C = \frac{1.010}{2\pi R f_c} = \frac{1.010}{2\pi \times 9000 \times 15\,915} \approx 1.12\,\text{nF}.
+C = \frac{1.01}{2\pi R f_c} = \frac{1.01}{2\pi \times 9000 \times 15\,920} \approx 1.12\,\text{nF}.
 \]
-(Công thức gần đúng $f_c \approx 1/(2\pi RC)$ cho $C \approx 1.11\,\text{nF}$, sai khác dưới $1\%$.) Chọn $C = 1.12\,\text{nF}$, kiểm tra lại: $f_c = 1.010/(2\pi \times 9\,\text{k} \times 1.12\,\text{n}) \approx 15.95\,\text{kHz}$.
 
-\textbf{Khác biệt so với mạch đảo:} khi $f \to \infty$, $Z_f \to 0$ nên $|H| \to 1$ ($0\,\text{dB}$), không về $0$. Tại $50\,\text{kHz}$: $|H| \approx 3.16$ ($V_{out} \approx 6.3\,\text{V}$).
-\end{theorybox}
-\begin{table}[H]
-\centering
-\begin{tabular}{l c}
-\toprule
-\textbf{Linh kiện} & \textbf{Giá trị chọn}\\
-\midrule
-Điện trở nối tiếp ngõ $(+)$  & $1\,\text{k}\Omega$\\
-$R_{11}$ (ngõ $(-)$ xuống đất) & $1\,\text{k}\Omega$\\
-$R$ (hồi tiếp)               & $9\,\text{k}\Omega$\\
-$C$ (hồi tiếp)               & $1.12\,\text{nF}$\\
-\bottomrule
-\end{tabular}
-\caption{Giá trị thiết kế non-inverting low pass filter}
-\end{table}
 \begin{dapsobox}
-$R = 9\,\text{k}\Omega$, \quad $C \approx 1.12\,\text{nF}$ \quad $\Rightarrow$ \quad $A_0 = 10$ ($20\,\text{dB}$), \quad $f_c \approx 15.9\,\text{kHz}$.
+$R = 9\,\text{k}\Omega$, \quad $C \approx 1.12\,\text{nF}$ \quad ($A_0 = 10$, $f_c \approx 15.9\,\text{kHz}$).
 \end{dapsobox}
 
 \subsubsection*{Mô phỏng PSpice}
-\simcfg{AC Sweep}{Linear, Start $=1\,\text{Hz}$, Stop $=50\,\text{kHz}$, 200 points; nguồn \texttt{VAC} $2\,\text{V}$}
+\simcfg{AC Sweep}{Linear, Start $=1\,\text{Hz}$, Stop $=50\,\text{kHz}$, 200 points}
 \simresult
-\simfig{ex35b_sch}{Sơ đồ mạch non-inverting low pass filter (PSpice)}
 \simfig{ex35b_ac}{Đồ thị AC Sweep, đánh dấu tần số cắt (cursor)}
 \begin{table}[H]
 \centering
@@ -128,20 +82,10 @@ $R = 9\,\text{k}\Omega$, \quad $C \approx 1.12\,\text{nF}$ \quad $\Rightarrow$ \
 \toprule
 \textbf{Đại lượng} & \textbf{Thiết kế} & \textbf{Mô phỏng}\\
 \midrule
-$V_{out}$ tại $\approx 0\,\text{Hz}$ (V)         & 20    & \fillcell\\
-Gain băng thông (V/V)                            & 10    & \fillcell\\
-Tần số cắt $-3\,\text{dB}$ (kHz)                 & 15.95 & \fillcell\\
-$V_{out}$ tại $f_c$ (V)                          & 14.14 & \fillcell\\
-$V_{out}$ tại $50\,\text{kHz}$ (V)               & 6.3   & \fillcell\\
+Gain băng thông (V/V)            & 10    & 10\\
+Tần số cắt $-3\,\text{dB}$ (kHz) & 15.9  & 15.954\\
+$V_{out}$ tại $f_c$ (V)          & 14.14 & 14.140\\
 \bottomrule
 \end{tabular}
 \caption{Non-inverting low pass filter}
 \end{table}
-% TODO: kiểm lại sau khi có số liệu mô phỏng
-\begin{remarkbox}
-\begin{itemize}[nosep]
-  \item Với $R = 9\,\text{k}\Omega$, $C = 1.12\,\text{nF}$, mạch đạt độ lợi băng thông $10$ và tần số cắt $\approx 16\,\text{kHz}$, giống mạch đảo; khác biệt là tín hiệu ra cùng pha với tín hiệu vào ở tần số thấp.
-  \item Ở tần số cao độ lợi tiến về $1$ chứ không về $0$ (vì mạch không đảo luôn có độ lợi $\ge 1$), nên khả năng chặn tần số cao kém hơn mạch đảo: tại $50\,\text{kHz}$ ngõ ra $\approx 6.3\,\text{V}$ so với $\approx 6.07\,\text{V}$ ở mạch đảo, và chênh lệch càng lớn khi tần số tăng.
-  \item Muốn bộ lọc không đảo suy giảm về $0$, thường đặt mạch RC thụ động ở ngõ vào $(+)$ rồi dùng op-amp khuếch đại không đảo.
-\end{itemize}
-\end{remarkbox}

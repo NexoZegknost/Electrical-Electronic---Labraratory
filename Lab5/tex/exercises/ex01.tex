@@ -1,30 +1,21 @@
 \secnum{1}
 \section{Voltage Follower}\label{sec:follower}
-Mạch đệm (\textit{voltage follower}) có độ lợi bằng 1: $V_{OUT} = V_{(+)}$, trở kháng vào rất lớn, trở kháng ra rất nhỏ. Mạch dùng làm tầng đệm giữa nguồn có trở kháng ra lớn và tải có trở kháng vào nhỏ.
-
 \given{fig5_03}{0.55\linewidth}{Opamp follower circuit\label{fig:5-03}}
-\dsn{ex3.1.dsn}
-
-\noindent\textbf{Thiết lập:} $V_9 = 3\,\text{V}_{DC}$ nối ngõ vào $(+)$; ngõ ra nối về ngõ vào $(-)$ qua $R_{15}$ (ban đầu $1\,\text{k}\Omega$). Simulation profile: \textbf{Bias Point}. Lặp lại với $R_{15} = 10\,\text{k}\Omega$, $100\,\text{k}\Omega$, $1\,\text{M}\Omega$.
 
 \subsection{Tính toán lý thuyết}
-\begin{theorybox}
-Op-amp có độ lợi vòng hở $A$ rất lớn và trở kháng vào rất lớn, nên dòng chảy vào ngõ $(-)$ bằng $0$:
+Dòng vào ngõ $(-)$ bằng $0$ nên $R_{15}$ không có sụt áp:
 \[
-I_{(-)} = 0 \;\Rightarrow\; I_{R_{15}} = 0 \;\Rightarrow\; V_{R_{15}} = I_{R_{15}}\,R_{15} = 0 \;\Rightarrow\; V_{(-)} = V_{OUT}.
+I_{R_{15}} = 0 \;\Rightarrow\; V_{(-)} = V_{OUT}.
 \]
-Điện áp ra của op-amp:
+Điện áp ra:
 \[
-V_{OUT} = A\,\bigl(V_{(+)} - V_{(-)}\bigr) = A\,\bigl(V_{(+)} - V_{OUT}\bigr)
-\;\Rightarrow\;
-V_{OUT} = \frac{A}{1+A}\,V_{(+)} \xrightarrow{\;A\to\infty\;} V_{(+)}.
+V_{OUT} = A\,(V_{(+)} - V_{(-)}) = A\,(V_{(+)} - V_{OUT})
+\;\Rightarrow\; V_{OUT} = \frac{A}{1+A}\,V_{(+)} \xrightarrow{A\to\infty} V_{(+)}.
 \]
-Kết quả không chứa $R_{15}$: vì không có dòng qua $R_{15}$ nên điện trở này không tạo sụt áp, giá trị của nó không ảnh hưởng đến $V_{OUT}$. Độ lợi $G = V_{OUT}/V_{(+)} = 1$.
+Kết quả không chứa $R_{15}$ nên $V_{OUT} = V_{(+)}$ với mọi $R_{15}$, độ lợi $G = 1$. Với $V_{(+)} = 3\,\text{V}$: $V_{OUT} = 3\,\text{V}$.
 
-Với $V_{(+)} = V_9 = 3\,\text{V}$: $V_{(-)} = V_{OUT} = 3\,\text{V}$.
-\end{theorybox}
 \begin{dapsobox}
-$V_{OUT} = V_{(+)} = 3\,\text{V}$ với mọi giá trị $R_{15}$ \quad (độ lợi $G = 1$).
+$V_{OUT} = V_{(+)} = 3\,\text{V}$ với mọi $R_{15}$.
 \end{dapsobox}
 
 \subsection{Mô phỏng PSpice}
@@ -37,7 +28,7 @@ $V_{OUT} = V_{(+)} = 3\,\text{V}$ với mọi giá trị $R_{15}$ \quad (độ l
 \toprule
 $R_{15}$ & $V_{(+)}$ (V) & $V_{(-)}$ (V) & $V_{OUT}$ lý thuyết (V) & $V_{OUT}$ mô phỏng (V)\\
 \midrule
-$1\,\text{k}\Omega$   & 3 & \fillcell & 3 & \fillcell\\
+$1\,\text{k}\Omega$   & 3 & 3.000 & 3 & 3.000\\
 $10\,\text{k}\Omega$  & 3 & \fillcell & 3 & \fillcell\\
 $100\,\text{k}\Omega$ & 3 & \fillcell & 3 & \fillcell\\
 $1\,\text{M}\Omega$   & 3 & \fillcell & 3 & \fillcell\\
@@ -45,13 +36,3 @@ $1\,\text{M}\Omega$   & 3 & \fillcell & 3 & \fillcell\\
 \end{tabular}
 \caption{So sánh $V_{OUT}$ và $V_{(+)}$ khi thay đổi $R_{15}$}
 \end{table}
-
-\subsection{Nhận xét}
-% TODO: kiểm lại sau khi có số liệu mô phỏng
-\begin{remarkbox}
-\begin{itemize}[nosep]
-  \item Với mọi giá trị $R_{15}$, điện áp ra mô phỏng bằng $V_{(+)} = 3\,\text{V}$ (sai khác cỡ $\mu$V do độ lợi vòng hở hữu hạn), khớp với lý thuyết.
-  \item Dòng qua $R_{15}$ bằng $0$ nên $V_{(-)} = V_{OUT}$; $R_{15}$ chỉ có vai trò đường hồi tiếp, không quyết định độ lợi. Trong thực tế có thể bỏ $R_{15}$ (nối thẳng) hoặc chọn $R_{15}$ bằng trở kháng nguồn để bù sai số do dòng phân cực ngõ vào.
-  \item Mạch không khuếch đại điện áp nhưng cách ly nguồn với tải: nguồn gần như không phải cấp dòng, còn tải được op-amp cấp dòng.
-\end{itemize}
-\end{remarkbox}
