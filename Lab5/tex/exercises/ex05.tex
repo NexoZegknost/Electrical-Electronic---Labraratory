@@ -1,19 +1,53 @@
-\section{Low Pass Filter}\label{sec:lpf}
-Bộ lọc thông thấp cho qua tín hiệu từ $0\,\text{Hz}$ (DC) đến tần số cắt trên $f_H$ và chặn tín hiệu có tần số cao hơn.
+\secnum{7}
+\section{Comparator with Hysteresis (Schmitt Trigger)}\label{sec:schmitt}
+Hai điện trở tạo bộ chia áp đưa một phần điện áp ra về ngõ vào không đảo (hồi tiếp dương). Hồi tiếp dương này tạo \textbf{độ trễ} (\textit{hysteresis}) giữa hai ngưỡng chuyển trạng thái. Ngõ ra luôn ngược dấu với ngõ vào khi ngõ vào vượt ra ngoài vùng trễ.
 
-\given{fig5_08}{0.6\linewidth}{Low pass filter principles}
+\given{fig5_13}{0.45\linewidth}{Inverting Schmitt trigger\label{fig:5-13}}
 
-\subsection{Inverting low pass filter}
-Tần số cắt: $f_H = \dfrac{1}{2\pi R_2 C}$. Với $R_2 = 10\,\text{k}\Omega$, $C = 1\,\text{nF}$ thì $f_H \approx 16\,\text{kHz}$.
+\subsection{Thiết lập trong PSpice}
+\given{fig5_14}{0.45\linewidth}{Schmitt trigger in PSPICE (3 voltage markers)\label{fig:5-14}}
+\dsn{ex3.7.dsn}
+\begin{itemize}
+  \item Sửa thuộc tính \texttt{OPAMP}: \texttt{VPOS} $=+5\,\text{V}$, \texttt{VNEG} $=-5\,\text{V}$ (Hình 5.15).
+  \item Nguồn \texttt{VSIN} $V_{12}$ nối ngõ $(-)$: \texttt{VOFF} $=0$, \texttt{VAMPL} $=5$, \texttt{FREQ} $=50$, \texttt{AC} $=0$.
+  \item $R_{23} = 4\,\text{k}\Omega$ từ ngõ $(+)$ xuống đất, $R_{22} = 1\,\text{k}\Omega$ từ ngõ ra về ngõ $(+)$ (hồi tiếp dương).
+  \item Ba marker: $V(\text{V12:+})$ -- ngõ vào; $V(\text{R22:1})$ -- ngõ $(+)$; $V(\text{R22:2})$ -- ngõ ra.
+\end{itemize}
+\simcfg{Time Domain (Transient)}{Run To Time $=100\,\text{ms}$ (5 chu kỳ), Maximum Step Size $=0.1\,\text{ms}$ để đồ thị mịn}
 
-\given{fig5_09}{0.55\linewidth}{Inverting low pass filter\label{fig:5-09}}
+\subsection{Tính toán lý thuyết}
+\begin{theorybox}
+\textbf{Mức ngõ ra.} Mạch có hồi tiếp dương, không có hồi tiếp âm, nên op-amp làm việc như bộ so sánh vòng hở: chỉ cần $V_{(+)} \neq V_{(-)}$ là ngõ ra bão hòa. Với \texttt{VPOS}/\texttt{VNEG} $= \pm 5\,\text{V}$:
+\[
+V_{OUT} = +V_{sat} = +5\,\text{V} \;\text{ khi } V_{(+)} > V_{(-)},\qquad
+V_{OUT} = -V_{sat} = -5\,\text{V} \;\text{ khi } V_{(+)} < V_{(-)}.
+\]
+\textbf{Điện áp ngõ $(+)$.} Dòng vào ngõ $(+)$ bằng $0$, $R_{22}$ và $R_{23}$ là cầu chia áp từ ngõ ra:
+\[
+V_{(+)} = V_{OUT}\,\frac{R_{23}}{R_{22} + R_{23}} = V_{OUT}\,\frac{4}{1 + 4} = 0.8\,V_{OUT} = \pm 4\,\text{V}.
+\]
+\textbf{Hai ngưỡng chuyển.} Ngõ vào $V_{IN}$ nối ngõ $(-)$, ngõ ra đổi trạng thái khi $V_{IN}$ vượt qua $V_{(+)}$:
+\[
+V_{TH} = +0.8 \times 5 = +4\,\text{V}\;(\text{khi } V_{OUT} = +5\,\text{V}),\qquad
+V_{TL} = -0.8 \times 5 = -4\,\text{V}\;(\text{khi } V_{OUT} = -5\,\text{V}),
+\]
+\[
+\text{độ rộng vùng trễ } V_H = V_{TH} - V_{TL} = 8\,\text{V}.
+\]
+\textbf{Thời điểm chuyển.} $V_{IN} = 5\sin(2\pi\cdot 50\,t)$, chu kỳ $T = 20\,\text{ms}$. $V_{IN} = 4\,\text{V}$ khi $\sin(\omega t) = 0.8$:
+\[
+t_1 = \frac{\arcsin 0.8}{2\pi \cdot 50} \approx 2.95\,\text{ms}.
+\]
+Ngõ ra xuống $-5\,\text{V}$ tại $t \approx 2.95\,\text{ms}$ ($+$ $kT$), lên lại $+5\,\text{V}$ khi $V_{IN}$ giảm qua $-4\,\text{V}$ tại $t \approx 10 + 2.95 = 12.95\,\text{ms}$ ($+$ $kT$). Ngõ ra là sóng vuông $\pm 5\,\text{V}$ cùng tần số $50\,\text{Hz}$, ngược pha với ngõ vào và trễ $2.95\,\text{ms}$ so với các điểm qua $0$ của $V_{IN}$.
+\end{theorybox}
+\begin{dapsobox}
+$V_{OUT} = \pm 5\,\text{V}$, \quad $V_{(+)} = \pm 4\,\text{V}$, \quad $V_{TH} = +4\,\text{V}$, \quad $V_{TL} = -4\,\text{V}$, \quad $V_H = 8\,\text{V}$.
+\end{dapsobox}
 
-\simcfg{AC Sweep}{Linear, Start $=1\,\text{Hz}$, Stop $=50\,\text{kHz}$, 200 points}
-\given{fig5_10}{0.5\linewidth}{AC Sweep simulation profile}
-
+\subsection{Mô phỏng PSpice}
 \simresult
-\simfig{ex05a_sch}{Sơ đồ mạch inverting low pass filter (PSpice)}
-\simfig{ex05a_ac}{Kết quả AC Sweep: $V(\text{out})$ theo tần số}
+\simfigs{ex37_sch}{Sơ đồ Schmitt trigger đã đặt marker (PSpice)}
+\simfig{ex37_tran}{Kết quả Time Domain: $V_{IN}$, $V_{(+)}$ và $V_{OUT}$ theo thời gian}
 
 \begin{table}[H]
 \centering
@@ -21,38 +55,25 @@ Tần số cắt: $f_H = \dfrac{1}{2\pi R_2 C}$. Với $R_2 = 10\,\text{k}\Omega
 \toprule
 \textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
 \midrule
-$f_H$ (Hz)                      & \fillcell & \fillcell\\
-Gain tại $0\,\text{Hz}$ (V/V)   & \fillcell & \fillcell\\
-Gain tại $0\,\text{Hz}$ (dB)    & \fillcell & \fillcell\\
-Gain tại $f_H$ (V/V)            & \fillcell & \fillcell\\
-Gain tại $f_H$ (dB)             & \fillcell & \fillcell\\
+$V_{OUT}$ mức cao / thấp (V)      & $+5$ / $-5$ & \fillcell\\
+$V_{(+)}$ mức cao / thấp (V)      & $+4$ / $-4$ & \fillcell\\
+Ngưỡng trên $V_{TH}$ (V)          & $+4$        & \fillcell\\
+Ngưỡng dưới $V_{TL}$ (V)          & $-4$        & \fillcell\\
+Thời điểm chuyển xuống (ms)       & 2.95        & \fillcell\\
+Thời điểm chuyển lên (ms)         & 12.95       & \fillcell\\
 \bottomrule
 \end{tabular}
-\caption{Inverting low pass filter ($V_{IN}=2\,\text{V}$)}
-\end{table}
-\remark[3]
-
-\subsection{Non-inverting low pass filter}
-Tính $R$, $C$ để độ lợi băng thông bằng $10$ và tần số cắt giống mục trước (Hình~\ref{fig:5-12}); vẽ kết quả AC Sweep.
-
-\given{fig5_12}{0.5\linewidth}{Non-inverting low pass filter\label{fig:5-12}}
-
-\calc[6]
-\begin{table}[H]
-\centering
-\begin{tabular}{l c}
-\toprule
-\textbf{Linh kiện} & \textbf{Giá trị chọn}\\
-\midrule
-$R_{11}$ & \fillcell\\
-$R$ (hồi tiếp) & \fillcell\\
-$C$ (hồi tiếp) & \fillcell\\
-\bottomrule
-\end{tabular}
-\caption{Giá trị thiết kế non-inverting low pass filter}
+\caption{Thông số Schmitt trigger}
 \end{table}
 
-\simresult
-\simfig{ex05b_sch}{Sơ đồ mạch non-inverting low pass filter (PSpice)}
-\simfig{ex05b_ac}{Kết quả AC Sweep: $V(\text{out})$ theo tần số}
-\remark[3]
+\subsection{Giải thích hiện tượng}
+% TODO: kiểm lại sau khi có số liệu mô phỏng
+\begin{remarkbox}[Giải thích tín hiệu ngõ ra]
+\begin{itemize}[nosep]
+  \item \textbf{Ngõ ra là sóng vuông.} Không có hồi tiếp âm nên op-amp không làm việc ở vùng tuyến tính; với độ lợi vòng hở rất lớn, chênh lệch nhỏ giữa hai ngõ vào cũng đẩy ngõ ra lên mức bão hòa $\pm 5\,\text{V}$ (bằng \texttt{VPOS}/\texttt{VNEG}).
+  \item \textbf{Vì sao chuyển trạng thái ở $+4\,\text{V}$ và $-4\,\text{V}$.} Ngưỡng so sánh không cố định ở $0$ mà là $V_{(+)} = 0.8\,V_{OUT}$. Khi ngõ ra ở $+5\,\text{V}$, ngõ $(+)$ là $+4\,\text{V}$: ngõ ra chỉ lật xuống khi $V_{IN}$ tăng vượt $+4\,\text{V}$. Ngay khi lật, $V_{(+)}$ đổi thành $-4\,\text{V}$, nên ngõ ra chỉ lật lên lại khi $V_{IN}$ giảm dưới $-4\,\text{V}$. Trên đồ thị, đường $V_{(+)}$ (marker R22:1) là sóng vuông $\pm 4\,\text{V}$ và các điểm chuyển nằm đúng nơi đường sin $V_{IN}$ cắt $\pm 4\,\text{V}$.
+  \item \textbf{Hồi tiếp dương làm chuyển trạng thái dứt khoát.} Khi ngõ ra bắt đầu giảm, $V_{(+)}$ giảm theo, làm chênh lệch $V_{(+)} - V_{(-)}$ càng âm, đẩy ngõ ra giảm nhanh hơn (hiệu ứng tự kích, \textit{regenerative}).
+  \item \textbf{Ý nghĩa của hysteresis.} Trong vùng $-4\,\text{V} < V_{IN} < +4\,\text{V}$ ngõ ra giữ trạng thái trước đó (như một mạch chốt). Nhờ vậy nhiễu có biên độ nhỏ hơn $8\,\text{V}$ quanh ngưỡng không làm ngõ ra dao động lật liên tục, điều mà bộ so sánh không trễ (ngưỡng $0\,\text{V}$) mắc phải.
+  \item \textbf{Đầu đồ thị.} Tại $t = 0$, $V_{IN} = 0$ và PSpice tính điểm làm việc ban đầu với $V_{OUT} \approx 0$ (trạng thái không bền), nên khoảng thời gian đầu ngõ ra chưa ở mức bão hòa rõ ràng; sau lần chuyển đầu tiên mạch hoạt động tuần hoàn ổn định.
+\end{itemize}
+\end{remarkbox}

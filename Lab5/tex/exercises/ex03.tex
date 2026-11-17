@@ -1,46 +1,103 @@
-\section{Voltage Follower with Gain}\label{sec:gain}
-Mạch đệm dòng có thể thêm độ lợi bằng cách đặt điện trở vào nhánh hồi tiếp: $\text{Gain} = 1 + R_2/R_1$.
+\secnum{4}
+\section{Summing Amplifier}\label{sec:summing}
 
-\given{fig5_05}{0.55\linewidth}{Opamp follower with gain for the output\label{fig:5-05}}
+\subsection{Non-inverting summing}\label{sec:summing-a}
+Mạch cộng không đảo (Hình~\ref{fig:5-06}) với $R_1 = 1\,\text{k}\Omega$, $R_2 = 2\,\text{k}\Omega$, $R_3 = 5\,\text{k}\Omega$, $R_f = 9\,\text{k}\Omega$, $R_i = 1\,\text{k}\Omega$; ba ngõ vào $V_1 = 1\,\text{V}$, $V_2 = 2\,\text{V}$, $V_3 = 3\,\text{V}$.
 
-Yêu cầu thực hiện trên PSpice: $V_{IN} = 2\,\text{V}$, độ lợi $= 3$, nguồn phía tải $12\,\text{V}_{DC}$, $R_{LOAD} = 1\,\text{k}\Omega$.
+\given{fig5_06}{0.5\linewidth}{Non inverse summing using OPAMP\label{fig:5-06}}
+\dsn{ex3.4.dsn}
 
-\subsection{Chọn linh kiện}
-\calc[4]
+\noindent\textbf{Thiết lập:} ba nguồn \texttt{VDC} $1$, $2$, $3\,\text{V}$ nối qua $R_1$, $R_2$, $R_3$ vào ngõ $(+)$; $R_i$ từ ngõ $(-)$ xuống đất, $R_f$ từ ngõ ra về ngõ $(-)$. Simulation profile: \textbf{Bias Point}.
 
-\begin{table}[H]
-\centering
-\begin{tabular}{l c}
-\toprule
-\textbf{Thông số} & \textbf{Giá trị}\\
-\midrule
-$R_1$ & \fillcell\\
-$R_2$ & \fillcell\\
-$R_{LOAD}$ & $1\,\text{k}\Omega$\\
-$V_{IN}$ / $V_{+}$ & $2\,\text{V}$ / $12\,\text{V}$\\
-\bottomrule
-\end{tabular}
-\caption{Thông số mạch follower có độ lợi}
-\end{table}
+\subsubsection*{Tính toán lý thuyết}
+\begin{theorybox}
+\textbf{Điện áp tại ngõ $(+)$.} Dòng vào ngõ $(+)$ bằng $0$, nên tổng dòng từ ba nhánh vào nút $V_{IN}$ bằng $0$ (KCL):
+\[
+\frac{V_1 - V_{IN}}{R_1} + \frac{V_2 - V_{IN}}{R_2} + \frac{V_3 - V_{IN}}{R_3} = 0
+\;\Rightarrow\;
+V_{IN} = \frac{\dfrac{V_1}{R_1} + \dfrac{V_2}{R_2} + \dfrac{V_3}{R_3}}{\dfrac{1}{R_1} + \dfrac{1}{R_2} + \dfrac{1}{R_3}}
+= \frac{\dfrac{1}{1} + \dfrac{2}{2} + \dfrac{3}{5}}{\dfrac{1}{1} + \dfrac{1}{2} + \dfrac{1}{5}}
+= \frac{2.6}{1.7} \approx 1.529\,\text{V}.
+\]
+\textbf{Độ lợi không đảo.} $V_{(-)} = V_{IN}$, $R_i$ và $R_f$ là cầu chia áp từ ngõ ra:
+\[
+V_{OUT} = \Bigl(1 + \frac{R_f}{R_i}\Bigr) V_{IN} = \Bigl(1 + \frac{9}{1}\Bigr)\times 1.529 \approx 15.29\,\text{V}.
+\]
+\textbf{Lưu ý bão hòa.} Linh kiện \texttt{OPAMP} của PSpice có ngõ ra bị giới hạn trong khoảng [\texttt{VNEG}, \texttt{VPOS}] (mặc định $\pm 15\,\text{V}$, xem ở Property Editor). Vì $15.29\,\text{V} > 15\,\text{V}$, ngõ ra mô phỏng sẽ bị kẹp ở khoảng $15\,\text{V}$. Để thấy đúng giá trị tuyến tính, đặt \texttt{VPOS} $= 20\,\text{V}$.
+\end{theorybox}
+\begin{dapsobox}
+$V_{IN} \approx 1.529\,\text{V}$, \quad $V_{OUT} \approx 15.29\,\text{V}$ (nếu \texttt{VPOS} $= 15\,\text{V}$: bão hòa $\approx 15\,\text{V}$).
+\end{dapsobox}
 
-\subsection{Mô phỏng}
+\subsubsection*{Mô phỏng PSpice}
 \simresult
-\simfigs{ex03_bias}{Kết quả Bias Point mạch follower with gain}
-
+\simfigs{ex34_bias}{Kết quả Bias Point mạch cộng không đảo}
 \begin{table}[H]
 \centering
 \begin{tabular}{l c c}
 \toprule
 \textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
 \midrule
-$V_{OUT}$ (V)         & \fillcell & \fillcell\\
-Gain                  & \fillcell & \fillcell\\
-$I_{LOAD}$ (mA)       & \fillcell & \fillcell\\
+$V_{IN}$ tại ngõ vào $(+)$ (V)                & 1.529 & \fillcell\\
+$V_{OUT}$ (V), \texttt{VPOS} $= 15\,\text{V}$ & 15.29 (bão hòa $\approx 15$) & \fillcell\\
+$V_{OUT}$ (V), \texttt{VPOS} $= 20\,\text{V}$ & 15.29 & \fillcell\\
 \bottomrule
 \end{tabular}
-\caption{So sánh lý thuyết -- mô phỏng}
+\caption{Mạch cộng không đảo}
 \end{table}
+% TODO: kiểm lại sau khi có số liệu mô phỏng
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Nút $V_{IN}$ là trung bình có trọng số của $V_1$, $V_2$, $V_3$ (trọng số $1/R_k$); ngõ vào nối điện trở nhỏ nhất ($V_1$ qua $1\,\text{k}\Omega$) đóng góp nhiều nhất. Vì vậy mạch cộng không đảo không cho tổng đơn giản $V_1+V_2+V_3$ trừ khi $R_1 = R_2 = R_3$ và $1 + R_f/R_i = 3$.
+  \item Với nguồn cấp đủ lớn, $V_{OUT}$ mô phỏng khớp $15.29\,\text{V}$. Với nguồn mặc định $\pm 15\,\text{V}$, ngõ ra bão hòa: op-amp không thể xuất điện áp vượt nguồn cấp, khi đó $V_{(-)} \neq V_{(+)}$ vì vòng hồi tiếp không còn điều khiển được.
+\end{itemize}
+\end{remarkbox}
 
-\begin{notebox}{Giải thích độ lợi của điện áp ra}
-\dotlines{5}
-\end{notebox}
+\subsection{Inverting summing \bonus}\label{sec:summing-b}
+Mạch cộng đảo (Hình~\ref{fig:5-07}) với $R_1 = 1\,\text{k}\Omega$, $R_2 = 2\,\text{k}\Omega$, $R_3 = 10\,\text{k}\Omega$ (điện trở hồi tiếp), $V_{i1} = 1\,\text{V}$, $V_{i2} = 5\,\text{V}$.
+
+\given{fig5_07}{0.45\linewidth}{Inverse summing using OPAMP\label{fig:5-07}}
+\dsn{ex3.4b.dsn}
+
+\noindent\textbf{Thiết lập:} hai nguồn \texttt{VDC} $1\,\text{V}$, $5\,\text{V}$ qua $R_1$, $R_2$ vào ngõ $(-)$; ngõ $(+)$ nối đất; $R_3$ từ ngõ ra về ngõ $(-)$. Simulation profile: \textbf{Bias Point}.
+
+\subsubsection*{Tính toán lý thuyết}
+\begin{theorybox}
+Ngõ $(+)$ nối đất và có hồi tiếp âm nên $V_{(-)} = V_{(+)} = 0$ (\textit{đất ảo}, \textit{virtual ground}). Dòng vào ngõ $(-)$ bằng $0$, KCL tại nút $(-)$:
+\[
+\frac{V_{i1}}{R_1} + \frac{V_{i2}}{R_2} + \frac{V_o}{R_3} = 0
+\;\Rightarrow\;
+V_o = -\Bigl(\frac{R_3}{R_1}V_{i1} + \frac{R_3}{R_2}V_{i2}\Bigr)
+= -\Bigl(\frac{10}{1}\times 1 + \frac{10}{2}\times 5\Bigr) = -(10 + 25) = -35\,\text{V}.
+\]
+Dòng qua các nhánh: $I_1 = 1/1\,\text{k} = 1\,\text{mA}$, $I_2 = 5/2\,\text{k} = 2.5\,\text{mA}$, $I_{R_3} = 3.5\,\text{mA}$.
+
+\textbf{Lưu ý bão hòa.} $|-35\,\text{V}|$ vượt nguồn cấp mặc định $\pm 15\,\text{V}$, nên ngõ ra mô phỏng bị kẹp ở khoảng $-15\,\text{V}$ và nút $(-)$ không còn là đất ảo. Để kiểm chứng giá trị $-35\,\text{V}$, đặt \texttt{VPOS} $= 40\,\text{V}$, \texttt{VNEG} $= -40\,\text{V}$.
+\end{theorybox}
+\begin{dapsobox}
+$V_o = -35\,\text{V}$ (lý thuyết, op-amp lý tưởng); với nguồn $\pm 15\,\text{V}$: bão hòa $V_o \approx -15\,\text{V}$.
+\end{dapsobox}
+
+\subsubsection*{Mô phỏng PSpice}
+\simresult
+\simfigs{ex34b_bias}{Kết quả Bias Point mạch cộng đảo}
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$V_{(-)}$ (V), nguồn $\pm 40\,\text{V}$ & 0   & \fillcell\\
+$V_o$ (V), nguồn $\pm 40\,\text{V}$     & $-35$ & \fillcell\\
+$V_o$ (V), nguồn $\pm 15\,\text{V}$     & bão hòa $\approx -15$ & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Mạch cộng đảo}
+\end{table}
+% TODO: kiểm lại sau khi có số liệu mô phỏng
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Mạch cộng đảo cho tổng có trọng số $R_3/R_k$ của các ngõ vào và đảo dấu. Do $V_{(-)}$ là đất ảo, các ngõ vào không ảnh hưởng lẫn nhau (khác với mạch cộng không đảo).
+  \item Bộ giá trị của đề cho $V_o = -35\,\text{V}$, vượt nguồn cấp thông thường; khi đó op-amp bão hòa và kết quả mô phỏng chỉ khớp lý thuyết khi nâng nguồn cấp. Trong thiết kế thực, cần chọn $R_3$ nhỏ hơn (ví dụ $R_3 = 3\,\text{k}\Omega$ cho $V_o = -10.5\,\text{V}$) để ngõ ra nằm trong dải tuyến tính.
+\end{itemize}
+\end{remarkbox}

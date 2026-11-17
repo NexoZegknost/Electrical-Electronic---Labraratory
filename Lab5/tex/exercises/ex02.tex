@@ -1,33 +1,82 @@
-\section{High-Current Voltage Follower}\label{sec:hcfollower}
-Op-amp thường không cấp được dòng ngõ ra lớn. Để cấp dòng lớn cho tải (động cơ, LED công suất\dots), dùng thêm transistor (\textbf{QbreakN}) làm tầng đệm dòng; $V_{OUT}$ vẫn bám theo $V_{(+)}$ nhờ hồi tiếp lấy tại emitter ($R_{16}$ mô phỏng tải).
+\secnum{3}
+\section{Voltage Follower with Gain}\label{sec:gain}
+Mạch đệm dòng có thể thêm độ lợi bằng cách đặt cầu chia áp $R_1$, $R_2$ vào nhánh hồi tiếp: $\text{Gain} = 1 + R_2/R_1$. Transistor NPN mắc kiểu lặp emitter cấp dòng cho tải từ nguồn $12\,\text{V}$, op-amp chỉ phải cấp dòng base nhỏ.
 
-\given{fig5_04}{0.6\linewidth}{Opamp follower circuit (high-current)\label{fig:5-04}}
+\given{fig5_05}{0.5\linewidth}{Opamp follower with gain for the output\label{fig:5-05}}
+\dsn{ex3.3.dsn}
 
-\subsection{Mô phỏng}
-Chạy \textbf{Bias Point}, chụp kết quả điện áp và dòng điện.
+Yêu cầu: $V_{IN} = 2\,\text{V}$, độ lợi $=3$, nguồn phía tải $V_+ = 12\,\text{V}_{DC}$, $R_{LOAD} = 1\,\text{k}\Omega$.
 
-\simresult
-\simfigs{ex02_bias}{Kết quả Bias Point mạch high-current follower}
+\noindent\textbf{Thiết lập:} \texttt{OPAMP}; transistor \texttt{QbreakN} (như Hình 5.4); $V_{IN} = 2\,\text{V}_{DC}$ vào ngõ $(+)$; collector nối nguồn $12\,\text{V}$; emitter là $V_{OUT}$, nối $R_{LOAD}$ xuống đất và nối cầu chia $R_2$ -- $R_1$ về ngõ $(-)$. Simulation profile: \textbf{Bias Point}.
 
+\subsection{Tính toán lý thuyết}
+\begin{theorybox}
+\textbf{Chọn linh kiện.} Hồi tiếp âm làm $V_{(-)} = V_{(+)} = V_{IN}$; dòng vào ngõ $(-)$ bằng $0$ nên $R_1$, $R_2$ là cầu chia áp từ $V_{OUT}$:
+\[
+V_{(-)} = V_{OUT}\,\frac{R_1}{R_1+R_2} = V_{IN}
+\;\Rightarrow\;
+G = \frac{V_{OUT}}{V_{IN}} = 1 + \frac{R_2}{R_1} = 3 \;\Rightarrow\; R_2 = 2R_1.
+\]
+Chọn $R_1 = 10\,\text{k}\Omega$, $R_2 = 20\,\text{k}\Omega$ (đủ lớn để dòng qua cầu chia nhỏ so với dòng tải).
+
+\textbf{Điện áp và dòng điện.}
+\[
+V_{OUT} = 3 \times 2 = 6\,\text{V}, \qquad
+I_{LOAD} = \frac{V_{OUT}}{R_{LOAD}} = \frac{6}{1\,\text{k}} = 6\,\text{mA},\qquad
+I_{R_1R_2} = \frac{6}{10\,\text{k}+20\,\text{k}} = 0.2\,\text{mA}.
+\]
+\[
+I_E = I_{LOAD} + I_{R_1R_2} = 6.2\,\text{mA},\qquad
+I_B \approx \frac{I_E}{\beta+1} \approx \frac{6.2\,\text{mA}}{101} \approx 61\,\mu\text{A}\quad(\beta \approx 100).
+\]
+Ngõ ra op-amp: $V_{O,\,op} = V_{OUT} + V_{BE} \approx 6 + 0.7 \approx 6.7\,\text{V}$ (op-amp tự nâng điện áp ra để bù $V_{BE}$, nên $V_{BE}$ không làm sai $V_{OUT}$).
+Kiểm tra vùng làm việc: $V_{CE} = 12 - 6 = 6\,\text{V} > 0$, transistor ở vùng khuếch đại tích cực.
+\end{theorybox}
 \begin{table}[H]
 \centering
 \begin{tabular}{l c}
 \toprule
-\textbf{Đại lượng} & \textbf{Giá trị mô phỏng}\\
+\textbf{Thông số} & \textbf{Giá trị}\\
 \midrule
-$V_{(+)}$ (V)                  & \fillcell\\
-$V_{OUT}$ (V)                  & \fillcell\\
-$I_{R16}$ (mA) -- dòng qua tải & \fillcell\\
-$I_{C}$ (mA) -- dòng từ nguồn 12\,V & \fillcell\\
-$I_{B}$ ($\mu$A) -- dòng ngõ ra op-amp & \fillcell\\
+$R_1$ & $10\,\text{k}\Omega$\\
+$R_2$ & $20\,\text{k}\Omega$\\
+$R_{LOAD}$ & $1\,\text{k}\Omega$\\
+$V_{IN}$ / nguồn tải & $2\,\text{V}$ / $12\,\text{V}$\\
 \bottomrule
 \end{tabular}
-\caption{Kết quả mô phỏng mạch high-current follower}
+\caption{Thông số mạch follower có độ lợi}
+\end{table}
+\begin{dapsobox}
+$V_{OUT} = 6\,\text{V}$, \quad $G = 3$, \quad $I_{LOAD} = 6\,\text{mA}$.
+\end{dapsobox}
+
+\subsection{Mô phỏng PSpice}
+\simresult
+\simfigs{ex33_bias}{Kết quả Bias Point mạch follower with gain}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$V_{(-)}$ (V)                 & 2       & \fillcell\\
+$V_{OUT}$ (V)                 & 6       & \fillcell\\
+Gain $V_{OUT}/V_{IN}$         & 3       & \fillcell\\
+$I_{LOAD}$ (mA)               & 6       & \fillcell\\
+Ngõ ra op-amp (V)             & $\approx 6.7$ & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết -- mô phỏng}
 \end{table}
 
-\subsection{Tính toán}
-\calc[6]
-\begin{dapsobox}
-\dotlineeq{$V_{OUT} =$}{V \qquad $I_{LOAD} =$ \dotfill\ mA}
-\end{dapsobox}
-\remark[3]
+\subsection{Nhận xét}
+% TODO: kiểm lại sau khi có số liệu mô phỏng
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Điện áp ra $V_{OUT} \approx 6\,\text{V}$, gấp 3 lần $V_{IN}$, khớp với $G = 1 + R_2/R_1$. Độ lợi chỉ phụ thuộc tỉ số $R_2/R_1$, không phụ thuộc $R_{LOAD}$ hay $\beta$ của transistor.
+  \item Do vòng hồi tiếp lấy tại emitter (sau transistor), op-amp tự đặt ngõ ra cao hơn $V_{OUT}$ một lượng $V_{BE}$; sụt áp $V_{BE}$ được bù hoàn toàn.
+  \item Dòng tải $6\,\text{mA}$ do nguồn $12\,\text{V}$ cấp qua transistor; op-amp chỉ cấp dòng base cỡ vài chục $\mu$A. Đây là ưu điểm so với follower thường khi tải cần dòng lớn.
+  \item Giới hạn: $V_{OUT}$ phải nhỏ hơn khoảng $12 - V_{CE(sat)}$ và nhỏ hơn mức bão hòa của op-amp trừ $V_{BE}$; với $V_{OUT} = 6\,\text{V}$ mạch còn dư nhiều.
+\end{itemize}
+\end{remarkbox}
