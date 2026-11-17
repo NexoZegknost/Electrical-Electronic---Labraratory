@@ -15,8 +15,5 @@ Báo cáo LaTeX theo mẫu Lab 4. Biên dịch: `latexmk` (XeLaTeX). Đổi tên
 
 Khung nhận xét chỉ có ở 3.3 và 3.7 (hai bài đề yêu cầu giải thích).
 
-## Còn thiếu
-- 3.1: số mô phỏng cho R15 = 10k, 100k, 1M (đổi R15, chạy lại Bias Point, đọc V(-) và V_OUT).
-
 ## Nộp bài
 `2510290_NguyenHuynhHuuDuc_Chapter5.zip` gồm `report.pdf` và các file `.dsn` ở bảng trên.
