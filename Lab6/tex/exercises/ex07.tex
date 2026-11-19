@@ -1,0 +1,68 @@
+\secnum{4}
+\section{MOSFET Applications}\label{sec:app}
+
+\subsection{MOSFET as a switch}\label{sec:switch}
+\given{fig6_14}{0.5\linewidth}{EFET is used as a switch\label{fig:6-14}}
+
+Thông số: $R_{IN} = 4.7\,\text{k}\Omega$, $R_{GS} = 47\,\text{k}\Omega$, $V_{IN}$ mức TTL ($0\,\text{V}$ / $5\,\text{V}$), $V_{DD} = 12\,\text{V}$, đèn thay bằng $R_L = 100\,\Omega$.
+
+\subsubsection*{Tính toán lý thuyết}
+Cổng không có dòng nên $R_{IN}$, $R_{GS}$ là cầu chia áp:
+\[
+V_{GS} = V_{IN}\,\frac{R_{GS}}{R_{IN} + R_{GS}} = V_{IN} \times \frac{47}{51.7} = 0.909\,V_{IN}.
+\]
+\textbf{$V_{IN} = 0\,\text{V}$ (OFF):} $V_{GS} = 0 \le V_T$, không có kênh dẫn:
+$I_D = 0$, $V_{DS} = V_{DD} = 12\,\text{V}$, $V_{R_L} = 0$.
+
+\noindent\textbf{$V_{IN} = 5\,\text{V}$ (ON):} $V_{GS} = 4.545\,\text{V}$.
+\begin{itemize}[nosep]
+  \item \textit{Khóa lý tưởng:} $V_{DS} \approx 0$, $I_D = V_{DD}/R_L = 12/100 = 120\,\text{mA}$.
+  \item \textit{\texttt{MbreakN} mặc định} ($k = 10\,\mu\text{A/V}^2$): dòng bão hòa tối đa chỉ
+  $I_D = k\,V_{GS}^2 = 10^{-5} \times 4.545^2 \approx 0.207\,\text{mA}$, nên $V_{R_L} \approx 20.7\,\text{mV}$ và $V_{DS} \approx 11.98\,\text{V}$: MOSFET ở vùng bão hòa, \textbf{không} đóng được tải.
+  \item \textit{\texttt{MbreakN} sửa model $\text{KP} = 1\,\text{A/V}^2$} (Edit PSpice Model): MOSFET vào vùng ohmic với
+  $R_{DS(on)} \approx \dfrac{1}{\text{KP}\,(V_{GS} - V_T)} \approx 0.22\,\Omega$, nên
+  $I_D \approx \dfrac{12}{100 + 0.22} \approx 119.7\,\text{mA}$, $V_{DS} \approx 26\,\text{mV}$.
+\end{itemize}
+
+\begin{dapsobox}
+OFF: $I_D = 0$, $V_{DS} = 12\,\text{V}$. \quad
+ON: $V_{GS} = 4.545\,\text{V}$; khóa tốt cho $I_D \approx 120\,\text{mA}$, $V_{DS} \approx 0$
+(\texttt{MbreakN} mặc định chỉ đạt $I_D \approx 0.207\,\text{mA}$).
+\end{dapsobox}
+
+\subsubsection*{Mô phỏng PSpice}
+\dsn{ex4.1.dsn}
+\simcfg{Time Domain (Transient)}{\texttt{VPULSE}: V1 $=0$, V2 $=5\,\text{V}$, TD $=0$, TR $=$ TF $=1\,\mu\text{s}$, PW $=0.5\,\text{ms}$, PER $=1\,\text{ms}$; Run To Time $=3\,\text{ms}$}
+\simresult
+\simfig{ex41_tran}{Kết quả Transient: $V_{IN}$, $V_{GS}$, $V_{DS}$ và dòng qua tải}
+\simfigs{ex41_bias_on}{Bias Point khi $V_{IN} = 5\,\text{V}$ (ON)}
+\simfigs{ex41_bias_off}{Bias Point khi $V_{IN} = 0\,\text{V}$ (OFF)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c c c}
+\toprule
+\multirow{2}{*}{\textbf{Đại lượng}} & \multicolumn{2}{c}{\textbf{OFF} ($V_{IN} = 0$)} & \multicolumn{2}{c}{\textbf{ON} ($V_{IN} = 5\,\text{V}$)}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & Lý thuyết & Mô phỏng & Lý thuyết & Mô phỏng\\
+\midrule
+$V_{GS}$ (V)                              & 0  & \fillcell & 4.545 & \fillcell\\
+$I_D$ (mA), \texttt{MbreakN} mặc định     & 0  & \fillcell & 0.207 & \fillcell\\
+$V_{DS}$ (V), \texttt{MbreakN} mặc định   & 12 & \fillcell & 11.98 & \fillcell\\
+$I_D$ (mA), $\text{KP} = 1\,\text{A/V}^2$ & 0  & \fillcell & 119.7 & \fillcell\\
+$V_{DS}$ (V), $\text{KP} = 1\,\text{A/V}^2$ & 12 & \fillcell & 0.026 & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Trạng thái ON/OFF của khóa MOSFET ($V_{DD} = 12\,\text{V}$, $R_L = 100\,\Omega$)}
+\end{table}
+
+\subsubsection*{Nhận xét hoạt động ON/OFF và dòng qua tải}
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item $V_{IN} = 0$: $V_{GS} = 0 < V_T$, MOSFET tắt như khóa hở; không có dòng qua tải và toàn bộ $V_{DD}$ đặt lên $V_{DS}$.
+  \item $V_{IN} = 5\,\text{V}$: $V_{GS} \approx 4.5\,\text{V} > V_T$, MOSFET dẫn. Dòng tải bị giới hạn bởi $R_L$ chỉ khi MOSFET vào vùng ohmic với $R_{DS(on)} \ll R_L$; khi đó $I_D \approx V_{DD}/R_L = 120\,\text{mA}$.
+  \item \texttt{MbreakN} mặc định có $k$ rất nhỏ nên dòng bão hòa chỉ khoảng $0.2\,\text{mA}$; muốn mô phỏng đúng vai trò khóa cần tăng KP hoặc dùng MOSFET công suất.
+  \item $R_{GS}$ là điện trở kéo xuống, giữ $V_{GS} = 0$ khi ngõ vào để hở; $R_{IN}$ hạn dòng nạp/xả cho tụ cổng khi chuyển mạch.
+  \item Mô phỏng: dòng qua tải khi ON $= $ \fillcell\ mA, khi OFF $= $ \fillcell\ mA.
+\end{itemize}
+\end{remarkbox}

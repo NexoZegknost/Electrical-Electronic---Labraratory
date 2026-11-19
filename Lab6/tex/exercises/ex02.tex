@@ -1,0 +1,40 @@
+\subsection{Nested DC Sweep simulation \bonus}\label{sec:jfet-nested}
+
+\subsubsection*{Tính toán lý thuyết}
+Với mỗi giá trị $V_{GS}$ (nguồn quét phụ \texttt{V3}), $I_D$ theo $V_{DS}$ (nguồn quét chính \texttt{V2}) gồm hai vùng:
+\begin{itemize}[nosep]
+  \item Vùng ohmic ($V_{DS} < V_{GS} - V_P$): $I_D = \text{BETA}\bigl[2(V_{GS} - V_P)V_{DS} - V_{DS}^2\bigr]$, $I_D$ tăng gần tuyến tính theo $V_{DS}$.
+  \item Vùng bão hòa ($V_{DS} \ge V_{GS} - V_P$): $I_D = I_{DSS}(1 - V_{GS}/V_P)^2$, không phụ thuộc $V_{DS}$.
+\end{itemize}
+Ranh giới giữa hai vùng: $V_{DS,sat} = V_{GS} - V_P = V_{GS} + 2$.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c c c c c}
+\toprule
+\multirow{2}{*}{$V_{GS}$ (V)} & \multicolumn{2}{c}{\textbf{Lý thuyết}} & \multicolumn{2}{c}{\textbf{Mô phỏng}}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & $V_{DS,sat}$ (V) & $I_{D,sat}$ ($\mu$A) & $V_{DS,sat}$ (V) & $I_{D,sat}$ ($\mu$A)\\
+\midrule
+$0$    & 2.0 & 400 & \fillcell & \fillcell\\
+$-0.5$ & 1.5 & 225 & \fillcell & \fillcell\\
+$-1.0$ & 1.0 & 100 & \fillcell & \fillcell\\
+$-1.5$ & 0.5 & 25  & \fillcell & \fillcell\\
+$-2.0$ & 0   & 0   & \fillcell & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Họ đặc tuyến ra $I_D$ -- $V_{DS}$ của JFET}
+\end{table}
+
+\subsubsection*{Mô phỏng PSpice}
+\dsn{ex2.2.dsn}
+\simcfg{DC Sweep -- Nested}{Primary: \texttt{V2} từ $0$ đến $6\,\text{V}$, bước $0.01\,\text{V}$; Secondary: \texttt{V3} từ $-2\,\text{V}$ đến $0$, bước $0.5\,\text{V}$}
+\given{fig6_04}{0.6\linewidth}{Primary dc sweep source V2 (đề bài)}
+\given{fig6_05}{0.6\linewidth}{Secondary dc sweep source V3 (đề bài)}
+\simresult
+\simfig{ex22_nested}{Kết quả Nested DC Sweep: họ đặc tuyến $I_D$ -- $V_{DS}$}
+
+\subsubsection*{Nhận xét}
+\begin{notebox}{Nhận xét}
+\dotlines{3}
+\end{notebox}

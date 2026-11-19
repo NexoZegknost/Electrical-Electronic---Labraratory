@@ -1,0 +1,48 @@
+\setcounter{subsection}{1}
+\subsection{Enhancement-mode MOSFET}\label{sec:efet}
+\given{fig6_12}{0.55\linewidth}{EFET validation\label{fig:6-12}}
+
+\subsubsection*{Tính toán lý thuyết}
+\texttt{MbreakN} là MOSFET level 1 với model mặc định: $\text{KP} = 20\,\mu\text{A/V}^2$, $W = L = 100\,\mu\text{m}$, $V_T = \text{VTO} = 0$. Ở vùng bão hòa ($V_{DS} \ge V_{GS} - V_T$):
+\[
+I_D = k\,(V_{GS} - V_T)^2,\qquad k = \frac{\text{KP}}{2}\,\frac{W}{L} = 10\,\mu\text{A/V}^2;
+\qquad I_D = 0 \text{ khi } V_{GS} \le V_T .
+\]
+Với $V_2 = 10\,\text{V}$ và $R_2 = 100\,\Omega$, sụt áp trên $R_2$ không đáng kể ($< 30\,\text{mV}$), nên $V_{DS} \approx 10\,\text{V}$: EFET luôn bão hòa trong khoảng quét.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c c c}
+\toprule
+$V_{GS} = V_3$ (V) & $I_D$ lý thuyết ($\mu$A) & $I_D$ mô phỏng ($\mu$A)\\
+\midrule
+$-1$ & 0   & \fillcell\\
+$0$  & 0   & \fillcell\\
+$1$  & 10  & \fillcell\\
+$2$  & 40  & \fillcell\\
+$3$  & 90  & \fillcell\\
+$4$  & 160 & \fillcell\\
+$5$  & 250 & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Đặc tuyến truyền đạt $I_D$ -- $V_{GS}$ của EFET}
+\end{table}
+
+\begin{dapsobox}
+$V_T = 0\,\text{V}$, \quad $k = 10\,\mu\text{A/V}^2$, \quad $I_D(V_{GS} = 5\,\text{V}) = 250\,\mu\text{A}$.
+\end{dapsobox}
+
+\subsubsection*{Mô phỏng PSpice}
+\dsn{ex3.2.dsn}
+\simcfg{DC Sweep}{\texttt{V3} từ $-1\,\text{V}$ đến $5\,\text{V}$, bước $0.01\,\text{V}$; vẽ \texttt{-I(R2)}}
+\simresult
+\simfig{ex32_dc}{Kết quả DC Sweep của EFET: $I_D$ theo $V_{GS}$ từ $-1\,\text{V}$ đến $5\,\text{V}$}
+
+\subsubsection*{Nhận xét}
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Với $V_{GS} \le V_T$, chưa có kênh dẫn nên $I_D = 0$: EFET thường tắt (normally OFF), khác JFET và DFET vốn dẫn ngay tại $V_{GS} = 0$.
+  \item Khi $V_{GS} > V_T$, kênh N được cảm ứng dưới lớp oxit và $I_D$ tăng theo bình phương $(V_{GS} - V_T)$.
+  \item Mô phỏng: $V_T \approx $ \fillcell\ V, $I_D(5\,\text{V}) = $ \fillcell\ $\mu$A.
+\end{itemize}
+\end{remarkbox}

@@ -1,0 +1,53 @@
+\secnum{2}
+\section{Junction Field Effect Transistor (JFET)}\label{sec:jfet}
+\given{fig6_01}{0.55\linewidth}{JFET circuit in PSPICE\label{fig:6-01}}
+
+\subsection{DC Sweep simulation}\label{sec:jfet-dc}
+
+\subsubsection*{Tính toán lý thuyết}
+Linh kiện \texttt{JbreakN} dùng model mặc định của PSpice: $\text{BETA} = 10^{-4}\,\text{A/V}^2$, $\text{VTO} = -2\,\text{V}$. Khi đó:
+\[
+V_P = \text{VTO} = -2\,\text{V},\qquad
+I_{DSS} = \text{BETA}\cdot V_P^2 = 10^{-4}\times 4 = 400\,\mu\text{A}.
+\]
+Với $V_{DS} = V_2 = 10\,\text{V}$, JFET luôn nằm trong vùng bão hòa ($V_{DS} > V_{GS} - V_P$), dòng máng theo phương trình Shockley:
+\[
+I_D = I_{DSS}\Bigl(1 - \frac{V_{GS}}{V_P}\Bigr)^2,\qquad V_{GS} = V_3 .
+\]
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c c c}
+\toprule
+$V_{GS} = V_3$ (V) & $I_D$ lý thuyết ($\mu$A) & $I_D$ mô phỏng ($\mu$A)\\
+\midrule
+$-3.0$ & 0   & \fillcell\\
+$-2.0$ & 0   & \fillcell\\
+$-1.5$ & 25  & \fillcell\\
+$-1.0$ & 100 & \fillcell\\
+$-0.5$ & 225 & \fillcell\\
+$0$    & 400 & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{Đặc tuyến truyền đạt $I_D$ -- $V_{GS}$ của JFET}
+\end{table}
+
+\begin{dapsobox}
+$I_{DSS} = 400\,\mu\text{A}$, \quad $V_P = -2\,\text{V}$.
+\end{dapsobox}
+
+\subsubsection*{Mô phỏng PSpice}
+\dsn{ex2.1.dsn}
+\simcfg{DC Sweep}{Sweep variable: Voltage source \texttt{V3}, Linear, Start $=-3\,\text{V}$, End $=0\,\text{V}$, Increment $=0.01\,\text{V}$; vẽ \texttt{-I(R2)}}
+\given{fig6_02}{0.6\linewidth}{DC Sweep simulation profile (đề bài)}
+\simresult
+\simfig{ex21_dc}{Kết quả DC Sweep: $I_D$ theo $V_3$ từ $-3\,\text{V}$ đến $0\,\text{V}$}
+
+\subsubsection*{Nhận xét}
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Khi $V_{GS} \le V_P = -2\,\text{V}$, kênh bị thắt hoàn toàn nên $I_D = 0$ (vùng cutoff).
+  \item Khi $V_{GS}$ tăng từ $-2\,\text{V}$ lên $0$, $I_D$ tăng theo dạng parabol và đạt cực đại $I_{DSS}$ tại $V_{GS} = 0$. Mô phỏng đọc được $I_{DSS} = $ \fillcell\ $\mu$A, $V_P = $ \fillcell\ V.
+  \item Đề ghi $I_{DSS} = 400\,\text{mA}$ nhưng trục đồ thị là $\mu$A; giá trị đúng là $400\,\mu\text{A}$, khớp với $\text{BETA}\cdot V_P^2$.
+\end{itemize}
+\end{remarkbox}

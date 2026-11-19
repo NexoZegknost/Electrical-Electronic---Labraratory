@@ -1,0 +1,47 @@
+\subsection{MOSFET Motor Controller \bonus}\label{sec:motor}
+\given{fig6_15}{0.6\linewidth}{Simple motor controller using EFET\label{fig:6-15}}
+
+\subsubsection*{Nguyên lý}
+\begin{itemize}[nosep]
+  \item Động cơ là tải cảm. Khi MOSFET tắt, cuộn dây sinh sức phản điện động (back-emf) $v_L = L\,\dfrac{di}{dt}$ rất lớn; diode flywheel song song với động cơ dẫn dòng này về lại nguồn, bảo vệ MOSFET.
+  \item Mạng snubber/clamping (zener nối tiếp diode) cho phép dòng tắt nhanh hơn và giới hạn đỉnh điện áp ngược.
+  \item $D_1$ đặt ngang kênh D--S bảo vệ MOSFET khỏi quá áp chuyển mạch; $R_{GS}$ kéo cổng về $0\,\text{V}$ khi ngõ TTL ở mức thấp.
+\end{itemize}
+
+\subsubsection*{Mô phỏng PSpice}
+\dsn{ex4.2.dsn}
+\simcfg{Time Domain (Transient)}{\dotfill}
+\begin{notebox}{Mô hình động cơ và thông số}
+\dotline{Mô hình động cơ (ví dụ $R$ nối tiếp $L$):}
+\dotline{MOSFET và diode sử dụng:}
+\dotline{$V_{DD}$, tần số và độ rộng xung điều khiển:}
+\end{notebox}
+\simresult
+\simfig{ex42_tran}{Kết quả Transient: điện áp $V_{DS}$ và dòng qua động cơ (có / không có diode flywheel)}
+
+\begin{notebox}{Nhận xét}
+\dotlines{3}
+\end{notebox}
+
+\subsection{Complementary MOSFET Motor Controller \bonus}\label{sec:cmos-motor}
+\given{fig6_16}{0.6\linewidth}{Full Motor controller with N and P channel EFET\label{fig:6-16}}
+
+\subsubsection*{Nguyên lý}
+\begin{itemize}[nosep]
+  \item $V_{IN}$ thấp: P-MOSFET ($\text{FET}_1$) có $V_{GS} < 0$ nên dẫn, N-MOSFET tắt; động cơ nối với $+V_{DD}$ và quay thuận (high-side switching).
+  \item $V_{IN}$ cao: P-MOSFET tắt, N-MOSFET dẫn; động cơ nối với $-V_{DD}$, điện áp hai đầu đảo chiều nên động cơ quay ngược (low-side switching).
+\end{itemize}
+
+\subsubsection*{Mô phỏng PSpice}
+\dsn{ex4.3.dsn}
+\simcfg{Time Domain (Transient)}{\dotfill}
+\begin{notebox}{Mô hình động cơ và thông số}
+\dotline{N-MOSFET / P-MOSFET sử dụng:}
+\dotline{$\pm V_{DD}$, xung điều khiển $V_{IN}$:}
+\end{notebox}
+\simresult
+\simfig{ex43_tran}{Kết quả Transient: $V_{IN}$, điện áp và dòng qua động cơ ($I_F$, $I_R$)}
+
+\begin{notebox}{Nhận xét}
+\dotlines{3}
+\end{notebox}

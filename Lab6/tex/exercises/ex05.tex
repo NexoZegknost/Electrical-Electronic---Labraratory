@@ -1,0 +1,69 @@
+\secnum{3}
+\section{Metal Oxide Semiconductor FET (MOSFET)}\label{sec:mosfet}
+
+\subsection{Depletion-mode MOSFET \bonus}\label{sec:dfet}
+\given{fig6_09}{0.55\linewidth}{DFET verification in PSPICE\label{fig:6-09}}
+
+\subsubsection*{Kiểm chứng $I_{DSS}$ và $V_P$}
+\texttt{MbreakND} là MOSFET level 1 với $\text{KP} = 20\,\mu\text{A/V}^2$, $W = L = 100\,\mu\text{m}$, $\text{VTO} = -4\,\text{V}$. Ở vùng bão hòa:
+\[
+I_D = \frac{\text{KP}}{2}\,\frac{W}{L}\,(V_{GS} - V_{TO})^2 = I_{DSS}\Bigl(1 - \frac{V_{GS}}{V_P}\Bigr)^2,
+\]
+\[
+I_{DSS} = \frac{\text{KP}}{2}\,V_P^2 = 10^{-5}\times 16 = 160\,\mu\text{A},\quad V_P = -4\,\text{V}.
+\]
+\simcfg{DC Sweep}{\texttt{V3} từ $-5\,\text{V}$ đến $0$, bước $0.01\,\text{V}$; vẽ \texttt{-I(R2)}}
+\simresult
+\simfig{ex31_dc}{Kết quả DC Sweep của DFET: $I_D$ theo $V_{GS}$}
+
+\subsubsection*{Self bias configuration}
+\given{fig6_11}{0.5\linewidth}{Self bias configuration for DFET\label{fig:6-11}}
+
+\par\medskip\noindent\textbf{Tính toán lý thuyết}\par\smallskip
+Cổng cách điện nên $I_G = 0$, $V_G = 0$ và $V_{GS} = -I_D R_4 = -1\,\text{k}\Omega \cdot I_D$. Thay vào phương trình ($I_D$ tính bằng mA):
+\[
+I_D = 0.16\Bigl(1 - \frac{I_D}{4}\Bigr)^2
+\;\Rightarrow\; 0.01\,I_D^2 - 1.08\,I_D + 0.16 = 0
+\;\Rightarrow\; I_D \approx 0.148\,\text{mA}.
+\]
+\[
+V_{GS} \approx -0.148\,\text{V},\qquad
+V_S \approx 0.148\,\text{V},\qquad
+V_D = 12 - 0.148 \times 2 \approx 11.70\,\text{V},
+\]
+\[
+V_{DS} \approx 11.55\,\text{V} > V_{GS} - V_P = 3.85\,\text{V}\;(\text{bão hòa}).
+\]
+
+\begin{dapsobox}
+$I_D \approx 0.148\,\text{mA}$, \quad $V_{GS} \approx -0.148\,\text{V}$, \quad $V_{DS} \approx 11.55\,\text{V}$.
+\end{dapsobox}
+
+\par\medskip\noindent\textbf{Mô phỏng PSpice}\par\smallskip
+\dsn{ex3.1.dsn}
+\simcfg{Bias Point}{bật hiển thị V, I trên sơ đồ}
+\simresult
+\simfigs{ex31_bias}{Kết quả Bias Point mạch DFET tự phân cực}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$I_D$ (mA)   & 0.148    & \fillcell\\
+$V_{GS}$ (V) & $-0.148$ & \fillcell\\
+$V_D$ (V)    & 11.70    & \fillcell\\
+$V_{DS}$ (V) & 11.55    & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết -- mô phỏng mạch DFET tự phân cực}
+\end{table}
+
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Giống JFET tự phân cực: $I_D$ qua $R_4$ tạo $V_{GS} = -I_D R_4 < 0$ và hồi tiếp âm ổn định điểm làm việc.
+  \item Khác JFET: cổng MOSFET cách điện bằng lớp oxit nên $I_G = 0$ tuyệt đối; DFET còn có thể làm việc với $V_{GS} > 0$ (chế độ tăng cường) mà không có dòng cổng.
+  \item Mô phỏng: $I_D = $ \fillcell\ mA, $V_{GS} = $ \fillcell\ V.
+\end{itemize}
+\end{remarkbox}

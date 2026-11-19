@@ -1,0 +1,63 @@
+\setcounter{subsection}{2}
+\subsection{Exercises}\label{sec:jfet-ex}
+
+\subsubsection{Self bias configuration}\label{sec:jfet-self}
+\given{fig6_07}{0.5\linewidth}{Self bias configuration\label{fig:6-07}}
+
+\par\medskip\noindent\textbf{Tính toán lý thuyết}\par\smallskip
+Dòng cổng $I_G \approx 0$ nên $R_G$ không sụt áp: $V_G = 0$. Do đó
+\[
+V_{GS} = V_G - V_S = -I_D R_S = -1\,\text{k}\Omega \cdot I_D .
+\]
+Thay vào phương trình Shockley ($I_D$ tính bằng mA):
+\[
+I_D = 0.4\Bigl(1 - \frac{-I_D \cdot 1}{-2}\Bigr)^2 = 0.4\,(1 - 0.5\,I_D)^2
+\;\Rightarrow\; I_D^2 - 14\,I_D + 4 = 0
+\;\Rightarrow\; I_D = \frac{14 - \sqrt{180}}{2} \approx 0.292\,\text{mA}
+\]
+(nghiệm còn lại $I_D \approx 13.7\,\text{mA} > I_{DSS}$, loại). Suy ra:
+\[
+V_{GS} = -0.292\,\text{V},\qquad
+V_S = 0.292\,\text{V},\qquad
+V_D = V_{DD} - I_D R_D = 12 - 0.584 = 11.416\,\text{V},
+\]
+\[
+V_{DS} = V_D - V_S \approx 11.12\,\text{V}.
+\]
+Kiểm tra: $V_{DS} = 11.12\,\text{V} > V_{GS} - V_P = 1.708\,\text{V}$ nên JFET làm việc ở vùng bão hòa, giả thiết dùng phương trình Shockley là đúng.
+
+\begin{dapsobox}
+$I_D \approx 0.292\,\text{mA}$, \quad $V_{GS} \approx -0.292\,\text{V}$, \quad $V_{DS} \approx 11.12\,\text{V}$ (vùng bão hòa).
+\end{dapsobox}
+
+\par\medskip\noindent\textbf{Mô phỏng PSpice}\par\smallskip
+\dsn{ex2.3.1.dsn}
+\simcfg{Bias Point}{bật hiển thị V, I trên sơ đồ}
+\simresult
+\simfigs{ex231_bias}{Kết quả Bias Point mạch JFET tự phân cực}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$I_D$ (mA)    & 0.292  & \fillcell\\
+$V_G$ (V)     & 0      & \fillcell\\
+$V_S$ (V)     & 0.292  & \fillcell\\
+$V_D$ (V)     & 11.416 & \fillcell\\
+$V_{GS}$ (V)  & $-0.292$ & \fillcell\\
+$V_{DS}$ (V)  & 11.12  & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết -- mô phỏng mạch tự phân cực}
+\end{table}
+
+\par\medskip\noindent\textbf{Giải thích $I_D$ và $V_{GS}$}\par\smallskip
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Tiếp giáp cổng -- kênh phân cực ngược nên $I_G \approx 0$, $V_G = 0$. Dòng $I_D$ chạy qua $R_S$ làm $V_S > 0$, tạo ra $V_{GS} = -I_D R_S < 0$: chính dòng máng tự đặt điện áp phân cực cho cổng (self bias).
+  \item Đây là cơ chế hồi tiếp âm: $I_D$ tăng thì $V_{GS}$ âm hơn, kênh hẹp lại và kéo $I_D$ giảm. Điểm làm việc là giao điểm của đường phân cực $V_{GS} = -I_D R_S$ với đặc tuyến Shockley, cho $I_D \approx 0.292\,\text{mA}$.
+  \item Mô phỏng: $I_D = $ \fillcell\ mA, $V_{GS} = $ \fillcell\ V, khớp với tính toán.
+\end{itemize}
+\end{remarkbox}

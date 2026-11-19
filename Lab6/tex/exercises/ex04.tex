@@ -1,0 +1,67 @@
+\subsubsection{Voltage divider configuration}\label{sec:jfet-divider}
+\given{fig6_08}{0.42\linewidth}{Voltage divider configuration\label{fig:6-08}}
+
+\par\medskip\noindent\textbf{Tính toán lý thuyết}\par\smallskip
+\textbf{Bước 1 -- giả sử $I_G = 0$.} Cầu chia áp cho điện áp cổng:
+\[
+V_G = V_{DD}\,\frac{R_2}{R_1 + R_2} = 12 \times \frac{2.2}{3.3 + 2.2} = 4.8\,\text{V},
+\qquad V_{GS} = V_G - I_D R_S = 4.8 - 3.3\,I_D\ (\text{mA}).
+\]
+Với \texttt{JbreakN}, $I_D \le I_{DSS} = 0.4\,\text{mA}$ khi $V_{GS} \le 0$, nên $V_S = I_D R_S \le 1.32\,\text{V} < V_G$. Vậy $V_{GS} > 0$: giả thiết $I_G = 0$ \textbf{không thỏa}, tiếp giáp cổng -- nguồn bị phân cực thuận.
+
+\textbf{Bước 2 -- tiếp giáp cổng dẫn.} Coi tiếp giáp cổng -- nguồn như diode silicon dẫn yếu, $V_{GS} \approx 0.5\,\text{V}$. Model PSpice vẫn dùng công thức bão hòa khi $V_{GS} > 0$:
+\[
+I_D = I_{DSS}\Bigl(1 - \frac{V_{GS}}{V_P}\Bigr)^2 = 0.4\,(1 + 0.25)^2 \approx 0.62\,\text{mA}.
+\]
+\[
+V_S \approx I_D R_S = 0.62 \times 3.3 \approx 2.05\,\text{V},\qquad
+V_G = V_S + V_{GS} \approx 2.55\,\text{V},
+\]
+\[
+V_D = 12 - 0.62 \times 1.8 \approx 10.88\,\text{V},\qquad
+V_{DS} = V_D - V_S \approx 8.83\,\text{V}.
+\]
+Dòng cổng (KCL tại nút G):
+\[
+I_G = \frac{V_{DD} - V_G}{R_1} - \frac{V_G}{R_2} = \frac{12 - 2.55}{3.3\,\text{M}\Omega} - \frac{2.55}{2.2\,\text{M}\Omega} \approx 2.86 - 1.16 \approx 1.7\,\mu\text{A}.
+\]
+$I_G \ll I_D$ nhưng đủ để kéo $V_G$ từ $4.8\,\text{V}$ xuống khoảng $2.55\,\text{V}$, vì $R_1$, $R_2$ cỡ M$\Omega$.
+
+\begin{dapsobox}
+$I_D \approx 0.62\,\text{mA}$, \quad $V_{GS} \approx +0.49\,\text{V}$ (tiếp giáp cổng phân cực thuận), \quad $V_G \approx 2.55\,\text{V}$, \quad $V_{DS} \approx 8.83\,\text{V}$.
+\end{dapsobox}
+
+\par\medskip\noindent\textbf{Mô phỏng PSpice}\par\smallskip
+\dsn{ex2.3.2.dsn}
+\simcfg{Bias Point}{bật hiển thị V, I trên sơ đồ}
+\simresult
+\simfigs{ex232_bias}{Kết quả Bias Point mạch JFET phân cực cầu chia áp}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Đại lượng} & \textbf{Lý thuyết} & \textbf{Mô phỏng}\\
+\midrule
+$V_G$ (V) khi bỏ qua $I_G$ & 4.8  & --\\
+$V_G$ (V)                  & 2.55 & \fillcell\\
+$V_S$ (V)                  & 2.05 & \fillcell\\
+$V_D$ (V)                  & 10.88 & \fillcell\\
+$I_D$ (mA)                 & 0.62 & \fillcell\\
+$I_G$ ($\mu$A)             & 1.7  & \fillcell\\
+$V_{GS}$ (V)               & $\approx +0.49$ & \fillcell\\
+$V_{DS}$ (V)               & 8.83 & \fillcell\\
+\bottomrule
+\end{tabular}
+\caption{So sánh lý thuyết -- mô phỏng mạch phân cực cầu chia áp}
+\end{table}
+
+\par\medskip\noindent\textbf{Giải thích $I_D$ và $V_{GS}$}\par\smallskip
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Mạch này lấy từ giáo trình, vốn dành cho JFET có $I_{DSS}$ cỡ vài mA. Với \texttt{JbreakN} ($I_{DSS} = 0.4\,\text{mA}$), dòng máng quá nhỏ để $V_S$ vượt $V_G = 4.8\,\text{V}$, nên không thể có $V_{GS} < 0$.
+  \item Vì vậy tiếp giáp cổng -- nguồn phân cực thuận, $V_{GS}$ bị kẹp ở khoảng $+0.5\,\text{V}$ và có dòng cổng $I_G$ cỡ $\mu$A. Dòng này chảy qua $R_1$ ($3.3\,\text{M}\Omega$) làm $V_G$ giảm mạnh so với $4.8\,\text{V}$.
+  \item $V_{GS} > 0$ nên $I_D \approx 0.62\,\text{mA} > I_{DSS}$; JFET vẫn ở vùng bão hòa vì $V_{DS} \approx 8.83\,\text{V} > V_{GS} - V_P \approx 2.5\,\text{V}$.
+  \item Mô phỏng: $V_{GS} = $ \fillcell\ V, $I_D = $ \fillcell\ mA, $V_G = $ \fillcell\ V.
+\end{itemize}
+\end{remarkbox}
