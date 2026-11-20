@@ -16,11 +16,11 @@ Ranh giới giữa hai vùng: $V_{DS,sat} = V_{GS} - V_P = V_{GS} + 2$.
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
  & $V_{DS,sat}$ (V) & $I_{D,sat}$ ($\mu$A) & $V_{DS,sat}$ (V) & $I_{D,sat}$ ($\mu$A)\\
 \midrule
-$0$    & 2.0 & 400 & \fillcell & \fillcell\\
-$-0.5$ & 1.5 & 225 & \fillcell & \fillcell\\
-$-1.0$ & 1.0 & 100 & \fillcell & \fillcell\\
-$-1.5$ & 0.5 & 25  & \fillcell & \fillcell\\
-$-2.0$ & 0   & 0   & \fillcell & \fillcell\\
+$0$    & 2.0 & 400 & $\approx 2.0$ & 400\\
+$-0.5$ & 1.5 & 225 & $\approx 1.5$ & 225\\
+$-1.0$ & 1.0 & 100 & $\approx 1.0$ & 100\\
+$-1.5$ & 0.5 & 25  & $\approx 0.5$ & 25\\
+$-2.0$ & 0   & 0   & $0$ & $\approx 0$\\
 \bottomrule
 \end{tabular}
 \caption{Họ đặc tuyến ra $I_D$ -- $V_{DS}$ của JFET}
@@ -28,13 +28,19 @@ $-2.0$ & 0   & 0   & \fillcell & \fillcell\\
 
 \subsubsection*{Mô phỏng PSpice}
 \dsn{ex2.2.dsn}
-\simcfg{DC Sweep -- Nested}{Primary: \texttt{V2} từ $0$ đến $6\,\text{V}$, bước $0.01\,\text{V}$; Secondary: \texttt{V3} từ $-2\,\text{V}$ đến $0$, bước $0.5\,\text{V}$}
+\simcfg{DC Sweep -- Nested}{Primary Sweep: nguồn \texttt{V2} (nguồn drain), Linear, Start $=0$, End $=6\,\text{V}$, Increment $=0.1\,\text{V}$; Secondary Sweep: nguồn \texttt{V1} (nguồn gate, \texttt{V3} trong đề), Linear, Start $=0$, End $=-3\,\text{V}$, Increment $=-0.5\,\text{V}$; vẽ \texttt{-I(R1)} (\texttt{R2} trong đề)}
 \given{fig6_04}{0.6\linewidth}{Primary dc sweep source V2 (đề bài)}
 \given{fig6_05}{0.6\linewidth}{Secondary dc sweep source V3 (đề bài)}
 \simresult
 \simfig{ex22_nested}{Kết quả Nested DC Sweep: họ đặc tuyến $I_D$ -- $V_{DS}$}
 
 \subsubsection*{Nhận xét}
-\begin{notebox}{Nhận xét}
-\dotlines{3}
-\end{notebox}
+\begin{remarkbox}
+\begin{itemize}[nosep]
+  \item Với mỗi $V_{GS}$ đường cong có hai vùng: vùng ohmic ($I_D$ tăng gần tuyến tính theo $V_{DS}$, dốc hơn khi $V_{GS}$ gần $0$ vì kênh rộng hơn nên điện trở kênh nhỏ hơn) và vùng bão hòa ($I_D$ nằm ngang).
+  \item Dòng bão hòa đo được là $400$, $225$, $100$, $25\,\mu\text{A}$ ứng với $V_{GS} = 0$, $-0.5$, $-1$, $-1.5\,\text{V}$, khớp $I_{DSS}(1 - V_{GS}/V_P)^2$. Với $V_{GS} \le V_P = -2\,\text{V}$ kênh bị thắt, $I_D \approx 0$ nên các đường $-2$, $-2.5$, $-3\,\text{V}$ trùng với trục hoành.
+  \item Điểm chuyển sang bão hòa dịch về phía $V_{DS}$ lớn khi $V_{GS}$ tiến về $0$: khoảng $0.5$, $1.0$, $1.5$, $2.0\,\text{V}$, đúng $V_{DS,sat} = V_{GS} - V_P$. Trên đồ thị đây là chỗ đường cong thôi uốn để chuyển sang nằm ngang.
+  \item Trong vùng bão hòa $I_D$ gần như không phụ thuộc $V_{DS}$ (model \texttt{JbreakN} mặc định không có hiệu ứng điều chế độ dài kênh), nên JFET hoạt động như nguồn dòng điều khiển bằng điện áp $V_{GS}$.
+  \item Trục hoành là điện áp nguồn \texttt{V2}, còn $V_{DS} = V_2 - I_D R_1$; với $R_1 = 100\,\Omega$ và $I_D \le 400\,\mu\text{A}$ độ chênh tối đa $40\,\text{mV}$ nên bỏ qua được.
+\end{itemize}
+\end{remarkbox}
